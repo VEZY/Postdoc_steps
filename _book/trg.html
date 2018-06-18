@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-
-<link rel="next" href="Light.html">
+<link rel="prev" href="Light.html">
+<link rel="next" href="eai.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -508,29 +508,40 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">Work of R.Vezy for the ReMIX Project</h1>
-<h4 class="author"><em>R. Vezy</em></h4>
-<h4 class="date"><em>2018-06-18</em></h4>
+<div id="trg" class="section level1">
+<h1><span class="header-section-number">Chapter 3</span> Light incident to the dominated crop (trg)</h1>
+<div id="computing-the-trg-incident-to-the-dominated-plant" class="section level2">
+<h2><span class="header-section-number">3.1</span> Computing the trg incident to the dominated plant</h2>
+<p>For the moment, STICS compute the radiation incident above the dominated (or associated) plant as:</p>
+<div class="sourceCode"><pre class="sourceCode fortran"><code class="sourceCode fortran"><span class="kw">if</span> (i <span class="op">&gt;</span> <span class="dv">1</span>) c%trg(n) <span class="kw">=</span> trg_bak <span class="kw">*</span> p(i<span class="kw">-</span><span class="dv">1</span>)%rsoleil</code></pre></div>
+<p>Which means that trg for the dominated plant (<code>i &gt; 1</code>) is computed as the global atmospheric radiation, reduced by the average proportion of light intercepted by the sunlit area of the plane below the dominant plant. This computation does not consider that the average proportion of light incident above the shaded part of the dominated plant (<code>rombre</code>) is different from <code>rsoleil</code>. See Chapter <a href="Light.html#Light">2</a> for more details.</p>
 </div>
-<div id="prerequisites" class="section level1">
-<h1><span class="header-section-number">Chapter 1</span> Prerequisites</h1>
-<p>Each chapter of the book match a specific objective. I first introduce the subject with a brief description, try to find some solutions for the specific issues and show the results.</p>
-<p>The code is only visible on the <code>html</code> version of the book, so please refer to this format if you need any further information (open the <code>index.html</code> file).</p>
-<p>This book is written using the R <strong>bookdown</strong> package, which can be installed from CRAN or Github:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">&quot;bookdown&quot;</span>)
-<span class="co"># or the development version</span>
-<span class="co"># devtools::install_github(&quot;rstudio/bookdown&quot;)</span></code></pre></div>
-<p>To compile this example to PDF, you need XeLaTeX. You are recommended to install TinyTeX (which includes XeLaTeX): <a href="https://yihui.name/tinytex/" class="uri">https://yihui.name/tinytex/</a>.</p>
+<div id="proposed-solution" class="section level2">
+<h2><span class="header-section-number">3.2</span> Proposed solution</h2>
+<p>We propose to change this computation to take the relevant incident light according to the light regime of the dominated plant under computation:</p>
+<div class="sourceCode"><pre class="sourceCode fortran"><code class="sourceCode fortran"><span class="kw">if</span>(i <span class="op">&gt;</span> <span class="dv">1</span>) <span class="kw">then</span>
+  <span class="kw">if</span>(ens<span class="op">.eq.</span>sc%AS) <span class="kw">then</span>
+    c%trg(n) <span class="kw">=</span> trg_bak <span class="kw">*</span> p(i<span class="kw">-</span><span class="dv">1</span>)%rsoleil
+  <span class="kw">else</span>
+    c%trg(n) <span class="kw">=</span> trg_bak <span class="kw">*</span> p(i<span class="kw">-</span><span class="dv">1</span>)%rombre
+  <span class="kw">endif</span>
+<span class="kw">endif</span></code></pre></div>
+<p>With this new computation, the radiation incident above the dominant plant depends from the component (shaded or sunlit) under consideration, and is computed using the geometry of the dominant plant (for atmospheric+transmitted light computation).</p>
+</div>
+<div id="results" class="section level2">
+<h2><span class="header-section-number">3.3</span> Results</h2>
+<p>A comparison of the two was made using the <a href="https://github.com/VEZY/sticRs">sticRs</a> package, from which a summary plot was extracted: <img src="img/trg-computation.png" alt="trg comparison" /></p>
+<p>The comparison between both indicated that the dominated plant intercepted more PAR with the original computation (<code>raint</code>), due to its wrong light regime (<code>rsoleil</code> for both AS and AO). While the dry mass and height of the dominated plant did not change, its <code>LAI</code> was previously higher on the end of the rotation, which increased the <code>rsoleil</code> and <code>rombre</code> of the ground (visible as associated ones). These simulations also showed that the wheat (dominant) <code>eai</code> was highly overestimated, which will be fixed in the next simulations.</p>
 
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-
-<a href="Light.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="Light.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="eai.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

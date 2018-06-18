@@ -20,7 +20,9 @@ if(knitr:::pandoc_to() == "html") {
 
 # Prerequisites
 
-Each chapter of the book should approximately match a specific objective. I first introduce the subject with a brief description, propose some solutions to the different issues and show the results. 
+Each chapter of the book match a specific objective. I first introduce the subject with a brief description, try to find some solutions for the specific issues and show the results. 
+
+The code is only visible on the `html` version of the book, so please refer to this format if you need any further information (open the `index.html` file).
 
 This book is written using the R **bookdown** package, which can be installed from CRAN or Github:
 

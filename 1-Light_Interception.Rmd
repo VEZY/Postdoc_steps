@@ -436,7 +436,7 @@ The light transmitted by the dominant crop to the dominated crop (`rtransmis`) i
 
 $rtransmis=(1.0-rdroit)\cdot e^{-P_{ktrou}\cdot(lai+eai)}$
 
-where $P_{ktrou}$ is the targeted plant light extinction coefficient, `lai` the plant leaf area index, and `eai` the equivalent leaf area index, which represent the photosynthetic surface that is not from leaves (e.g. wheat ears, rapeseed siliquae, pea pods or grapes during their green stage).
+where $P_{ktrou}$ is the targeted plant light extinction coefficient, `lai` the plant leaf area index, and `eai` the equivalent leaf area index, which represent the photosynthetic surface that is not from leaves (e.g. wheat ears, rapeseed pods, pea pods or grapes during their green stage).
 
 ### Total light incident to X points
 
@@ -449,26 +449,33 @@ rdroit= (Output_diff$kgdiffus*rdif)+(Output$kg*rdirect)
 rtransmis = (1.0 - rdroit) * (exp(-P_ktrou * (lai + eai)))
 
 incident_light= 
-  data.frame(Output[,1:2],Total=rdroit+rtransmis, rdroit,rtransmis, 
-             light_env= ifelse(Output$`X value (m)`<limite,"Shade","Sun"))
+  data.frame(Output[,1:2],Total=rdroit+rtransmis, rdroit= rdroit,
+             rtransmis= rtransmis, 
+             light_env= ifelse(Output$`X value (m)`<limite,"Shaded","Sunlit"))
 kable(incident_light,
       col.names = c("X index","X value (m)","Total incident ratio",
-                    "Atmospheric ratio","Transmitted ratio","Light environment"),
+                    "Atmospheric ratio (rdroit)","Transmitted ratio (rtransmis)",
+                    "Light environment"),
   caption=paste("Example of the computation of the total incident radiation ratio.",
                 "See introduction section for further details on the crop."))
 ```
 
+The Total incident ratio is computed as: `Total incident ratio= rdroit+rtransmis`. It is the proportion of the incident ligth from the atmosphere that reach the point on the plane below the plant canopy. This light either comes directly from the sky (`rdroit`) or passing through the plant canopy (`rtransmis`).
+Consequently, the first point `X` of our example that is right under the plant canopy receives in average `incident_light$Total[1]*100`% of the light coming from the atmosphere: `incident_light$rdroit[1]*100`% of the light directly from the sky (either direct or diffuse light) + `incident_light$rtransmis[1]*100`% of the light that is transmitted by the plant above.
+
 ### Total radiation incident to the plane
 
-The ratio of the radiation incident to the plane is computed separately for its so-called sunlit and shaded components, giving for our previous example:
+After computing the total incident ratio for each point, the model averages the values between the so-called sunlit and shaded components. Each point positioned right under the plant canopy is considered shaded, and all other is considered sunlit (see fig. \@ref(fig:Compdominated)). using our previous example, this computation gives:
 
 ```{r}
 incident_light%<>%
   group_by(light_env)%>%
-  summarise(Total= mean(Total))
+  summarise(Total= mean(Total))%>%
+  transmute(Variable= c("rombre","rsoleil"),light_env,Total)
 
 kable(incident_light, 
-      col.names = c("Plane light environment", "Total incident light ratio"),
+      col.names = c("STICS variable name","Light environment",
+                    "Total incident light ratio"),
       caption= paste("Example of the computation of the total incident radiation",
                      "ratio for each light environment for a horizontal plane below",
                      "the targeted plant canopy. See introduction section for further",
@@ -477,7 +484,8 @@ kable(incident_light,
       
 Finally, both ratios are used to compute the intercepted PAR `raint` (MJ m-2 d-1) of the target plant as:  
 $raint=P_{parsurrg}\cdot trg\cdot(1-(rombre\cdot surfAO)-(rsoleil\cdot surfAS))$  
-where $P_{parsurrg}$ is a coefficient to compute PAR (Photosynthetically Active Radiation) from the global radiation, `trg` is the active radiation (either RG or radiation transmitted below the dominant crop), `rombre` and `rsoleil` are the ratio of incident light for shaded and sunlit components of the plane, and `surfAO` and `surfAS` are the relative surface (0 to 1) of the shaded and sunlit components of the plane.
+where $P_{parsurrg}$ is a coefficient to compute PAR (Photosynthetically Active Radiation) from the global radiation, `trg` is the active radiation (either global radiation or radiation transmitted below the dominant crop), `rombre` and `rsoleil` are the ratio of incident light for shaded and sunlit components of the plane, and `surfAO` and `surfAS` are the relative surfaces (0 to 1) of the shaded and sunlit components of the plane.
+The computation of `trg` is further described in Chapter \@ref(trg).
 
 ```{r message=FALSE, warning=FALSE}
 library(tidyverse)
@@ -487,24 +495,25 @@ incident_light%<>%spread(light_env,Total)
 surfAO = l/ir
 surfAO = min(surfAO,1.0)
 surfAS = 1.0 - surfAO
-raint = P_parsurrg * trg * (1 - (incident_light$Shade * surfAO) - (incident_light$Sun* surfAS))
+raint = P_parsurrg * trg * (1 - (incident_light$Shaded * surfAO) - 
+                              (incident_light$Sunlit* surfAS))
 ```
 
-For our example, the crop would have intercepted `r round(raint,2)` MJ m-2 day-1 of radiation.
+For our example, the crop would have intercepted `r round(raint,2)` MJ m-2 day-1 of radiation, with a PAR of `r P_parsurrg * trg` W m-2, an `rombre` of `r incident_light$Shaded`, an `rsoleil` of `r incident_light$Sunlit` and a relative surface of `r surfAO` and `r surfAS` for the shaded and sunlit component respectively.
 
-Note: The relative surfaces (0 to 1) of the shaded and sunlit components of the plane (`surfAO` and `surfAS`) that are computed during the dominant plant computation are then used as the shaded and sunlit surfaces for the dominated plant.
+> The relative surfaces (0 to 1) of the shaded and sunlit components of the plane (`surfAO` and `surfAS`) that are computed during the dominant plant computation are then used as the shaded and sunlit surfaces for the dominated plant.
 
 
-## Conclusion
+## Summary
 
 The interception of the targeted plant is obtained by:
 
 1. Computing the light that is incident at a horizontal plane at the height of the dominated plant (or the soil) and,
-2. Substracting this incident light to the global PAR (or the transmitted PAR for the dominated plant), which gives the PAR intercepted by the target plant.
+2. Substracting this incident light to the global PAR, which gives the PAR intercepted by the target plant.
 
 This process is applied iteratively to the dominant and the dominated plant to compute both species PAR interception while taking account for their respective structure (shape, height, width...).
 
-## Further details
+## Discussion and proposed modifications
 
 The dominated plant interception is computed in two separate computations, one for the sunlit component, and one for the shaded component, and interception is then weighted by their relative surface. The dominant plant is considered having 100% of its surface that is sunlit, so all this computation is made only for its sunlit part.
 
@@ -513,8 +522,4 @@ $trg=trg\cdot rsoleil$
 
 where `rsoleil` is the average proportion of light intercepted by the sunlit area of the plane below the dominant plant. 
 
-This computation is a little strange because the radiation transmitted to the dominanted plant species would only be equal to the proportion of light reaching the sunlit part of the plane. It probably should be modified by something like:
-$trg= trg-raint$
-
-where `raint` would be the interception of the dominant plant.
-This correction is more natural, because the radiation incident to the dominated plant species would be equivalent to the radiation transmitted by the dominant plant. Furthermore, as long as the dominant plant is not growing, the dominated plant receives `0` radiation with the previous computation, because `rsoleil= 0` while the plant as no surface. Fortunately, the plant dominance can change from day to day, so this is not a big problem.
+This computation is only right for the sunlit component of the dominated plant. A modification is proposed, discussed and tested on Chapter \@ref(trg). 

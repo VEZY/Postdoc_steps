@@ -12,7 +12,6 @@ if(knitr:::pandoc_to() == "html") {
 
 The plant density, which is related to the interrow distance, seems to be an important formalism to describe the crop, and particularly for mixed crops. Several computations are made to represent plant competition in the STICS model, making the density effect a complex process. Lets describe each step of the process to have a clearer representation in mind.
 
-
 ## The density effect on LAI
 
 In the model, the plant density is taken as a negative effect upon the `LAI` growth as soon as a threshold of `LAI` is reached. This threshold (`P_laicomp`) represents the moment when the leaf surface of a plant start becoming competitive for light against another plant (from the same species or not). So whenever the `LAI` is higher than `P_laicomp`, the effect of the density (`efdensite`) become closer to 0 (the effect is null when equal to 1, and maximum at 0).
@@ -21,7 +20,7 @@ $ef_{densite}=\min\left\{1.0\ ;\ e^{P_{adens}\cdot\frac{log(densiteequiv)}{P_{bd
 or more simply:
 $ef_{densite}=\min\left\{1.0\ ;\ (\frac{densiteequiv}{P_{bdens}})^{P_{adens}}\right\}$
 
-> Note: replace the equation in the model to simplify too ? 
+> Replace the equation in the model to simplify too ? 
 
 Here is a plot representing the density effect along the equivalent density:
 ```{r message=FALSE, warning=FALSE}
@@ -34,7 +33,7 @@ expand.grid(densiteequiv= 140:280, P_adens=c(-0.54,-0.7),P_bdens=c(7,10))%>%
   ggplot(aes(x=densiteequiv))+
   geom_point(aes(y=efdensite,colour= Parameters))+
   labs(x= "Equivalent density", y= "Density effect (0-1)", colour= "a and b parameters values",
-       title="Equivalent density effect on density effect")
+       title="Equivalent density / density effect")
 ```
 
 So the higher the density, the higher the negative effect on `LAI`.
@@ -79,4 +78,3 @@ The new formalism has several implications in the model, notably that the domina
 
 A comparison of the two formalisms was made using the [sticRs](https://github.com/VEZY/sticRs) package, from which a summary plot was extracted:
 ![trg comparison](img/Equ-dens-computation.png)
-

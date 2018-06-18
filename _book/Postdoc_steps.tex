@@ -152,9 +152,13 @@
 }
 \chapter{Prerequisites}\label{prerequisites}
 
-Each chapter of the book should approximately match a specific
-objective. I first introduce the subject with a brief description,
-propose some solutions to the different issues and show the results.
+Each chapter of the book match a specific objective. I first introduce
+the subject with a brief description, try to find some solutions for the
+specific issues and show the results.
+
+The code is only visible on the \texttt{html} version of the book, so
+please refer to this format if you need any further information (open
+the \texttt{index.html} file).
 
 This book is written using the R \textbf{bookdown} package, which can be
 installed from CRAN or Github:
@@ -901,8 +905,8 @@ targeted plant leaf area index as follow:
 where \(P_{ktrou}\) is the targeted plant light extinction coefficient,
 \texttt{lai} the plant leaf area index, and \texttt{eai} the equivalent
 leaf area index, which represent the photosynthetic surface that is not
-from leaves (e.g.~wheat ears, rapeseed siliquae, pea pods or grapes
-during their green stage).
+from leaves (e.g.~wheat ears, rapeseed pods, pea pods or grapes during
+their green stage).
 
 \subsection{Total light incident to X
 points}\label{total-light-incident-to-x-points}
@@ -918,49 +922,64 @@ again, this computation leads to:
 \centering
 \begin{tabular}[t]{r|r|r|r|r|l}
 \hline
-X index & X value (m) & Total incident ratio & Atmospheric ratio & Transmitted ratio & Light environment\\
+X index & X value (m) & Total incident ratio & Atmospheric ratio (rdroit) & Transmitted ratio (rtransmis) & Light environment\\
 \hline
-1 & 0.00 & 0.7727202 & 0.3106046 & 0.4621155 & Shade\\
+1 & 0.00 & 0.7727202 & 0.3106046 & 0.4621155 & Shaded\\
 \hline
-2 & 0.05 & 0.7784515 & 0.3279890 & 0.4504624 & Shade\\
+2 & 0.05 & 0.7784515 & 0.3279890 & 0.4504624 & Shaded\\
 \hline
-3 & 0.10 & 0.7799044 & 0.3323963 & 0.4475082 & Sun\\
+3 & 0.10 & 0.7799044 & 0.3323963 & 0.4475082 & Sunlit\\
 \hline
-4 & 0.15 & 0.7931983 & 0.3727197 & 0.4204785 & Sun\\
+4 & 0.15 & 0.7931983 & 0.3727197 & 0.4204785 & Sunlit\\
 \hline
-5 & 0.20 & 0.7918188 & 0.3685355 & 0.4232833 & Sun\\
+5 & 0.20 & 0.7918188 & 0.3685355 & 0.4232833 & Sunlit\\
 \hline
-6 & 0.25 & 0.7975112 & 0.3858020 & 0.4117092 & Sun\\
+6 & 0.25 & 0.7975112 & 0.3858020 & 0.4117092 & Sunlit\\
 \hline
-7 & 0.30 & 0.7984328 & 0.3885975 & 0.4098354 & Sun\\
+7 & 0.30 & 0.7984328 & 0.3885975 & 0.4098354 & Sunlit\\
 \hline
-8 & 0.35 & 0.8011901 & 0.3969610 & 0.4042292 & Sun\\
+8 & 0.35 & 0.8011901 & 0.3969610 & 0.4042292 & Sunlit\\
 \hline
-9 & 0.40 & 0.7961262 & 0.3816007 & 0.4145254 & Sun\\
+9 & 0.40 & 0.7961262 & 0.3816007 & 0.4145254 & Sunlit\\
 \hline
-10 & 0.45 & 0.7963256 & 0.3822058 & 0.4141198 & Sun\\
+10 & 0.45 & 0.7963256 & 0.3822058 & 0.4141198 & Sunlit\\
 \hline
 \end{tabular}
 \end{table}
 
+The Total incident ratio is computed as:
+\texttt{Total\ incident\ ratio=\ rdroit+rtransmis}. It is the proportion
+of the incident ligth from the atmosphere that reach the point on the
+plane below the plant canopy. This light either comes directly from the
+sky (\texttt{rdroit}) or passing through the plant canopy
+(\texttt{rtransmis}). Consequently, the first point \texttt{X} of our
+example that is right under the plant canopy receives in average
+\texttt{incident\_light\$Total{[}1{]}*100}\% of the light coming from
+the atmosphere: \texttt{incident\_light\$rdroit{[}1{]}*100}\% of the
+light directly from the sky (either direct or diffuse light) +
+\texttt{incident\_light\$rtransmis{[}1{]}*100}\% of the light that is
+transmitted by the plant above.
+
 \subsection{Total radiation incident to the
 plane}\label{total-radiation-incident-to-the-plane}
 
-The ratio of the radiation incident to the plane is computed separately
-for its so-called sunlit and shaded components, giving for our previous
-example:
+After computing the total incident ratio for each point, the model
+averages the values between the so-called sunlit and shaded components.
+Each point positioned right under the plant canopy is considered shaded,
+and all other is considered sunlit (see fig. \ref{fig:Compdominated}).
+using our previous example, this computation gives:
 
 \begin{table}
 
 \caption{\label{tab:unnamed-chunk-6}Example of the computation of the total incident radiation ratio for each light environment for a horizontal plane below the targeted plant canopy. See introduction section for further details on the crop.}
 \centering
-\begin{tabular}[t]{l|r}
+\begin{tabular}[t]{l|l|r}
 \hline
-Plane light environment & Total incident light ratio\\
+STICS variable name & Light environment & Total incident light ratio\\
 \hline
-Shade & 0.7755858\\
+rombre & Shaded & 0.7755858\\
 \hline
-Sun & 0.7943134\\
+rsoleil & Sunlit & 0.7943134\\
 \hline
 \end{tabular}
 \end{table}
@@ -970,21 +989,27 @@ Finally, both ratios are used to compute the intercepted PAR
 \(raint=P_{parsurrg}\cdot trg\cdot(1-(rombre\cdot surfAO)-(rsoleil\cdot surfAS))\)\\
 where \(P_{parsurrg}\) is a coefficient to compute PAR
 (Photosynthetically Active Radiation) from the global radiation,
-\texttt{trg} is the active radiation (either RG or radiation transmitted
-below the dominant crop), \texttt{rombre} and \texttt{rsoleil} are the
-ratio of incident light for shaded and sunlit components of the plane,
-and \texttt{surfAO} and \texttt{surfAS} are the relative surface (0 to
-1) of the shaded and sunlit components of the plane.
+\texttt{trg} is the active radiation (either global radiation or
+radiation transmitted below the dominant crop), \texttt{rombre} and
+\texttt{rsoleil} are the ratio of incident light for shaded and sunlit
+components of the plane, and \texttt{surfAO} and \texttt{surfAS} are the
+relative surfaces (0 to 1) of the shaded and sunlit components of the
+plane. The computation of \texttt{trg} is further described in Chapter
+\ref{trg}.
 
-For our example, the crop would have intercepted 2.62 MJ m-2 day-1 of
-radiation.
+For our example, the crop would have intercepted NA, NA MJ m-2 day-1 of
+radiation, with a PAR of 12.5 W m-2, an \texttt{rombre} of 0.7755858,
+NA, an \texttt{rsoleil} of NA, 0.7943134 and a relative surface of 0.2
+and 0.8 for the shaded and sunlit component respectively.
 
-Note: The relative surfaces (0 to 1) of the shaded and sunlit components
-of the plane (\texttt{surfAO} and \texttt{surfAS}) that are computed
-during the dominant plant computation are then used as the shaded and
-sunlit surfaces for the dominated plant.
+\begin{quote}
+The relative surfaces (0 to 1) of the shaded and sunlit components of
+the plane (\texttt{surfAO} and \texttt{surfAS}) that are computed during
+the dominant plant computation are then used as the shaded and sunlit
+surfaces for the dominated plant.
+\end{quote}
 
-\section{Conclusion}\label{conclusion}
+\section{Summary}\label{summary}
 
 The interception of the targeted plant is obtained by:
 
@@ -995,16 +1020,16 @@ The interception of the targeted plant is obtained by:
   Computing the light that is incident at a horizontal plane at the
   height of the dominated plant (or the soil) and,
 \item
-  Substracting this incident light to the global PAR (or the transmitted
-  PAR for the dominated plant), which gives the PAR intercepted by the
-  target plant.
+  Substracting this incident light to the global PAR, which gives the
+  PAR intercepted by the target plant.
 \end{enumerate}
 
 This process is applied iteratively to the dominant and the dominated
 plant to compute both species PAR interception while taking account for
 their respective structure (shape, height, width\ldots{}).
 
-\section{Further details}\label{further-details}
+\section{Discussion and proposed
+modifications}\label{discussion-and-proposed-modifications}
 
 The dominated plant interception is computed in two separate
 computations, one for the sunlit component, and one for the shaded
@@ -1019,25 +1044,14 @@ radiation, but the radiation above the dominated plant (also
 where \texttt{rsoleil} is the average proportion of light intercepted by
 the sunlit area of the plane below the dominant plant.
 
-This computation is a little strange because the radiation transmitted
-to the dominanted plant species would only be equal to the proportion of
-light reaching the sunlit part of the plane. It probably should be
-modified by something like: \(trg= trg-raint\)
+This computation is only right for the sunlit component of the dominated
+plant. A modification is proposed, discussed and tested on Chapter
+\ref{trg}.
 
-where \texttt{raint} would be the interception of the dominant plant.
-This correction is more natural, because the radiation incident to the
-dominated plant species would be equivalent to the radiation transmitted
-by the dominant plant. Furthermore, as long as the dominant plant is not
-growing, the dominated plant receives \texttt{0} radiation with the
-previous computation, because \texttt{rsoleil=\ 0} while the plant as no
-surface. Fortunately, the plant dominance can change from day to day, so
-this is not a big problem.
+\chapter{Light incident to the dominated crop (trg)}\label{trg}
 
-\chapter{Light incident to the dominated crop
-(trg)}\label{light-incident-to-the-dominated-crop-trg}
-
-\section{Problem on computing the trg for the dominated
-plant}\label{problem-on-computing-the-trg-for-the-dominated-plant}
+\section{Computing the trg incident to the dominated
+plant}\label{computing-the-trg-incident-to-the-dominated-plant}
 
 For the moment, STICS compute the radiation incident above the dominated
 (or associated) plant as:
@@ -1050,14 +1064,18 @@ not consider that the average proportion of light incident above the
 shaded part of the dominated plant (\texttt{rombre}) is different from
 \texttt{rsoleil}. See Chapter \ref{Light} for more details.
 
+\section{Proposed solution}\label{proposed-solution}
+
 We propose to change this computation to take the relevant incident
-light according the light regime of the dominated plant under
+light according to the light regime of the dominated plant under
 computation:
 
 With this new computation, the radiation incident above the dominant
-plant depends from the part (shaded or sunlit) under consideration, and
-is computed using the geometry of the dominant plant (for
+plant depends from the component (shaded or sunlit) under consideration,
+and is computed using the geometry of the dominant plant (for
 atmospheric+transmitted light computation).
+
+\section{Results}\label{results}
 
 A comparison of the two was made using the
 \href{https://github.com/VEZY/sticRs}{sticRs} package, from which a
@@ -1066,15 +1084,38 @@ summary plot was extracted: \includegraphics{img/trg-computation.png}
 The comparison between both indicated that the dominated plant
 intercepted more PAR with the original computation (\texttt{raint}), due
 to its wrong light regime (\texttt{rsoleil} for both AS and AO). While
-the dry mass and height of the dominated plant did not change, its lai
-was previously higher on the end of the rotation, which increased the
-\texttt{rsoleil} and \texttt{rombre} of the ground (shown as associated
-ones). These simulations also showed that the wheat (dominant) eai was
-highly overestimated, which will be fixed in the next simulations.
+the dry mass and height of the dominated plant did not change, its
+\texttt{LAI} was previously higher on the end of the rotation, which
+increased the \texttt{rsoleil} and \texttt{rombre} of the ground
+(visible as associated ones). These simulations also showed that the
+wheat (dominant) \texttt{eai} was highly overestimated, which will be
+fixed in the next simulations.
+
+\chapter{Wheat EAI parameterization}\label{eai}
+
+\section{Introduction}\label{introduction-1}
+
+The simulations outputs from Chapter \ref{trg} have shown that the wheat
+ears equivalent photosynthetic surface area (\texttt{eai}) was probably
+overestimated by a 3-4 factor. This surface is computed using the fruit
+dry mass (\texttt{maenfruit}) and a parameter (\texttt{P\_sea}) as
+follow:
+
+This parameter was originally equal to 100, meaning that each gram of
+fruit dry mass gave 1 m2 of equivalent \texttt{LAI}. This value was
+probably overestimated, but before re-parameterizing the plant, we first
+needed to know the model sensitivity to this parameter.
+
+\section{\texorpdfstring{Model sensitivity to the \texttt{P\_sea}
+parameter}{Model sensitivity to the P\_sea parameter}}\label{model-sensitivity-to-the-p_sea-parameter}
+
+The model sensitivity was assessed using the
+\href{https://github.com/VEZY/sticRs}{sticRs} package, and the results
+are shown below: \includegraphics{img/SEA-sensitivity.png}
 
 \chapter{Plant density and equivalent plant density}\label{plantdensity}
 
-\section{Introduction}\label{introduction-1}
+\section{Introduction}\label{introduction-2}
 
 The plant density, which is related to the interrow distance, seems to
 be an important formalism to describe the crop, and particularly for
@@ -1098,12 +1139,12 @@ or more simply:
 \(ef_{densite}=\min\left\{1.0\ ;\ (\frac{densiteequiv}{P_{bdens}})^{P_{adens}}\right\}\)
 
 \begin{quote}
-Note: replace the equation in the model to simplify too ?
+Replace the equation in the model to simplify too ?
 \end{quote}
 
 Here is a plot representing the density effect along the equivalent
 density:
-\includegraphics{Postdoc_steps_files/figure-latex/unnamed-chunk-12-1.pdf}
+\includegraphics{Postdoc_steps_files/figure-latex/unnamed-chunk-14-1.pdf}
 
 So the higher the density, the higher the negative effect on
 \texttt{LAI}.
@@ -1136,7 +1177,7 @@ with \(diffx= \frac{density_{p1}}{P_{bdensp1}}\cdot P_{bdensp2}\) and
 Here is an exemple with a wheat-pea intercrop with a plant density of
 140 for the wheat as the principal species and 30 for the pea as the
 associated species:
-\includegraphics{Postdoc_steps_files/figure-latex/unnamed-chunk-14-1.pdf}
+\includegraphics{Postdoc_steps_files/figure-latex/unnamed-chunk-16-1.pdf}
 
 The new formalism has several implications in the model, notably that
 the dominated plant is less impacted by the competition with the
@@ -1149,7 +1190,7 @@ summary plot was extracted:
 
 \chapter{Interrow spacing}\label{interrow-spacing}
 
-\section{Introduction}\label{introduction-2}
+\section{Introduction}\label{introduction-3}
 
 The inter-row is the distance between two rows of the same plant
 species. It is straightforward for monocrops, but a bit more informative

@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-
-<link rel="next" href="Light.html">
+<link rel="prev" href="trg.html">
+<link rel="next" href="plantdensity.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -508,29 +508,27 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">Work of R.Vezy for the ReMIX Project</h1>
-<h4 class="author"><em>R. Vezy</em></h4>
-<h4 class="date"><em>2018-06-18</em></h4>
+<div id="eai" class="section level1">
+<h1><span class="header-section-number">Chapter 4</span> Wheat EAI parameterization</h1>
+<div id="introduction-1" class="section level2">
+<h2><span class="header-section-number">4.1</span> Introduction</h2>
+<p>The simulations outputs from Chapter <a href="trg.html#trg">3</a> have shown that the wheat ears equivalent photosynthetic surface area (<code>eai</code>) was probably overestimated by a 3-4 factor. This surface is computed using the fruit dry mass (<code>maenfruit</code>) and a parameter (<code>P_sea</code>) as follow:</p>
+<div class="sourceCode"><pre class="sourceCode fortran"><code class="sourceCode fortran">  eai <span class="kw">=</span> P_sea <span class="kw">*</span> maenfruit<span class="kw">/</span><span class="fl">100.</span></code></pre></div>
+<p>This parameter was originally equal to 100, meaning that each gram of fruit dry mass gave 1 m2 of equivalent <code>LAI</code>. This value was probably overestimated, but before re-parameterizing the plant, we first needed to know the model sensitivity to this parameter.</p>
 </div>
-<div id="prerequisites" class="section level1">
-<h1><span class="header-section-number">Chapter 1</span> Prerequisites</h1>
-<p>Each chapter of the book match a specific objective. I first introduce the subject with a brief description, try to find some solutions for the specific issues and show the results.</p>
-<p>The code is only visible on the <code>html</code> version of the book, so please refer to this format if you need any further information (open the <code>index.html</code> file).</p>
-<p>This book is written using the R <strong>bookdown</strong> package, which can be installed from CRAN or Github:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">&quot;bookdown&quot;</span>)
-<span class="co"># or the development version</span>
-<span class="co"># devtools::install_github(&quot;rstudio/bookdown&quot;)</span></code></pre></div>
-<p>To compile this example to PDF, you need XeLaTeX. You are recommended to install TinyTeX (which includes XeLaTeX): <a href="https://yihui.name/tinytex/" class="uri">https://yihui.name/tinytex/</a>.</p>
+<div id="model-sensitivity-to-the-p_sea-parameter" class="section level2">
+<h2><span class="header-section-number">4.2</span> Model sensitivity to the <code>P_sea</code> parameter</h2>
+<p>The model sensitivity was assessed using the <a href="https://github.com/VEZY/sticRs">sticRs</a> package, and the results are shown below: <img src="img/SEA-sensitivity.png" alt="sea sensitivity" /></p>
 
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-
-<a href="Light.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="trg.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="plantdensity.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
