@@ -486,9 +486,7 @@ angles of the hemisphere between \(\theta_1\) and \(\theta_2\) (see
 of each point.
 
 Here is an example of the computation of the direct proportion received
-at each X point for a crop. The code is from the \texttt{kgeom()}
-function, translated into the R language for compatibility with
-\textbf{knitr} (the building machine of this book):
+at each X point for a crop using the \texttt{kgeom()} function:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -713,8 +711,8 @@ if it is under the targeted crop.
 
 Here is an example of the computation of the diffuse proportion received
 at each X point for the same crop as above (interrow= 1 meter, width=
-0.2 meter, thickness= 0.1 meter, height= 1 meter). The code is from the
-\texttt{kdif()} function, translated into R:
+0.2 meter, thickness= 0.1 meter, height= 1 meter) using the
+\texttt{kdif()} function:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1050,9 +1048,7 @@ radiation, reduced by the average proportion of light intercepted by the
 sunlit area of the plane below the dominant plant. This computation does
 not consider that the average proportion of light incident above the
 shaded part of the dominated plant (\texttt{rombre}) is different from
-\texttt{rsoleil}. See the document
-\href{Light_Interception.html}{Light\_interception.html} for more
-details.
+\texttt{rsoleil}. See Chapter \ref{Light} for more details.
 
 We propose to change this computation to take the relevant incident
 light according the light regime of the dominated plant under
