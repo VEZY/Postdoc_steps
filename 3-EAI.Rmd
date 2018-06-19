@@ -2,26 +2,71 @@
 
 ```{r, include=FALSE}
 if(knitr:::pandoc_to() == "html") {
-  knitr::opts_chunk$set(echo = TRUE)
+  knitr::opts_chunk$set(echo = TRUE,message=FALSE, warning=FALSE)
 }else{
-  knitr::opts_chunk$set(echo = FALSE)
+  knitr::opts_chunk$set(echo = FALSE,message=FALSE, warning=FALSE)
 }
 library(tidyverse)
 library(magrittr)
+library(sticRs)
+library(plotly)
+source("0-functions.R")
 ```
 
 ## Introduction
 
 The simulations outputs from Chapter \@ref(trg) have shown that the wheat ears equivalent photosynthetic surface area (`eai`) was probably overestimated by a 3-4 factor. This surface is computed using the fruit dry mass (`maenfruit`) and a parameter (`P_sea`) as follow:
 
-```{r, engine='fortran', eval=FALSE, include=TRUE}
-  eai = P_sea * maenfruit/100.
-```
+$eai=P_{sea}\cdot\frac{maenfruit}{100}$
 
 This parameter was originally equal to 100, meaning that each gram of fruit dry mass gave 1 m2 of equivalent `LAI`. This value was probably overestimated, but before re-parameterizing the plant, we first needed to know the model sensitivity to this parameter.
 
 ## Model sensitivity to the `P_sea` parameter
 
-The model sensitivity was assessed using the [sticRs](https://github.com/VEZY/sticRs) package, and the results are shown below:
-![sea sensitivity](img/SEA-sensitivity.png)
+The model sensitivity was assessed using the [sticRs](https://github.com/VEZY/sticRs) package using values from 10 to 90 for the `P_sea` parameter. The results are shown below (see `html` version of this book for interactivity):
 
+```{r fig.height=11.69, fig.width=8.27, message=FALSE, warning=FALSE}
+sea_sensi= sticRs::load_sensi(dirpath = "data/sea_sensitivity")
+if(knitr:::pandoc_to() == "html") {
+  gg_objects= 
+    lapply(sea_sensi$gg_objects, 
+           function(x){
+             plotly::ggplotly(x, tooltip= "group")
+           })
+  htmltools::tagList(gg_objects)
+}else{
+  multiplot(plotlist = sea_sensi$gg_objects)
+}
+```
+
+The results show that the higher the `P_sea`, the higher the `eai`, and hence increasing the light interception (`raint`), which induced a higher aboveground dry mass (`masec`). The plant `LAI` is not influenced by the `P_sea` though, because there is no retroactions on this variable.
+
+In the case of intercrops, the `P_sea` parameter can influence the dominated plant also, because less light is transmitted when `P_sea` is high :
+
+```{r}
+sea_sensi_IC= sticRs::load_sensi(dirpath = "data/SEA_IC_Wheat_Pea")
+if(knitr:::pandoc_to() == "html") {
+  gg_objects= 
+    plotly::ggplotly(sea_sensi_IC$gg_objects$raint, 
+                     tooltip= "group")
+  htmltools::tagList(gg_objects)
+}else{
+  print(sea_sensi_IC$gg_objects$raint)
+}
+```
+
+The other variables are not much impacted though:
+
+```{r fig.height=11.69, fig.width=8.27, message=FALSE, warning=FALSE}
+multiplot(plotlist = sea_sensi_IC$gg_objects[
+  -grep("raint", names(sea_sensi_IC$gg_objects))])
+```
+
+## Parameterization of the `P_sea` parameter
+
+Knowing that the key outputs from the model are not much impacted by the `P_sea` parameter as soon as its value is not unreasonable, we tested several values of the parameter (*i.e.* 20, 50 and 80) and compared the outputs of the model against measurements for several types of management: Wheat in sole crop, Pea in sole crop, Wheat in self-intercrop, Pea in self-intercrop, and a Wheat-Pea intercrop.
+The results are available on [this page](Wheat_EAI.html). In short, the value we kept for the wheat was 20.
+
+```{r message=FALSE, warning=FALSE, include=FALSE}
+file.copy("data/Wheat_EAI.html",to = "_book/Wheat_EAI.html",overwrite = T)
+```

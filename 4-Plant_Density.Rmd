@@ -78,3 +78,59 @@ The new formalism has several implications in the model, notably that the domina
 
 A comparison of the two formalisms was made using the [sticRs](https://github.com/VEZY/sticRs) package, from which a summary plot was extracted:
 ![trg comparison](img/Equ-dens-computation.png)
+The results showed that the new equvalent density computation is less severe for the dominated plant compared to the previous formalism. Consequently, the dominated plant intercepts more light (see `cumraint` and `fapar`) and has a higher `LAI`.
+
+Now the next step is to parameterize well the parameters for the wheat and the pea.
+
+
+## Proposition for a newer equivalent density
+
+E.Justes, proposed a new (third) equivalent density computation that would have no increase in equivalent density until a given threshold (`hauteur_threshold_1`), after which a progressive increase in the equivalent density would happen until the maximum allowed. in this computation, the slope would be computed by the model, and the resulting equivalent density would be as follows:
+
+$density_{Equivalent} =\begin{cases}\Delta_{height} < hauteur_{threshold_1} & density_{p2} \\ \Delta_{height} > hauteur_{threshold_1} & b + \Delta_{height}\cdot slope \\ \Delta_{height} > hauteur_{threshold_2} & Max_{equDens} \end{cases}$
+
+with $slope= \frac{Max_{equDens}}{hauteur_{threshold_2}-hauteur_{threshold_1}}$
+
+Here is the resulting plot for the same Wheat-Pea intercrop:
+```{r}
+df_DE= data.frame(Delta_height= seq(from= 0.01, to= 1, by= 0.01))
+density_p1= 140
+density_p2= 30
+hauteur_threshold_1= 0.2
+hauteur_threshold_2= 0.8
+Max_equDens= 60
+slope= (Max_equDens)/(hauteur_threshold_2-hauteur_threshold_1)
+b= density_p2-slope*hauteur_threshold_1
+  
+df_DE%>%
+  mutate(slope= (Max_equDens)/(hauteur_threshold_2-hauteur_threshold_1),
+         Equ_density= 
+           ifelse(Delta_height>hauteur_threshold_1,
+                  slope*abs(Delta_height)+b,density_p2))%>%
+  mutate(Equ_density= ifelse(Equ_density>Max_equDens,
+                             Max_equDens,Equ_density))%>%
+  ggplot(aes(y= Equ_density, x= Delta_height, colour=Equ_density))+
+  geom_point()+
+  labs(colour = "Equivalent density",
+       x = "Delta height (Dominant Plant Height-Dominated Plant Height)",
+       y= "Dominated plant equivalent density",
+       title= "New (third) formalism for equivalent plant density")
+```
+
+This formalism would include three parameters: 
+
+* hauteur_threshold_1: the difference in height below which no competition is occuring
+
+* hauteur_threshold_2: the difference in height below which a progressive competition is occuring
+
+* Max_equDens: the maximum equivalent density allowed.
+
+## Proposition to remove the old explicit interspecies density competition effect
+
+For the moment, the competition induced by the density of the other species was re-included in the equivalent density computation using the `P_bdensp1` and `P_bdensp2` parameters, which come from the sole crop formalism, where it is used to consider intra-species competition effect. 
+
+The equivalent density was originally set up to consider the decrease in light quality when a plant has another plant above it. Adding another computation of competition based on the density of the other plant could be redundant, because it is already considered during the light interception (see \@ref(Interrow) and \@ref(Light)). 
+
+Consequently, we propose to remove this computation from the equivalent density formalism, and to let the `P_bdensp1` and `P_bdensp2` parameters being used to compute the `efdensite` variable only.
+
+We now have to test this proposition.

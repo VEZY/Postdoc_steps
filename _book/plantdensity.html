@@ -25,7 +25,7 @@
 <meta name="author" content="R. Vezy">
 
 
-<meta name="date" content="2018-06-18">
+<meta name="date" content="2018-06-19">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -33,7 +33,7 @@
   
   
 <link rel="prev" href="eai.html">
-<link rel="next" href="interrow-spacing.html">
+<link rel="next" href="Interrow.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -49,6 +49,13 @@
 
 <link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
 <script src="libs/pagedtable-1.1/js/pagedtable.js"></script>
+<script src="libs/htmlwidgets-1.2/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.7.1/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
+<link href="libs/plotlyjs-1.29.2/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotlyjs-1.29.2/plotly-latest.min.js"></script>
 
 <script>
 /* ========================================================================
@@ -478,15 +485,18 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="4" data-path="eai.html"><a href="eai.html"><i class="fa fa-check"></i><b>4</b> Wheat EAI parameterization</a><ul>
 <li class="chapter" data-level="4.1" data-path="eai.html"><a href="eai.html#introduction-1"><i class="fa fa-check"></i><b>4.1</b> Introduction</a></li>
 <li class="chapter" data-level="4.2" data-path="eai.html"><a href="eai.html#model-sensitivity-to-the-p_sea-parameter"><i class="fa fa-check"></i><b>4.2</b> Model sensitivity to the <code>P_sea</code> parameter</a></li>
+<li class="chapter" data-level="4.3" data-path="eai.html"><a href="eai.html#parameterization-of-the-p_sea-parameter"><i class="fa fa-check"></i><b>4.3</b> Parameterization of the <code>P_sea</code> parameter</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="plantdensity.html"><a href="plantdensity.html"><i class="fa fa-check"></i><b>5</b> Plant density and equivalent plant density</a><ul>
 <li class="chapter" data-level="5.1" data-path="plantdensity.html"><a href="plantdensity.html#introduction-2"><i class="fa fa-check"></i><b>5.1</b> Introduction</a></li>
 <li class="chapter" data-level="5.2" data-path="plantdensity.html"><a href="plantdensity.html#the-density-effect-on-lai"><i class="fa fa-check"></i><b>5.2</b> The density effect on LAI</a></li>
 <li class="chapter" data-level="5.3" data-path="plantdensity.html"><a href="plantdensity.html#the-equivalent-density"><i class="fa fa-check"></i><b>5.3</b> The equivalent density</a></li>
+<li class="chapter" data-level="5.4" data-path="plantdensity.html"><a href="plantdensity.html#proposition-for-a-newer-equivalent-density"><i class="fa fa-check"></i><b>5.4</b> Proposition for a newer equivalent density</a></li>
+<li class="chapter" data-level="5.5" data-path="plantdensity.html"><a href="plantdensity.html#proposition-to-remove-the-old-explicit-interspecies-density-competition-effect"><i class="fa fa-check"></i><b>5.5</b> Proposition to remove the old explicit interspecies density competition effect</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="interrow-spacing.html"><a href="interrow-spacing.html"><i class="fa fa-check"></i><b>6</b> Interrow spacing</a><ul>
-<li class="chapter" data-level="6.1" data-path="interrow-spacing.html"><a href="interrow-spacing.html#introduction-3"><i class="fa fa-check"></i><b>6.1</b> Introduction</a></li>
-<li class="chapter" data-level="6.2" data-path="interrow-spacing.html"><a href="interrow-spacing.html#different-inter-row-spacing-for-mixed-crops"><i class="fa fa-check"></i><b>6.2</b> Different inter-row spacing for mixed crops</a></li>
+<li class="chapter" data-level="6" data-path="Interrow.html"><a href="Interrow.html"><i class="fa fa-check"></i><b>6</b> Interrow spacing</a><ul>
+<li class="chapter" data-level="6.1" data-path="Interrow.html"><a href="Interrow.html#introduction-3"><i class="fa fa-check"></i><b>6.1</b> Introduction</a></li>
+<li class="chapter" data-level="6.2" data-path="Interrow.html"><a href="Interrow.html#inter-row-spacing-for-mixed-crops-in-the-model"><i class="fa fa-check"></i><b>6.2</b> Inter-row spacing for mixed crops in the model</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -531,7 +541,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">y=</span>efdensite,<span class="dt">colour=</span> Parameters))<span class="op">+</span>
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span> <span class="st">&quot;Equivalent density&quot;</span>, <span class="dt">y=</span> <span class="st">&quot;Density effect (0-1)&quot;</span>, <span class="dt">colour=</span> <span class="st">&quot;a and b parameters values&quot;</span>,
        <span class="dt">title=</span><span class="st">&quot;Equivalent density / density effect&quot;</span>)</code></pre></div>
-<p><img src="Postdoc_steps_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<p><img src="Postdoc_steps_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
 <p>So the higher the density, the higher the negative effect on <code>LAI</code>.</p>
 </div>
 <div id="the-equivalent-density" class="section level2">
@@ -561,9 +571,53 @@ slope=<span class="st"> </span>diffx<span class="op">/</span>hauteur_threshold</
        <span class="dt">x =</span> <span class="st">&quot;Delta height (Dominant Plant Height-Dominated Plant Height)&quot;</span>,
        <span class="dt">y=</span> <span class="st">&quot;Dominated plant equivalent density&quot;</span>,
        <span class="dt">title=</span> <span class="st">&quot;New formalism for equivalent plant density&quot;</span>)</code></pre></div>
-<p><img src="Postdoc_steps_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<p><img src="Postdoc_steps_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
 <p>The new formalism has several implications in the model, notably that the dominated plant is less impacted by the competition with the dominant plant when both have approximately the same height.</p>
-<p>A comparison of the two formalisms was made using the <a href="https://github.com/VEZY/sticRs">sticRs</a> package, from which a summary plot was extracted: <img src="img/Equ-dens-computation.png" alt="trg comparison" /></p>
+<p>A comparison of the two formalisms was made using the <a href="https://github.com/VEZY/sticRs">sticRs</a> package, from which a summary plot was extracted: <img src="img/Equ-dens-computation.png" alt="trg comparison" /> The results showed that the new equvalent density computation is less severe for the dominated plant compared to the previous formalism. Consequently, the dominated plant intercepts more light (see <code>cumraint</code> and <code>fapar</code>) and has a higher <code>LAI</code>.</p>
+<p>Now the next step is to parameterize well the parameters for the wheat and the pea.</p>
+</div>
+<div id="proposition-for-a-newer-equivalent-density" class="section level2">
+<h2><span class="header-section-number">5.4</span> Proposition for a newer equivalent density</h2>
+<p>E.Justes, proposed a new (third) equivalent density computation that would have no increase in equivalent density until a given threshold (<code>hauteur_threshold_1</code>), after which a progressive increase in the equivalent density would happen until the maximum allowed. in this computation, the slope would be computed by the model, and the resulting equivalent density would be as follows:</p>
+<p><span class="math inline">\(density_{Equivalent} =\begin{cases}\Delta_{height} &lt; hauteur_{threshold_1} &amp; density_{p2} \\ \Delta_{height} &gt; hauteur_{threshold_1} &amp; b + \Delta_{height}\cdot slope \\ \Delta_{height} &gt; hauteur_{threshold_2} &amp; Max_{equDens} \end{cases}\)</span></p>
+<p>with <span class="math inline">\(slope= \frac{Max_{equDens}}{hauteur_{threshold_2}-hauteur_{threshold_1}}\)</span></p>
+<p>Here is the resulting plot for the same Wheat-Pea intercrop:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df_DE=<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">Delta_height=</span> <span class="kw">seq</span>(<span class="dt">from=</span> <span class="fl">0.01</span>, <span class="dt">to=</span> <span class="dv">1</span>, <span class="dt">by=</span> <span class="fl">0.01</span>))
+density_p1=<span class="st"> </span><span class="dv">140</span>
+density_p2=<span class="st"> </span><span class="dv">30</span>
+hauteur_threshold_<span class="dv">1</span>=<span class="st"> </span><span class="fl">0.2</span>
+hauteur_threshold_<span class="dv">2</span>=<span class="st"> </span><span class="fl">0.8</span>
+Max_equDens=<span class="st"> </span><span class="dv">60</span>
+slope=<span class="st"> </span>(Max_equDens)<span class="op">/</span>(hauteur_threshold_<span class="dv">2</span><span class="op">-</span>hauteur_threshold_<span class="dv">1</span>)
+b=<span class="st"> </span>density_p2<span class="op">-</span>slope<span class="op">*</span>hauteur_threshold_<span class="dv">1</span>
+  
+df_DE<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">slope=</span> (Max_equDens)<span class="op">/</span>(hauteur_threshold_<span class="dv">2</span><span class="op">-</span>hauteur_threshold_<span class="dv">1</span>),
+         <span class="dt">Equ_density=</span> 
+           <span class="kw">ifelse</span>(Delta_height<span class="op">&gt;</span>hauteur_threshold_<span class="dv">1</span>,
+                  slope<span class="op">*</span><span class="kw">abs</span>(Delta_height)<span class="op">+</span>b,density_p2))<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Equ_density=</span> <span class="kw">ifelse</span>(Equ_density<span class="op">&gt;</span>Max_equDens,
+                             Max_equDens,Equ_density))<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">y=</span> Equ_density, <span class="dt">x=</span> Delta_height, <span class="dt">colour=</span>Equ_density))<span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>()<span class="op">+</span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">colour =</span> <span class="st">&quot;Equivalent density&quot;</span>,
+       <span class="dt">x =</span> <span class="st">&quot;Delta height (Dominant Plant Height-Dominated Plant Height)&quot;</span>,
+       <span class="dt">y=</span> <span class="st">&quot;Dominated plant equivalent density&quot;</span>,
+       <span class="dt">title=</span> <span class="st">&quot;New (third) formalism for equivalent plant density&quot;</span>)</code></pre></div>
+<p><img src="Postdoc_steps_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<p>This formalism would include three parameters:</p>
+<ul>
+<li><p>hauteur_threshold_1: the difference in height below which no competition is occuring</p></li>
+<li><p>hauteur_threshold_2: the difference in height below which a progressive competition is occuring</p></li>
+<li><p>Max_equDens: the maximum equivalent density allowed.</p></li>
+</ul>
+</div>
+<div id="proposition-to-remove-the-old-explicit-interspecies-density-competition-effect" class="section level2">
+<h2><span class="header-section-number">5.5</span> Proposition to remove the old explicit interspecies density competition effect</h2>
+<p>For the moment, the competition induced by the density of the other species was re-included in the equivalent density computation using the <code>P_bdensp1</code> and <code>P_bdensp2</code> parameters, which come from the sole crop formalism, where it is used to consider intra-species competition effect.</p>
+<p>The equivalent density was originally set up to consider the decrease in light quality when a plant has another plant above it. Adding another computation of competition based on the density of the other plant could be redundant, because it is already considered during the light interception (see <a href="Interrow.html#Interrow">6</a> and <a href="Light.html#Light">2</a>).</p>
+<p>Consequently, we propose to remove this computation from the equivalent density formalism, and to let the <code>P_bdensp1</code> and <code>P_bdensp2</code> parameters being used to compute the <code>efdensite</code> variable only.</p>
+<p>We now have to test this proposition.</p>
 
 </div>
 </div>
@@ -573,7 +627,7 @@ slope=<span class="st"> </span>diffx<span class="op">/</span>hauteur_threshold</
         </div>
       </div>
 <a href="eai.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="interrow-spacing.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="Interrow.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

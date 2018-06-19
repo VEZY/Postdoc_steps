@@ -25,7 +25,7 @@
 <meta name="author" content="R. Vezy">
 
 
-<meta name="date" content="2018-06-18">
+<meta name="date" content="2018-06-19">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -49,6 +49,13 @@
 
 <link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
 <script src="libs/pagedtable-1.1/js/pagedtable.js"></script>
+<script src="libs/htmlwidgets-1.2/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.7.1/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
+<link href="libs/plotlyjs-1.29.2/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotlyjs-1.29.2/plotly-latest.min.js"></script>
 
 <script>
 /* ========================================================================
@@ -478,15 +485,17 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="4" data-path="eai.html"><a href="eai.html"><i class="fa fa-check"></i><b>4</b> Wheat EAI parameterization</a><ul>
 <li class="chapter" data-level="4.1" data-path="eai.html"><a href="eai.html#introduction-1"><i class="fa fa-check"></i><b>4.1</b> Introduction</a></li>
 <li class="chapter" data-level="4.2" data-path="eai.html"><a href="eai.html#model-sensitivity-to-the-p_sea-parameter"><i class="fa fa-check"></i><b>4.2</b> Model sensitivity to the <code>P_sea</code> parameter</a></li>
+<li class="chapter" data-level="4.3" data-path="eai.html"><a href="eai.html#parameterization-of-the-p_sea-parameter"><i class="fa fa-check"></i><b>4.3</b> Parameterization of the <code>P_sea</code> parameter</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="plantdensity.html"><a href="plantdensity.html"><i class="fa fa-check"></i><b>5</b> Plant density and equivalent plant density</a><ul>
 <li class="chapter" data-level="5.1" data-path="plantdensity.html"><a href="plantdensity.html#introduction-2"><i class="fa fa-check"></i><b>5.1</b> Introduction</a></li>
 <li class="chapter" data-level="5.2" data-path="plantdensity.html"><a href="plantdensity.html#the-density-effect-on-lai"><i class="fa fa-check"></i><b>5.2</b> The density effect on LAI</a></li>
 <li class="chapter" data-level="5.3" data-path="plantdensity.html"><a href="plantdensity.html#the-equivalent-density"><i class="fa fa-check"></i><b>5.3</b> The equivalent density</a></li>
+<li class="chapter" data-level="5.4" data-path="plantdensity.html"><a href="plantdensity.html#proposition-for-a-newer-equivalent-density"><i class="fa fa-check"></i><b>5.4</b> Proposition for a newer equivalent density</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="interrow-spacing.html"><a href="interrow-spacing.html"><i class="fa fa-check"></i><b>6</b> Interrow spacing</a><ul>
 <li class="chapter" data-level="6.1" data-path="interrow-spacing.html"><a href="interrow-spacing.html#introduction-3"><i class="fa fa-check"></i><b>6.1</b> Introduction</a></li>
-<li class="chapter" data-level="6.2" data-path="interrow-spacing.html"><a href="interrow-spacing.html#different-inter-row-spacing-for-mixed-crops"><i class="fa fa-check"></i><b>6.2</b> Different inter-row spacing for mixed crops</a></li>
+<li class="chapter" data-level="6.2" data-path="interrow-spacing.html"><a href="interrow-spacing.html#inter-row-spacing-for-mixed-crops-in-the-model"><i class="fa fa-check"></i><b>6.2</b> Inter-row spacing for mixed crops in the model</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -512,7 +521,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h1><span class="header-section-number">Chapter 6</span> Interrow spacing</h1>
 <div id="introduction-3" class="section level2">
 <h2><span class="header-section-number">6.1</span> Introduction</h2>
-<p>The inter-row is the distance between two rows of the same plant species. It is straightforward for monocrops, but a bit more informative for intercrops. Indeed, the inter-row parameter can have unexpected adverse effects for intercrops. Here is a simple design with a field with two plant species sowed with the same inter-row:</p>
+<p>The inter-row is the distance between two rows of the same plant species. It is straightforward for monocrops, but a bit more complicated for intercrops. Indeed, the inter-row parameter can have unexpected adverse effects for intercrops. Here is a simple design with a field with two plant species sowed with the same inter-row:</p>
 <center>
 <div class="figure">
 <img src="img/Same-Interrow.png" alt="Pea-Wheat intercrop using the same inter-row spacing for the two crops" />
@@ -521,14 +530,18 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </center>
 <p>So far, so good. Now what happens if we set a different inter-row spacing for the two species ?</p>
 </div>
-<div id="different-inter-row-spacing-for-mixed-crops" class="section level2">
-<h2><span class="header-section-number">6.2</span> Different inter-row spacing for mixed crops</h2>
-<p>Note: look for <code>P_interrang</code> in <code>rtrans</code> function (and for <code>P_orientrang</code> also) ; for <code>ir</code> in <code>rtrans</code> function. Look also to the equivalent density in <code>croissance()</code>:</p>
-<div class="sourceCode"><pre class="sourceCode fortran"><code class="sourceCode fortran"><span class="kw">if</span> (sc%P_nbplantes <span class="op">&gt;</span> <span class="dv">1</span>) <span class="kw">then</span>
-  densiteassoc <span class="kw">=</span> p(<span class="dv">1</span>)%densite <span class="kw">/</span> p(<span class="dv">1</span>)%P_bdens <span class="kw">*</span> p(<span class="dv">2</span>)%P_bdens
-<span class="kw">else</span>
-  densiteassoc <span class="kw">=</span> <span class="fl">0.</span>
-<span class="kw">end if</span></code></pre></div>
+<div id="inter-row-spacing-for-mixed-crops-in-the-model" class="section level2">
+<h2><span class="header-section-number">6.2</span> Inter-row spacing for mixed crops in the model</h2>
+<p>Whereas the model as a notion of the position of the plants along the interrow considering the same plant species (<em>i.e.</em> Principal or Associated), it does not explicitly position the different plant species between each other. Indeed, the light interception of the dominant plant is first computed using its geometry and a plane at the height of the dominated plant. Then, the light interception of the dominated plant is computed using the average light incident on the previous plane (separated between shaded and sunlit component), the plant geometry, and a second plane right above the soil. So when computing its light interception, the dominated plant do not consider at all the dominant plant interrow spacing, but only the light it transmits. Of course the dominant plant interrow spacing does impact the light that is transmitted to the dominatd plant, but it is not an explicit description of the interrow spacing.</p>
+<p>Here is a depiction of how the model describe the interrow for intercrops:</p>
+<div class="figure"><span id="fig:interrow"></span>
+<img src="img/Interrow.png" alt="Interrow effect on light interception for intercrops in the STICS model" />
+<p class="caption">Figure 6.1: <strong>Interrow effect on light interception for intercrops in the STICS model</strong></p>
+</div>
+<p>The model does effectively compute half the interrow light interception only, because it is assumed that the other half have the same light regime at daily time-scale. First the interrow of the dominant plant is used to position the left and right dominant plants. The model then computes the golbal radiation (<code>trg</code>) that is transmitted to the Plane 1, which is then used to compute the light intercepted by the dominant plant. The light transmitted to the Plane 1 is divided into two light regimes: a shaded component (surface right under the dominant plant canopy) and a sunlit component (the opposite).</p>
+<p>Second, the light incident on the Plane 1 is used as the <code>trg</code> for the dominated plant, and the same computation than for the dominant plant is performed for the shaded and sunlit components of the dominated plant, and then integrated at species-scale using both light interception and relative surface.</p>
+<p>To conclude, we see that the interrow spacing can only impact the light interception as a density effect (more plants per m2, closer intra-species canopy), but not as a pure geometrical effect.</p>
+<p>For more details on how the <code>trg</code> is computed, see Chapter <a href="trg.html#trg">3</a>, and for more details on light interception, see Chapter <a href="Light.html#Light">2</a>.</p>
 
 </div>
 </div>
