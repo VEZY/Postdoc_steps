@@ -5,11 +5,11 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Work of R.Vezy for the ReMIX Project</title>
+  <title>STICS intercrop: a work in progress for the ReMIX H2020 project</title>
   <meta name="description" content="This book is made to keep track of my work during my post-doctorate position for the ReMIX project.">
   <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
 
-  <meta property="og:title" content="Work of R.Vezy for the ReMIX Project" />
+  <meta property="og:title" content="STICS intercrop: a work in progress for the ReMIX H2020 project" />
   <meta property="og:type" content="book" />
   
   
@@ -17,7 +17,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Work of R.Vezy for the ReMIX Project" />
+  <meta name="twitter:title" content="STICS intercrop: a work in progress for the ReMIX H2020 project" />
   
   <meta name="twitter:description" content="This book is made to keep track of my work during my post-doctorate position for the ReMIX project." />
   
@@ -25,7 +25,7 @@
 <meta name="author" content="R. Vezy">
 
 
-<meta name="date" content="2018-06-19">
+<meta name="date" content="2018-06-21">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -49,13 +49,6 @@
 
 <link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
 <script src="libs/pagedtable-1.1/js/pagedtable.js"></script>
-<script src="libs/htmlwidgets-1.2/htmlwidgets.js"></script>
-<script src="libs/plotly-binding-4.7.1/plotly.js"></script>
-<script src="libs/typedarray-0.1/typedarray.min.js"></script>
-<link href="libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
-<script src="libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
-<link href="libs/plotlyjs-1.29.2/plotly-htmlwidgets.css" rel="stylesheet" />
-<script src="libs/plotlyjs-1.29.2/plotly-latest.min.js"></script>
 
 <script>
 /* ========================================================================
@@ -456,7 +449,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
       <nav role="navigation">
 
 <ul class="summary">
-<li><a href="./">Work of R.Vezy for the ReMIX project</a></li>
+<li><a href="./">STICS intercrop: a work in progress for the ReMIX H2020 project</a></li>
 
 <li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Prerequisites</a></li>
@@ -465,6 +458,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="2.2" data-path="Light.html"><a href="Light.html#plant-shape"><i class="fa fa-check"></i><b>2.2</b> Plant shape</a><ul>
 <li class="chapter" data-level="2.2.1" data-path="Light.html"><a href="Light.html#plant-width-computation"><i class="fa fa-check"></i><b>2.2.1</b> Plant width computation</a></li>
 <li class="chapter" data-level="2.2.2" data-path="Light.html"><a href="Light.html#plant-width-correction"><i class="fa fa-check"></i><b>2.2.2</b> Plant width correction</a></li>
+<li class="chapter" data-level="2.2.3" data-path="Light.html"><a href="Light.html#plant-height"><i class="fa fa-check"></i><b>2.2.3</b> Plant height</a></li>
 </ul></li>
 <li class="chapter" data-level="2.3" data-path="Light.html"><a href="Light.html#light-interception"><i class="fa fa-check"></i><b>2.3</b> Light interception</a><ul>
 <li class="chapter" data-level="2.3.1" data-path="Light.html"><a href="Light.html#incident-direct-radiation-from-the-atmosphere"><i class="fa fa-check"></i><b>2.3.1</b> Incident direct radiation from the atmosphere</a></li>
@@ -498,6 +492,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="6.1" data-path="Interrow.html"><a href="Interrow.html#introduction-3"><i class="fa fa-check"></i><b>6.1</b> Introduction</a></li>
 <li class="chapter" data-level="6.2" data-path="Interrow.html"><a href="Interrow.html#inter-row-spacing-for-mixed-crops-in-the-model"><i class="fa fa-check"></i><b>6.2</b> Inter-row spacing for mixed crops in the model</a></li>
 </ul></li>
+<li class="chapter" data-level="7" data-path="design.html"><a href="design.html"><i class="fa fa-check"></i><b>7</b> Design</a><ul>
+<li class="chapter" data-level="7.1" data-path="design.html"><a href="design.html#introduction-4"><i class="fa fa-check"></i><b>7.1</b> Introduction</a></li>
+<li class="chapter" data-level="7.2" data-path="design.html"><a href="design.html#designs-that-can-be-simulated"><i class="fa fa-check"></i><b>7.2</b> Designs that can be simulated</a></li>
+<li class="chapter" data-level="7.3" data-path="design.html"><a href="design.html#designs-that-cannot-be-simulated"><i class="fa fa-check"></i><b>7.3</b> Designs that cannot be simulated</a></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -510,7 +509,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Work of R.Vezy for the ReMIX Project</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">STICS intercrop: a work in progress for the ReMIX H2020 project</a>
           </h1>
         </div>
 
@@ -541,14 +540,14 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">y=</span>efdensite,<span class="dt">colour=</span> Parameters))<span class="op">+</span>
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span> <span class="st">&quot;Equivalent density&quot;</span>, <span class="dt">y=</span> <span class="st">&quot;Density effect (0-1)&quot;</span>, <span class="dt">colour=</span> <span class="st">&quot;a and b parameters values&quot;</span>,
        <span class="dt">title=</span><span class="st">&quot;Equivalent density / density effect&quot;</span>)</code></pre></div>
-<p><img src="Postdoc_steps_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<p><img src="Postdoc_steps_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
 <p>So the higher the density, the higher the negative effect on <code>LAI</code>.</p>
 </div>
 <div id="the-equivalent-density" class="section level2">
 <h2><span class="header-section-number">5.3</span> The equivalent density</h2>
 <p>In sole crops, the density effect is straightforward. However, under the case of mixed crops, the density effect can be higher for the dominated plant compared to its equivalent in sole crops. Indeed, a pea in sole crop would have a given competition with other close plants, but a different one when mixed with wheat, where the same density of wheat can give higher competition effect for light because it is taller.</p>
 <p>Then the density effect is computed as an equivalent density instead (<code>densiteequiv</code>), that can differ from the sowing density for the dominated crop to increase the negative effect of <code>efdensite</code> compared to a sole crop.</p>
-<p>The previous implementation in STICS was simple. The dominated plant had a doubled equivalent density compared to its actual density. After some discussion with the STICS intercrop team, Sebastian Munz modified the STICS code to implement a new formalism to define the equivalent density as a function of the height difference between the plants as follow:</p>
+<p>The previous implementation in STICS was simple. As soon as a plant become dominated, it had an increased equivalent density compared to its actual density (<em>e.g.</em> doubled). After some discussion with the STICS intercrop team, Sebastian Munz modified the STICS code to implement a new formalism to define the equivalent density as a function of the height difference between the plants as follow:</p>
 <p><span class="math inline">\(density_{Equivalent} =\begin{cases}\Delta_{height} &gt; hauteur_{threshold} &amp; density_{p2} + \frac{density_{p1}}{P_{bdensp1}}\cdot P_{bdensp2} \\ \Delta_{height} &lt; hauteur_{threshold} &amp; density_{p2}+slope\cdot abs\left|\Delta_{height}\right| \end{cases}\)</span></p>
 <p>with <span class="math inline">\(diffx= \frac{density_{p1}}{P_{bdensp1}}\cdot P_{bdensp2}\)</span> and <span class="math inline">\(slope= \frac{diffx}{hauteur_{threshold}}\)</span></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df_DE=<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">Delta_height=</span> <span class="kw">seq</span>(<span class="dt">from=</span> <span class="fl">0.01</span>, <span class="dt">to=</span> <span class="dv">1</span>, <span class="dt">by=</span> <span class="fl">0.01</span>))
@@ -571,9 +570,9 @@ slope=<span class="st"> </span>diffx<span class="op">/</span>hauteur_threshold</
        <span class="dt">x =</span> <span class="st">&quot;Delta height (Dominant Plant Height-Dominated Plant Height)&quot;</span>,
        <span class="dt">y=</span> <span class="st">&quot;Dominated plant equivalent density&quot;</span>,
        <span class="dt">title=</span> <span class="st">&quot;New formalism for equivalent plant density&quot;</span>)</code></pre></div>
-<p><img src="Postdoc_steps_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
-<p>The new formalism has several implications in the model, notably that the dominated plant is less impacted by the competition with the dominant plant when both have approximately the same height.</p>
-<p>A comparison of the two formalisms was made using the <a href="https://github.com/VEZY/sticRs">sticRs</a> package, from which a summary plot was extracted: <img src="img/Equ-dens-computation.png" alt="trg comparison" /> The results showed that the new equvalent density computation is less severe for the dominated plant compared to the previous formalism. Consequently, the dominated plant intercepts more light (see <code>cumraint</code> and <code>fapar</code>) and has a higher <code>LAI</code>.</p>
+<p><img src="Postdoc_steps_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p>The new formalism has several implications in the model, notably that the dominated plant is less impacted by the competition with the dominant plant when both have approximately the same height. A comparison of the two formalisms was made using the <a href="https://github.com/VEZY/sticRs">sticRs</a> package, from which a summary plot was extracted, and the results are shown in Figure <a href="#fig:trgcomparison2">5.1</a>.</p>
+<p><img src="img/Equ-dens-computation.png" alt="trg comparison" /> The results showed that the new equvalent density computation is less severe for the dominated plant compared to the previous formalism. Consequently, the dominated plant intercepts more light (see <code>cumraint</code> and <code>fapar</code>) and has a higher <code>LAI</code>.</p>
 <p>Now the next step is to parameterize well the parameters for the wheat and the pea.</p>
 </div>
 <div id="proposition-for-a-newer-equivalent-density" class="section level2">
@@ -604,7 +603,7 @@ df_DE<span class="op">%&gt;%</span>
        <span class="dt">x =</span> <span class="st">&quot;Delta height (Dominant Plant Height-Dominated Plant Height)&quot;</span>,
        <span class="dt">y=</span> <span class="st">&quot;Dominated plant equivalent density&quot;</span>,
        <span class="dt">title=</span> <span class="st">&quot;New (third) formalism for equivalent plant density&quot;</span>)</code></pre></div>
-<p><img src="Postdoc_steps_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<p><img src="Postdoc_steps_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 <p>This formalism would include three parameters:</p>
 <ul>
 <li><p>hauteur_threshold_1: the difference in height below which no competition is occuring</p></li>

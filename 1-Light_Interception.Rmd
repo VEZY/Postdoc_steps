@@ -94,19 +94,28 @@ kable(data.frame(Origin= c("hauteur",'largeur',"varrapforme","enouv"),
 
 > Upside triangle is a triangle with its base at the bottom, while downside triangle is a triangle with the base at the top.  
 
-The correction of the shape of the plant can be summarised in the following diagram  (\@ref(fig:Comprad)):
-
+The correction of the shape of the plant can be summarised in the diagram Presented in Figure \@ref(fig:Comprad).
 
 ![(\#fig:Comprad)**Competition for radiation interception of the dominant plant induced by a high dominated plant**](img/Light-interception-dominant-2.png)
 
 The correction of the shape of the plant is only used to compute the light transmitted to a plane at the dominated plant or soil height. The targeted plant interception is computed using its whole leaf area index and a light extinction coefficient.   
+
+### Plant height
+
+The plant height is simply computed using the plant base height, its width, and the thickness to width ratio:
+
+$hauteur=P_{hautbase}+largeur\cdot\left|varrapforme\right|$
+
+So indirectly, the plant height depends on its `LAI`, because the plant width is computed using it in the first place.
+This formalism maybe not optimal, because the plant `height` and `LAI` are not well related during advanced plant physiological stages.  
+
 
 ## Light interception
 
 The light intercepted by a plant species is obtained by computing the light reaching a horizontal plane below its canopy, either at the height of the dominated plant (for the dominant plant) of the soil (for the dominated plant). Therefore, the light incident on this plane is either coming from:  
 
 * The incident light coming from the atmosphere, divided into two components, namely the diffuse and direct light. This light is called `rdroit` in the model,
-* The light transmitted by the dominant crop, which is called `rtrans`, and that is generally of lower quality for photosynthesis. The effect of light quality is wrapped in the equivalent density formalism, see \@ref(plantdensity) for more details.
+* The light transmitted by the dominant crop, which is called `rtrans`, and that is generally of lower quality for photosynthesis. The effect of light quality is wrapped in the equivalent density formalism, see Chapter \@ref(plantdensity) for more details.
 
 Consequently, numerous points (20, or 200 if the inter-row is lower than 1 m) are equally distributed every meter along the inter-row (*i.e.* one point every 5 cm, or every 0.5 cm with 200 points), at the height of the plane. These points are used to discretize the computation of the incident light at the surface of the plane.  
 Hence, the total number of points to simulate is computed using the `interval` parameter, which is equal to 200 if the inter-row is lower than 1 meter or 20 if more. It is then used to compute the total number of points to simulate as: $N_{points}=\frac{ir}{2}\cdot interval$
@@ -154,7 +163,7 @@ The incident direct radiation for each X point is computed for all angles of the
 
 Here is an example of the computation of the direct proportion received at each X point for a crop using the `kgeom()` function:
 
-```{r kdir, echo = TRUE, results = 'asis'}
+```{r kdir, results = 'asis'}
 decangle= function(j){
   theta1 = 2 * pi * (j - 80) / 365
   theta2 = 0.034 * (sin(2 * pi * j / 365) - sin(2 * pi * 80 / 365))
@@ -325,7 +334,7 @@ The incident diffuse radiation for all angles between $\theta_1$ and $\theta_2$ 
 
 Here is an example of the computation of the diffuse proportion received at each X point for the same crop as above (interrow= `r ir` meter, width= `r l` meter, thickness= `r l*rap` meter, height= `r haut` meter) using the `kdif()` function:
 
-```{r kdiff, echo = TRUE, results = 'asis', fig.cap= "Example of the computation of the incident diffuse radiation ratio kgdiffus for each angle of the semi-hemisphere."}
+```{r kdiff, results = 'asis', fig.cap= "Example of the computation of the incident diffuse radiation ratio kgdiffus for each angle of the semi-hemisphere."}
 # Initializations:
 htab= c(9.23, 9.23, 9.23, 9.23, 9.23, 10.81, 10.81, 26.57,
         26.57, 26.57, 31.08, 31.08, 31.08, 31.08, 31.08, 47.41,
@@ -415,7 +424,7 @@ if(knitr:::pandoc_to() == "html") {Output_diff}else{
 
 The total diffuse radiation incident to each point X is simply the cumulative of each angle:
 
-```{r kdifftot, echo = TRUE, results = 'asis'}
+```{r kdifftot, results = 'asis'}
 suppressWarnings(suppressPackageStartupMessages(library(dplyr)))
 Output_diff%<>%
   group_by(`X index`)%>%
@@ -461,7 +470,7 @@ kable(incident_light,
 ```
 
 The Total incident ratio is computed as: `Total incident ratio= rdroit+rtransmis`. It is the proportion of the incident ligth from the atmosphere that reach the point on the plane below the plant canopy. This light either comes directly from the sky (`rdroit`) or passing through the plant canopy (`rtransmis`).
-Consequently, the first point `X` of our example that is right under the plant canopy receives in average `incident_light$Total[1]*100`% of the light coming from the atmosphere: `incident_light$rdroit[1]*100`% of the light directly from the sky (either direct or diffuse light) + `incident_light$rtransmis[1]*100`% of the light that is transmitted by the plant above.
+Consequently, the first point `X` of our example that is right under the plant canopy receives in average `r incident_light$Total[1]*100`% of the light coming from the atmosphere: `r incident_light$rdroit[1]*100`% of the light directly from the sky (either direct or diffuse light) + `r incident_light$rtransmis[1]*100`% of the light that is transmitted by the plant above.
 
 ### Total radiation incident to the plane
 
@@ -495,11 +504,11 @@ incident_light%<>%spread(light_env,Total)
 surfAO = l/ir
 surfAO = min(surfAO,1.0)
 surfAS = 1.0 - surfAO
-raint = P_parsurrg * trg * (1 - (incident_light$Shaded * surfAO) - 
-                              (incident_light$Sunlit* surfAS))
+raint = P_parsurrg * trg * (1 - (incident_light$Shaded[1] * surfAO) - 
+                              (incident_light$Sunlit[2]* surfAS))
 ```
 
-For our example, the crop would have intercepted `r round(raint,2)` MJ m-2 day-1 of radiation, with a PAR of `r P_parsurrg * trg` W m-2, an `rombre` of `r incident_light$Shaded`, an `rsoleil` of `r incident_light$Sunlit` and a relative surface of `r surfAO` and `r surfAS` for the shaded and sunlit component respectively.
+For our example, the crop would have intercepted `r round(raint,2)` MJ m-2 day-1 of radiation, with a PAR of `r P_parsurrg * trg` W m-2, an `rombre` of `r incident_light$Shaded[1]`, an `rsoleil` of `r incident_light$Sunlit[2]` and a relative surface of `r surfAO` and `r surfAS` for the shaded and sunlit component respectively.
 
 > The relative surfaces (0 to 1) of the shaded and sunlit components of the plane (`surfAO` and `surfAS`) that are computed during the dominant plant computation are then used as the shaded and sunlit surfaces for the dominated plant.
 

@@ -5,11 +5,11 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Work of R.Vezy for the ReMIX Project</title>
+  <title>STICS intercrop: a work in progress for the ReMIX H2020 project</title>
   <meta name="description" content="This book is made to keep track of my work during my post-doctorate position for the ReMIX project.">
   <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
 
-  <meta property="og:title" content="Work of R.Vezy for the ReMIX Project" />
+  <meta property="og:title" content="STICS intercrop: a work in progress for the ReMIX H2020 project" />
   <meta property="og:type" content="book" />
   
   
@@ -17,7 +17,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Work of R.Vezy for the ReMIX Project" />
+  <meta name="twitter:title" content="STICS intercrop: a work in progress for the ReMIX H2020 project" />
   
   <meta name="twitter:description" content="This book is made to keep track of my work during my post-doctorate position for the ReMIX project." />
   
@@ -25,7 +25,7 @@
 <meta name="author" content="R. Vezy">
 
 
-<meta name="date" content="2018-06-19">
+<meta name="date" content="2018-06-21">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -49,13 +49,6 @@
 
 <link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
 <script src="libs/pagedtable-1.1/js/pagedtable.js"></script>
-<script src="libs/htmlwidgets-1.2/htmlwidgets.js"></script>
-<script src="libs/plotly-binding-4.7.1/plotly.js"></script>
-<script src="libs/typedarray-0.1/typedarray.min.js"></script>
-<link href="libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
-<script src="libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
-<link href="libs/plotlyjs-1.29.2/plotly-htmlwidgets.css" rel="stylesheet" />
-<script src="libs/plotlyjs-1.29.2/plotly-latest.min.js"></script>
 
 <script>
 /* ========================================================================
@@ -456,7 +449,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
       <nav role="navigation">
 
 <ul class="summary">
-<li><a href="./">Work of R.Vezy for the ReMIX project</a></li>
+<li><a href="./">STICS intercrop: a work in progress for the ReMIX H2020 project</a></li>
 
 <li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Prerequisites</a></li>
@@ -465,6 +458,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="2.2" data-path="Light.html"><a href="Light.html#plant-shape"><i class="fa fa-check"></i><b>2.2</b> Plant shape</a><ul>
 <li class="chapter" data-level="2.2.1" data-path="Light.html"><a href="Light.html#plant-width-computation"><i class="fa fa-check"></i><b>2.2.1</b> Plant width computation</a></li>
 <li class="chapter" data-level="2.2.2" data-path="Light.html"><a href="Light.html#plant-width-correction"><i class="fa fa-check"></i><b>2.2.2</b> Plant width correction</a></li>
+<li class="chapter" data-level="2.2.3" data-path="Light.html"><a href="Light.html#plant-height"><i class="fa fa-check"></i><b>2.2.3</b> Plant height</a></li>
 </ul></li>
 <li class="chapter" data-level="2.3" data-path="Light.html"><a href="Light.html#light-interception"><i class="fa fa-check"></i><b>2.3</b> Light interception</a><ul>
 <li class="chapter" data-level="2.3.1" data-path="Light.html"><a href="Light.html#incident-direct-radiation-from-the-atmosphere"><i class="fa fa-check"></i><b>2.3.1</b> Incident direct radiation from the atmosphere</a></li>
@@ -498,6 +492,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="6.1" data-path="Interrow.html"><a href="Interrow.html#introduction-3"><i class="fa fa-check"></i><b>6.1</b> Introduction</a></li>
 <li class="chapter" data-level="6.2" data-path="Interrow.html"><a href="Interrow.html#inter-row-spacing-for-mixed-crops-in-the-model"><i class="fa fa-check"></i><b>6.2</b> Inter-row spacing for mixed crops in the model</a></li>
 </ul></li>
+<li class="chapter" data-level="7" data-path="design.html"><a href="design.html"><i class="fa fa-check"></i><b>7</b> Design</a><ul>
+<li class="chapter" data-level="7.1" data-path="design.html"><a href="design.html#introduction-4"><i class="fa fa-check"></i><b>7.1</b> Introduction</a></li>
+<li class="chapter" data-level="7.2" data-path="design.html"><a href="design.html#designs-that-can-be-simulated"><i class="fa fa-check"></i><b>7.2</b> Designs that can be simulated</a></li>
+<li class="chapter" data-level="7.3" data-path="design.html"><a href="design.html#designs-that-cannot-be-simulated"><i class="fa fa-check"></i><b>7.3</b> Designs that cannot be simulated</a></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -510,7 +509,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Work of R.Vezy for the ReMIX Project</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">STICS intercrop: a work in progress for the ReMIX H2020 project</a>
           </h1>
         </div>
 
@@ -618,12 +617,18 @@ where <code>lai</code> is the leaf area index, <code>laisen</code> is the senesc
 <blockquote>
 <p>Upside triangle is a triangle with its base at the bottom, while downside triangle is a triangle with the base at the top.</p>
 </blockquote>
-<p>The correction of the shape of the plant can be summarised in the following diagram (<a href="Light.html#fig:Comprad">2.2</a>):</p>
+<p>The correction of the shape of the plant can be summarised in the diagram Presented in Figure <a href="Light.html#fig:Comprad">2.2</a>.</p>
 <div class="figure"><span id="fig:Comprad"></span>
 <img src="img/Light-interception-dominant-2.png" alt="Competition for radiation interception of the dominant plant induced by a high dominated plant" />
 <p class="caption">Figure 2.2: <strong>Competition for radiation interception of the dominant plant induced by a high dominated plant</strong></p>
 </div>
 <p>The correction of the shape of the plant is only used to compute the light transmitted to a plane at the dominated plant or soil height. The targeted plant interception is computed using its whole leaf area index and a light extinction coefficient.</p>
+</div>
+<div id="plant-height" class="section level3">
+<h3><span class="header-section-number">2.2.3</span> Plant height</h3>
+<p>The plant height is simply computed using the plant base height, its width, and the thickness to width ratio:</p>
+<p><span class="math inline">\(hauteur=P_{hautbase}+largeur\cdot\left|varrapforme\right|\)</span></p>
+<p>So indirectly, the plant height depends on its <code>LAI</code>, because the plant width is computed using it in the first place. This formalism maybe not optimal, because the plant <code>height</code> and <code>LAI</code> are not well related during advanced plant physiological stages.</p>
 </div>
 </div>
 <div id="light-interception" class="section level2">
@@ -631,7 +636,7 @@ where <code>lai</code> is the leaf area index, <code>laisen</code> is the senesc
 <p>The light intercepted by a plant species is obtained by computing the light reaching a horizontal plane below its canopy, either at the height of the dominated plant (for the dominant plant) of the soil (for the dominated plant). Therefore, the light incident on this plane is either coming from:</p>
 <ul>
 <li>The incident light coming from the atmosphere, divided into two components, namely the diffuse and direct light. This light is called <code>rdroit</code> in the model,</li>
-<li>The light transmitted by the dominant crop, which is called <code>rtrans</code>, and that is generally of lower quality for photosynthesis. The effect of light quality is wrapped in the equivalent density formalism, see <a href="plantdensity.html#plantdensity">5</a> for more details.</li>
+<li>The light transmitted by the dominant crop, which is called <code>rtrans</code>, and that is generally of lower quality for photosynthesis. The effect of light quality is wrapped in the equivalent density formalism, see Chapter <a href="plantdensity.html#plantdensity">5</a> for more details.</li>
 </ul>
 <p>Consequently, numerous points (20, or 200 if the inter-row is lower than 1 m) are equally distributed every meter along the inter-row (<em>i.e.</em> one point every 5 cm, or every 0.5 cm with 200 points), at the height of the plane. These points are used to discretize the computation of the incident light at the surface of the plane.<br />
 Hence, the total number of points to simulate is computed using the <code>interval</code> parameter, which is equal to 200 if the inter-row is lower than 1 meter or 20 if more. It is then used to compute the total number of points to simulate as: <span class="math inline">\(N_{points}=\frac{ir}{2}\cdot interval\)</span></p>
@@ -1125,7 +1130,7 @@ incident_light=<span class="st"> </span>
   <span class="dt">caption=</span><span class="kw">paste</span>(<span class="st">&quot;Example of the computation of the total incident radiation ratio.&quot;</span>,
                 <span class="st">&quot;See introduction section for further details on the crop.&quot;</span>))</code></pre></div>
 <table>
-<caption><span id="tab:unnamed-chunk-5">Table 2.4: </span>Example of the computation of the total incident radiation ratio. See introduction section for further details on the crop.</caption>
+<caption><span id="tab:unnamed-chunk-2">Table 2.4: </span>Example of the computation of the total incident radiation ratio. See introduction section for further details on the crop.</caption>
 <thead>
 <tr class="header">
 <th align="right">X index</th>
@@ -1219,7 +1224,7 @@ incident_light=<span class="st"> </span>
 </tr>
 </tbody>
 </table>
-<p>The Total incident ratio is computed as: <code>Total incident ratio= rdroit+rtransmis</code>. It is the proportion of the incident ligth from the atmosphere that reach the point on the plane below the plant canopy. This light either comes directly from the sky (<code>rdroit</code>) or passing through the plant canopy (<code>rtransmis</code>). Consequently, the first point <code>X</code> of our example that is right under the plant canopy receives in average <code>incident_light$Total[1]*100</code>% of the light coming from the atmosphere: <code>incident_light$rdroit[1]*100</code>% of the light directly from the sky (either direct or diffuse light) + <code>incident_light$rtransmis[1]*100</code>% of the light that is transmitted by the plant above.</p>
+<p>The Total incident ratio is computed as: <code>Total incident ratio= rdroit+rtransmis</code>. It is the proportion of the incident ligth from the atmosphere that reach the point on the plane below the plant canopy. This light either comes directly from the sky (<code>rdroit</code>) or passing through the plant canopy (<code>rtransmis</code>). Consequently, the first point <code>X</code> of our example that is right under the plant canopy receives in average 77.2720162% of the light coming from the atmosphere: 31.0604617% of the light directly from the sky (either direct or diffuse light) + 46.2115545% of the light that is transmitted by the plant above.</p>
 </div>
 <div id="total-radiation-incident-to-the-plane" class="section level3">
 <h3><span class="header-section-number">2.3.6</span> Total radiation incident to the plane</h3>
@@ -1237,7 +1242,7 @@ incident_light=<span class="st"> </span>
                      <span class="st">&quot;the targeted plant canopy. See introduction section for further&quot;</span>,
                      <span class="st">&quot;details on the crop.&quot;</span>))</code></pre></div>
 <table>
-<caption><span id="tab:unnamed-chunk-6">Table 2.5: </span>Example of the computation of the total incident radiation ratio for each light environment for a horizontal plane below the targeted plant canopy. See introduction section for further details on the crop.</caption>
+<caption><span id="tab:unnamed-chunk-3">Table 2.5: </span>Example of the computation of the total incident radiation ratio for each light environment for a horizontal plane below the targeted plant canopy. See introduction section for further details on the crop.</caption>
 <thead>
 <tr class="header">
 <th align="left">STICS variable name</th>
@@ -1268,9 +1273,9 @@ incident_light<span class="op">%&lt;&gt;%</span><span class="kw">spread</span>(l
 surfAO =<span class="st"> </span>l<span class="op">/</span>ir
 surfAO =<span class="st"> </span><span class="kw">min</span>(surfAO,<span class="fl">1.0</span>)
 surfAS =<span class="st"> </span><span class="fl">1.0</span> <span class="op">-</span><span class="st"> </span>surfAO
-raint =<span class="st"> </span>P_parsurrg <span class="op">*</span><span class="st"> </span>trg <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>(incident_light<span class="op">$</span>Shaded <span class="op">*</span><span class="st"> </span>surfAO) <span class="op">-</span><span class="st"> </span>
-<span class="st">                              </span>(incident_light<span class="op">$</span>Sunlit<span class="op">*</span><span class="st"> </span>surfAS))</code></pre></div>
-<p>For our example, the crop would have intercepted NA, NA MJ m-2 day-1 of radiation, with a PAR of 12.5 W m-2, an <code>rombre</code> of 0.7755858, NA, an <code>rsoleil</code> of NA, 0.7943134 and a relative surface of 0.2 and 0.8 for the shaded and sunlit component respectively.</p>
+raint =<span class="st"> </span>P_parsurrg <span class="op">*</span><span class="st"> </span>trg <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>(incident_light<span class="op">$</span>Shaded[<span class="dv">1</span>] <span class="op">*</span><span class="st"> </span>surfAO) <span class="op">-</span><span class="st"> </span>
+<span class="st">                              </span>(incident_light<span class="op">$</span>Sunlit[<span class="dv">2</span>]<span class="op">*</span><span class="st"> </span>surfAS))</code></pre></div>
+<p>For our example, the crop would have intercepted 2.62 MJ m-2 day-1 of radiation, with a PAR of 12.5 W m-2, an <code>rombre</code> of 0.7755858, an <code>rsoleil</code> of 0.7943134 and a relative surface of 0.2 and 0.8 for the shaded and sunlit component respectively.</p>
 <blockquote>
 <p>The relative surfaces (0 to 1) of the shaded and sunlit components of the plane (<code>surfAO</code> and <code>surfAS</code>) that are computed during the dominant plant computation are then used as the shaded and sunlit surfaces for the dominated plant.</p>
 </blockquote>

@@ -23,6 +23,7 @@ $ef_{densite}=\min\left\{1.0\ ;\ (\frac{densiteequiv}{P_{bdens}})^{P_{adens}}\ri
 > Replace the equation in the model to simplify too ? 
 
 Here is a plot representing the density effect along the equivalent density:
+
 ```{r message=FALSE, warning=FALSE}
 library(tidyverse)
 expand.grid(densiteequiv= 140:280, P_adens=c(-0.54,-0.7),P_bdens=c(7,10))%>%
@@ -36,6 +37,7 @@ expand.grid(densiteequiv= 140:280, P_adens=c(-0.54,-0.7),P_bdens=c(7,10))%>%
        title="Equivalent density / density effect")
 ```
 
+
 So the higher the density, the higher the negative effect on `LAI`.
 
 ## The equivalent density 
@@ -44,11 +46,13 @@ In sole crops, the density effect is straightforward. However, under the case of
 
 Then the density effect is computed as an equivalent density instead (`densiteequiv`), that can differ from the sowing density for the dominated crop to increase the negative effect of `efdensite` compared to a sole crop.
 
-The previous implementation in STICS was simple. The dominated plant had a doubled equivalent density compared to its actual density. After some discussion with the STICS intercrop team, Sebastian Munz modified the STICS code to implement a new formalism to define the equivalent density as a function of the height difference between the plants as follow:
+The previous implementation in STICS was simple. As soon as a plant become dominated, it had an increased equivalent density compared to its actual density (*e.g.* doubled). After some discussion with the STICS intercrop team, Sebastian Munz modified the STICS code to implement a new formalism to define the equivalent density as a function of the height difference between the plants as follow:
 
 $density_{Equivalent} =\begin{cases}\Delta_{height} > hauteur_{threshold} & density_{p2} + \frac{density_{p1}}{P_{bdensp1}}\cdot P_{bdensp2}  \\ \Delta_{height} < hauteur_{threshold} & density_{p2}+slope\cdot abs\left|\Delta_{height}\right| \end{cases}$
 
 with $diffx= \frac{density_{p1}}{P_{bdensp1}}\cdot P_{bdensp2}$ and $slope= \frac{diffx}{hauteur_{threshold}}$
+
+
 ```{r}
 df_DE= data.frame(Delta_height= seq(from= 0.01, to= 1, by= 0.01))
 density_p1= 140
@@ -58,7 +62,9 @@ hauteur_threshold= 0.2
 diffx = density_p1 / P_bdensp1 * P_bdensp2
 slope= diffx/hauteur_threshold
 ```
+
 Here is an exemple with a wheat-pea intercrop with a plant density of `r density_p1` for the wheat as the principal species and `r density_p2` for the pea as the associated species:
+
 ```{r}
 df_DE%>%
   mutate(Equ_density= 
@@ -74,10 +80,11 @@ df_DE%>%
        title= "New formalism for equivalent plant density")
 ```
 
-The new formalism has several implications in the model, notably that the dominated plant is less impacted by the competition with the dominant plant when both have approximately the same height.
 
-A comparison of the two formalisms was made using the [sticRs](https://github.com/VEZY/sticRs) package, from which a summary plot was extracted:
-![trg comparison](img/Equ-dens-computation.png)
+The new formalism has several implications in the model, notably that the dominated plant is less impacted by the competition with the dominant plant when both have approximately the same height.
+A comparison of the two formalisms was made using the [sticRs](https://github.com/VEZY/sticRs) package, from which a summary plot was extracted, and the results are shown in Figure \@ref(fig:trgcomparison2).
+
+![(\#fig:trgcomparison2)trg comparison](img/Equ-dens-computation.png)
 The results showed that the new equvalent density computation is less severe for the dominated plant compared to the previous formalism. Consequently, the dominated plant intercepts more light (see `cumraint` and `fapar`) and has a higher `LAI`.
 
 Now the next step is to parameterize well the parameters for the wheat and the pea.
@@ -92,6 +99,8 @@ $density_{Equivalent} =\begin{cases}\Delta_{height} < hauteur_{threshold_1} & de
 with $slope= \frac{Max_{equDens}}{hauteur_{threshold_2}-hauteur_{threshold_1}}$
 
 Here is the resulting plot for the same Wheat-Pea intercrop:
+
+
 ```{r}
 df_DE= data.frame(Delta_height= seq(from= 0.01, to= 1, by= 0.01))
 density_p1= 140
@@ -116,6 +125,7 @@ df_DE%>%
        y= "Dominated plant equivalent density",
        title= "New (third) formalism for equivalent plant density")
 ```
+
 
 This formalism would include three parameters: 
 

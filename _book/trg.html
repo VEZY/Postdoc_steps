@@ -5,11 +5,11 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Work of R.Vezy for the ReMIX Project</title>
+  <title>STICS intercrop: a work in progress for the ReMIX H2020 project</title>
   <meta name="description" content="This book is made to keep track of my work during my post-doctorate position for the ReMIX project.">
   <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
 
-  <meta property="og:title" content="Work of R.Vezy for the ReMIX Project" />
+  <meta property="og:title" content="STICS intercrop: a work in progress for the ReMIX H2020 project" />
   <meta property="og:type" content="book" />
   
   
@@ -17,7 +17,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Work of R.Vezy for the ReMIX Project" />
+  <meta name="twitter:title" content="STICS intercrop: a work in progress for the ReMIX H2020 project" />
   
   <meta name="twitter:description" content="This book is made to keep track of my work during my post-doctorate position for the ReMIX project." />
   
@@ -25,7 +25,7 @@
 <meta name="author" content="R. Vezy">
 
 
-<meta name="date" content="2018-06-19">
+<meta name="date" content="2018-06-21">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -456,7 +456,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
       <nav role="navigation">
 
 <ul class="summary">
-<li><a href="./">Work of R.Vezy for the ReMIX project</a></li>
+<li><a href="./">STICS intercrop: a work in progress for the ReMIX H2020 project</a></li>
 
 <li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Prerequisites</a></li>
@@ -465,6 +465,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="2.2" data-path="Light.html"><a href="Light.html#plant-shape"><i class="fa fa-check"></i><b>2.2</b> Plant shape</a><ul>
 <li class="chapter" data-level="2.2.1" data-path="Light.html"><a href="Light.html#plant-width-computation"><i class="fa fa-check"></i><b>2.2.1</b> Plant width computation</a></li>
 <li class="chapter" data-level="2.2.2" data-path="Light.html"><a href="Light.html#plant-width-correction"><i class="fa fa-check"></i><b>2.2.2</b> Plant width correction</a></li>
+<li class="chapter" data-level="2.2.3" data-path="Light.html"><a href="Light.html#plant-height"><i class="fa fa-check"></i><b>2.2.3</b> Plant height</a></li>
 </ul></li>
 <li class="chapter" data-level="2.3" data-path="Light.html"><a href="Light.html#light-interception"><i class="fa fa-check"></i><b>2.3</b> Light interception</a><ul>
 <li class="chapter" data-level="2.3.1" data-path="Light.html"><a href="Light.html#incident-direct-radiation-from-the-atmosphere"><i class="fa fa-check"></i><b>2.3.1</b> Incident direct radiation from the atmosphere</a></li>
@@ -498,6 +499,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="6.1" data-path="Interrow.html"><a href="Interrow.html#introduction-3"><i class="fa fa-check"></i><b>6.1</b> Introduction</a></li>
 <li class="chapter" data-level="6.2" data-path="Interrow.html"><a href="Interrow.html#inter-row-spacing-for-mixed-crops-in-the-model"><i class="fa fa-check"></i><b>6.2</b> Inter-row spacing for mixed crops in the model</a></li>
 </ul></li>
+<li class="chapter" data-level="7" data-path="design.html"><a href="design.html"><i class="fa fa-check"></i><b>7</b> Design</a><ul>
+<li class="chapter" data-level="7.1" data-path="design.html"><a href="design.html#introduction-4"><i class="fa fa-check"></i><b>7.1</b> Introduction</a></li>
+<li class="chapter" data-level="7.2" data-path="design.html"><a href="design.html#designs-that-can-be-simulated"><i class="fa fa-check"></i><b>7.2</b> Designs that can be simulated</a></li>
+<li class="chapter" data-level="7.3" data-path="design.html"><a href="design.html#designs-that-cannot-be-simulated"><i class="fa fa-check"></i><b>7.3</b> Designs that cannot be simulated</a></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -510,7 +516,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Work of R.Vezy for the ReMIX Project</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">STICS intercrop: a work in progress for the ReMIX H2020 project</a>
           </h1>
         </div>
 
@@ -524,7 +530,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h2><span class="header-section-number">3.1</span> Computing the trg incident to the dominated plant</h2>
 <p>For the moment, STICS compute the radiation incident above the dominated (or associated) plant as:</p>
 <div class="sourceCode"><pre class="sourceCode fortran"><code class="sourceCode fortran"><span class="kw">if</span> (i <span class="op">&gt;</span> <span class="dv">1</span>) c%trg(n) <span class="kw">=</span> trg_bak <span class="kw">*</span> p(i<span class="kw">-</span><span class="dv">1</span>)%rsoleil</code></pre></div>
-<p>Which means that trg for the dominated plant (<code>i &gt; 1</code>) is computed as the global atmospheric radiation, reduced by the average proportion of light intercepted by the sunlit area of the plane below the dominant plant. This computation does not consider that the average proportion of light incident above the shaded part of the dominated plant (<code>rombre</code>) is different from <code>rsoleil</code>. See Chapter <a href="Light.html#Light">2</a> for more details.</p>
+<p>Which means that trg for the dominated plant (<code>i &gt; 1</code>) is computed as the global atmospheric radiation (<code>trg_bak</code> here), reduced by the average proportion of light transmitted by the sunlit area of the plane below the dominant plant (and above the dominated plant). This computation does not consider that the average proportion of light incident above the shaded part of the dominated plant (<code>rombre</code>) is different from <code>rsoleil</code>. See Chapter <a href="Light.html#Light">2</a> for more details.</p>
 </div>
 <div id="proposed-solution" class="section level2">
 <h2><span class="header-section-number">3.2</span> Proposed solution</h2>
@@ -536,11 +542,15 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
     c%trg(n) <span class="kw">=</span> trg_bak <span class="kw">*</span> p(i<span class="kw">-</span><span class="dv">1</span>)%rombre
   <span class="kw">endif</span>
 <span class="kw">endif</span></code></pre></div>
-<p>With this new computation, the radiation incident above the dominant plant depends from the component (shaded or sunlit) under consideration, and is computed using the geometry of the dominant plant (for atmospheric+transmitted light computation).</p>
+<p>With this new computation, the radiation incident above the dominated plant depends from the component under consideration (shaded or sunlit), and is computed using the geometry of the dominant plant (for atmospheric+transmitted light computation).</p>
 </div>
 <div id="results" class="section level2">
 <h2><span class="header-section-number">3.3</span> Results</h2>
-<p>A comparison of the two was made using the <a href="https://github.com/VEZY/sticRs">sticRs</a> package, from which a summary plot was extracted: <img src="img/trg-computation.png" alt="trg comparison" /></p>
+<p>A comparison of the two was made using the <a href="https://github.com/VEZY/sticRs">sticRs</a> package, from which a summary plot was extracted. The results are shown in Figure <a href="trg.html#fig:trgcomparison1">3.1</a>.</p>
+<div class="figure"><span id="fig:trgcomparison1"></span>
+<img src="img/trg-computation.png" alt="trg comparison" />
+<p class="caption">Figure 3.1: trg comparison</p>
+</div>
 <p>The comparison between both indicated that the dominated plant intercepted more PAR with the original computation (<code>raint</code>), due to its wrong light regime (<code>rsoleil</code> for both AS and AO). While the dry mass and height of the dominated plant did not change, its <code>LAI</code> was previously higher on the end of the rotation, which increased the <code>rsoleil</code> and <code>rombre</code> of the ground (visible as associated ones). These simulations also showed that the wheat (dominant) <code>eai</code> was highly overestimated, which will be fixed in the next simulations.</p>
 
 </div>

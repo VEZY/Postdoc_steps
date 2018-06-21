@@ -24,7 +24,7 @@
 \usepackage[margin=1in]{geometry}
 \usepackage{hyperref}
 \hypersetup{unicode=true,
-            pdftitle={Work of R.Vezy for the ReMIX Project},
+            pdftitle={STICS intercrop: a work in progress for the ReMIX H2020 project},
             pdfauthor={R. Vezy},
             pdfborder={0 0 0},
             breaklinks=true}
@@ -117,7 +117,7 @@
 
 \setlength{\droptitle}{-2em}
 
-  \title{Work of R.Vezy for the ReMIX Project}
+  \title{STICS intercrop: a work in progress for the ReMIX H2020 project}
     \pretitle{\vspace{\droptitle}\centering\huge}
   \posttitle{\par}
     \author{R. Vezy}
@@ -125,7 +125,7 @@
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{2018-06-19}
+    \date{2018-06-21}
 
 \usepackage{booktabs}
 
@@ -337,7 +337,7 @@ downside triangle is a triangle with the base at the top.
 \end{quote}
 
 The correction of the shape of the plant can be summarised in the
-following diagram (\ref{fig:Comprad}):
+diagram Presented in Figure \ref{fig:Comprad}.
 
 \begin{figure}
 \centering
@@ -350,6 +350,18 @@ The correction of the shape of the plant is only used to compute the
 light transmitted to a plane at the dominated plant or soil height. The
 targeted plant interception is computed using its whole leaf area index
 and a light extinction coefficient.
+
+\subsection{Plant height}\label{plant-height}
+
+The plant height is simply computed using the plant base height, its
+width, and the thickness to width ratio:
+
+\(hauteur=P_{hautbase}+largeur\cdot\left|varrapforme\right|\)
+
+So indirectly, the plant height depends on its \texttt{LAI}, because the
+plant width is computed using it in the first place. This formalism
+maybe not optimal, because the plant \texttt{height} and \texttt{LAI}
+are not well related during advanced plant physiological stages.
 
 \section{Light interception}\label{light-interception}
 
@@ -369,7 +381,8 @@ coming from:
   The light transmitted by the dominant crop, which is called
   \texttt{rtrans}, and that is generally of lower quality for
   photosynthesis. The effect of light quality is wrapped in the
-  equivalent density formalism, see \ref{plantdensity} for more details.
+  equivalent density formalism, see Chapter \ref{plantdensity} for more
+  details.
 \end{itemize}
 
 Consequently, numerous points (20, or 200 if the inter-row is lower than
@@ -1058,10 +1071,11 @@ For the moment, STICS compute the radiation incident above the dominated
 
 Which means that trg for the dominated plant
 (\texttt{i\ \textgreater{}\ 1}) is computed as the global atmospheric
-radiation, reduced by the average proportion of light intercepted by the
-sunlit area of the plane below the dominant plant. This computation does
-not consider that the average proportion of light incident above the
-shaded part of the dominated plant (\texttt{rombre}) is different from
+radiation (\texttt{trg\_bak} here), reduced by the average proportion of
+light transmitted by the sunlit area of the plane below the dominant
+plant (and above the dominated plant). This computation does not
+consider that the average proportion of light incident above the shaded
+part of the dominated plant (\texttt{rombre}) is different from
 \texttt{rsoleil}. See Chapter \ref{Light} for more details.
 
 \section{Proposed solution}\label{proposed-solution}
@@ -1070,8 +1084,8 @@ We propose to change this computation to take the relevant incident
 light according to the light regime of the dominated plant under
 computation:
 
-With this new computation, the radiation incident above the dominant
-plant depends from the component (shaded or sunlit) under consideration,
+With this new computation, the radiation incident above the dominated
+plant depends from the component under consideration (shaded or sunlit),
 and is computed using the geometry of the dominant plant (for
 atmospheric+transmitted light computation).
 
@@ -1079,7 +1093,14 @@ atmospheric+transmitted light computation).
 
 A comparison of the two was made using the
 \href{https://github.com/VEZY/sticRs}{sticRs} package, from which a
-summary plot was extracted: \includegraphics{img/trg-computation.png}
+summary plot was extracted. The results are shown in Figure
+\ref{fig:trgcomparison1}.
+
+\begin{figure}
+\centering
+\includegraphics{img/trg-computation.png}
+\caption{\label{fig:trgcomparison1}trg comparison}
+\end{figure}
 
 The comparison between both indicated that the dominated plant
 intercepted more PAR with the original computation (\texttt{raint}), due
@@ -1178,6 +1199,7 @@ Replace the equation in the model to simplify too ?
 
 Here is a plot representing the density effect along the equivalent
 density:
+
 \includegraphics{Postdoc_steps_files/figure-latex/unnamed-chunk-17-1.pdf}
 
 So the higher the density, the higher the negative effect on
@@ -1197,11 +1219,12 @@ Then the density effect is computed as an equivalent density instead
 dominated crop to increase the negative effect of \texttt{efdensite}
 compared to a sole crop.
 
-The previous implementation in STICS was simple. The dominated plant had
-a doubled equivalent density compared to its actual density. After some
-discussion with the STICS intercrop team, Sebastian Munz modified the
-STICS code to implement a new formalism to define the equivalent density
-as a function of the height difference between the plants as follow:
+The previous implementation in STICS was simple. As soon as a plant
+become dominated, it had an increased equivalent density compared to its
+actual density (\emph{e.g.} doubled). After some discussion with the
+STICS intercrop team, Sebastian Munz modified the STICS code to
+implement a new formalism to define the equivalent density as a function
+of the height difference between the plants as follow:
 
 \(density_{Equivalent} =\begin{cases}\Delta_{height} > hauteur_{threshold} & density_{p2} + \frac{density_{p1}}{P_{bdensp1}}\cdot P_{bdensp2} \\ \Delta_{height} < hauteur_{threshold} & density_{p2}+slope\cdot abs\left|\Delta_{height}\right| \end{cases}\)
 
@@ -1211,6 +1234,7 @@ with \(diffx= \frac{density_{p1}}{P_{bdensp1}}\cdot P_{bdensp2}\) and
 Here is an exemple with a wheat-pea intercrop with a plant density of
 140 for the wheat as the principal species and 30 for the pea as the
 associated species:
+
 \includegraphics{Postdoc_steps_files/figure-latex/unnamed-chunk-19-1.pdf}
 
 The new formalism has several implications in the model, notably that
@@ -1219,7 +1243,9 @@ dominant plant when both have approximately the same height.
 
 A comparison of the two formalisms was made using the
 \href{https://github.com/VEZY/sticRs}{sticRs} package, from which a
-summary plot was extracted:
+summary plot was extracted, and the results are shown in Figure
+\ref{fig:trgcomparison2}.
+
 \includegraphics{img/Equ-dens-computation.png} The results showed that
 the new equvalent density computation is less severe for the dominated
 plant compared to the previous formalism. Consequently, the dominated
@@ -1245,6 +1271,7 @@ with
 \(slope= \frac{Max_{equDens}}{hauteur_{threshold_2}-hauteur_{threshold_1}}\)
 
 Here is the resulting plot for the same Wheat-Pea intercrop:
+
 \includegraphics{Postdoc_steps_files/figure-latex/unnamed-chunk-20-1.pdf}
 
 This formalism would include three parameters:
@@ -1288,16 +1315,14 @@ We now have to test this proposition.
 \section{Introduction}\label{introduction-3}
 
 The inter-row is the distance between two rows of the same plant
-species. It is straightforward for monocrops, but a bit more complicated
-for intercrops. Indeed, the inter-row parameter can have unexpected
-adverse effects for intercrops. Here is a simple design with a field
-with two plant species sowed with the same inter-row:
+species. Figure \ref{fig:SameInterrow} shows a simple design with a
+field with two plant species sowed with the same inter-row.
 
 \begin{figure}
 \centering
 \includegraphics{img/Same-Interrow.png}
-\caption{Pea-Wheat intercrop using the same inter-row spacing for the
-two crops}
+\caption{\label{fig:SameInterrow}Pea-Wheat intercrop using the same
+inter-row spacing for the two crops}
 \end{figure}
 
 So far, so good. Now what happens if we set a different inter-row
@@ -1321,14 +1346,14 @@ dominant plant interrow spacing does impact the light that is
 transmitted to the dominatd plant, but it is not an explicit description
 of the interrow spacing.
 
-Here is a depiction of how the model describe the interrow for
-intercrops:
+Figure \ref{fig:interrow} shows a depiction of how the model describe
+the interrow for intercrops.
 
 \begin{figure}
 \centering
 \includegraphics{img/Interrow.png}
-\caption{\label{fig:interrow}\textbf{Interrow effect on light interception
-for intercrops in the STICS model}}
+\caption{\label{fig:interrow}Interrow effect on light interception for
+intercrops in the STICS model}
 \end{figure}
 
 The model does effectively compute half the interrow light interception
@@ -1347,13 +1372,60 @@ plant is performed for the shaded and sunlit components of the dominated
 plant, and then integrated at species-scale using both light
 interception and relative surface.
 
-To conclude, we see that the interrow spacing can only impact the light
-interception as a density effect (more plants per m2, closer
-intra-species canopy), but not as a pure geometrical effect.
+To conclude on this point, we see that the interrow spacing can only
+impact the light interception as a density effect (more plants per m2,
+closer intra-species canopy), but not as a pure geometrical effect.
 
 For more details on how the \texttt{trg} is computed, see Chapter
 \ref{trg}, and for more details on light interception, see Chapter
 \ref{Light}.
+
+\chapter{Design}\label{design}
+
+\section{Introduction}\label{introduction-4}
+
+It is difficult to understand well which cropping design (i.e.~species
+arrangement) can be simulated using the STICS model formalisms. Based on
+the previous information from Chapter \ref{Light}, \ref{trg}, and
+\ref{Interrow}, we present some use-cases were the model can be applied
+according to its formalisms, and were it cannot. The list of designs
+proposed here is not exhaustive, and the user should always think about
+the relevance of using STICS to model a particular design.
+
+\section{Designs that can be
+simulated}\label{designs-that-can-be-simulated}
+
+Figure \ref{fig:DesignOK} shows the depiction of some of the cropping
+designs that possibly can be simulated by the STICS model. The list is
+not exhaustive, but gives an overall look on the possibilities:
+
+\begin{figure}
+\centering
+\includegraphics{img/Design_OK.png}
+\caption{\label{fig:DesignOK}Depiction of the potentially adapted intercrop
+designs for simulation using the STICS model.}
+\end{figure}
+
+The list will be extended soon, and the different assumptions and domain
+of vailidity for each will be detailed too.
+
+\section{Designs that cannot be
+simulated}\label{designs-that-cannot-be-simulated}
+
+Figure \ref{fig:DesignKO} shows a design that cannot be simulated by the
+STICS intercrop model as is:
+
+\begin{figure}
+\centering
+\includegraphics{img/Design_KO.png}
+\caption{\label{fig:DesignKO}Depiction of the intercrop designs not adapted
+for simulation using the STICS model as is.}
+\end{figure}
+
+Indeed, strips implies that interspecies light competition is only
+present on the border of each strip, making the Dominant/Dominated
+paradigm unreallistic for this design. The model could simulate large
+strips as two separated crops though.
 
 \bibliography{book.bib,packages.bib}
 

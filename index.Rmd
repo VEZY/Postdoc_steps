@@ -1,5 +1,5 @@
 --- 
-title: "Work of R.Vezy for the ReMIX Project"
+title: "STICS intercrop: a work in progress for the ReMIX H2020 project"
 author: "R. Vezy"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site

@@ -5,11 +5,11 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Work of R.Vezy for the ReMIX Project</title>
+  <title>STICS intercrop: a work in progress for the ReMIX H2020 project</title>
   <meta name="description" content="This book is made to keep track of my work during my post-doctorate position for the ReMIX project.">
   <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
 
-  <meta property="og:title" content="Work of R.Vezy for the ReMIX Project" />
+  <meta property="og:title" content="STICS intercrop: a work in progress for the ReMIX H2020 project" />
   <meta property="og:type" content="book" />
   
   
@@ -17,7 +17,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Work of R.Vezy for the ReMIX Project" />
+  <meta name="twitter:title" content="STICS intercrop: a work in progress for the ReMIX H2020 project" />
   
   <meta name="twitter:description" content="This book is made to keep track of my work during my post-doctorate position for the ReMIX project." />
   
@@ -25,7 +25,7 @@
 <meta name="author" content="R. Vezy">
 
 
-<meta name="date" content="2018-06-19">
+<meta name="date" content="2018-06-21">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -33,7 +33,7 @@
   
   
 <link rel="prev" href="plantdensity.html">
-
+<link rel="next" href="design.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -456,7 +456,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
       <nav role="navigation">
 
 <ul class="summary">
-<li><a href="./">Work of R.Vezy for the ReMIX project</a></li>
+<li><a href="./">STICS intercrop: a work in progress for the ReMIX H2020 project</a></li>
 
 <li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Prerequisites</a></li>
@@ -465,6 +465,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="2.2" data-path="Light.html"><a href="Light.html#plant-shape"><i class="fa fa-check"></i><b>2.2</b> Plant shape</a><ul>
 <li class="chapter" data-level="2.2.1" data-path="Light.html"><a href="Light.html#plant-width-computation"><i class="fa fa-check"></i><b>2.2.1</b> Plant width computation</a></li>
 <li class="chapter" data-level="2.2.2" data-path="Light.html"><a href="Light.html#plant-width-correction"><i class="fa fa-check"></i><b>2.2.2</b> Plant width correction</a></li>
+<li class="chapter" data-level="2.2.3" data-path="Light.html"><a href="Light.html#plant-height"><i class="fa fa-check"></i><b>2.2.3</b> Plant height</a></li>
 </ul></li>
 <li class="chapter" data-level="2.3" data-path="Light.html"><a href="Light.html#light-interception"><i class="fa fa-check"></i><b>2.3</b> Light interception</a><ul>
 <li class="chapter" data-level="2.3.1" data-path="Light.html"><a href="Light.html#incident-direct-radiation-from-the-atmosphere"><i class="fa fa-check"></i><b>2.3.1</b> Incident direct radiation from the atmosphere</a></li>
@@ -498,6 +499,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="6.1" data-path="Interrow.html"><a href="Interrow.html#introduction-3"><i class="fa fa-check"></i><b>6.1</b> Introduction</a></li>
 <li class="chapter" data-level="6.2" data-path="Interrow.html"><a href="Interrow.html#inter-row-spacing-for-mixed-crops-in-the-model"><i class="fa fa-check"></i><b>6.2</b> Inter-row spacing for mixed crops in the model</a></li>
 </ul></li>
+<li class="chapter" data-level="7" data-path="design.html"><a href="design.html"><i class="fa fa-check"></i><b>7</b> Design</a><ul>
+<li class="chapter" data-level="7.1" data-path="design.html"><a href="design.html#introduction-4"><i class="fa fa-check"></i><b>7.1</b> Introduction</a></li>
+<li class="chapter" data-level="7.2" data-path="design.html"><a href="design.html#designs-that-can-be-simulated"><i class="fa fa-check"></i><b>7.2</b> Designs that can be simulated</a></li>
+<li class="chapter" data-level="7.3" data-path="design.html"><a href="design.html#designs-that-cannot-be-simulated"><i class="fa fa-check"></i><b>7.3</b> Designs that cannot be simulated</a></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -510,7 +516,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Work of R.Vezy for the ReMIX Project</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">STICS intercrop: a work in progress for the ReMIX H2020 project</a>
           </h1>
         </div>
 
@@ -522,11 +528,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h1><span class="header-section-number">Chapter 6</span> Interrow spacing</h1>
 <div id="introduction-3" class="section level2">
 <h2><span class="header-section-number">6.1</span> Introduction</h2>
-<p>The inter-row is the distance between two rows of the same plant species. It is straightforward for monocrops, but a bit more complicated for intercrops. Indeed, the inter-row parameter can have unexpected adverse effects for intercrops. Here is a simple design with a field with two plant species sowed with the same inter-row:</p>
+<p>The inter-row is the distance between two rows of the same plant species. Figure <a href="Interrow.html#fig:SameInterrow">6.1</a> shows a simple design with a field with two plant species sowed with the same inter-row.</p>
 <center>
-<div class="figure">
+<div class="figure"><span id="fig:SameInterrow"></span>
 <img src="img/Same-Interrow.png" alt="Pea-Wheat intercrop using the same inter-row spacing for the two crops" />
-<p class="caption">Pea-Wheat intercrop using the same inter-row spacing for the two crops</p>
+<p class="caption">Figure 6.1: Pea-Wheat intercrop using the same inter-row spacing for the two crops</p>
 </div>
 </center>
 <p>So far, so good. Now what happens if we set a different inter-row spacing for the two species ?</p>
@@ -534,14 +540,14 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="inter-row-spacing-for-mixed-crops-in-the-model" class="section level2">
 <h2><span class="header-section-number">6.2</span> Inter-row spacing for mixed crops in the model</h2>
 <p>Whereas the model as a notion of the position of the plants along the interrow considering the same plant species (<em>i.e.</em> Principal or Associated), it does not explicitly position the different plant species between each other. Indeed, the light interception of the dominant plant is first computed using its geometry and a plane at the height of the dominated plant. Then, the light interception of the dominated plant is computed using the average light incident on the previous plane (separated between shaded and sunlit component), the plant geometry, and a second plane right above the soil. So when computing its light interception, the dominated plant do not consider at all the dominant plant interrow spacing, but only the light it transmits. Of course the dominant plant interrow spacing does impact the light that is transmitted to the dominatd plant, but it is not an explicit description of the interrow spacing.</p>
-<p>Here is a depiction of how the model describe the interrow for intercrops:</p>
+<p>Figure <a href="Interrow.html#fig:interrow">6.2</a> shows a depiction of how the model describe the interrow for intercrops.</p>
 <div class="figure"><span id="fig:interrow"></span>
 <img src="img/Interrow.png" alt="Interrow effect on light interception for intercrops in the STICS model" />
-<p class="caption">Figure 6.1: <strong>Interrow effect on light interception for intercrops in the STICS model</strong></p>
+<p class="caption">Figure 6.2: Interrow effect on light interception for intercrops in the STICS model</p>
 </div>
 <p>The model does effectively compute half the interrow light interception only, because it is assumed that the other half have the same light regime at daily time-scale. First the interrow of the dominant plant is used to position the left and right dominant plants. The model then computes the golbal radiation (<code>trg</code>) that is transmitted to the Plane 1, which is then used to compute the light intercepted by the dominant plant. The light transmitted to the Plane 1 is divided into two light regimes: a shaded component (surface right under the dominant plant canopy) and a sunlit component (the opposite).</p>
 <p>Second, the light incident on the Plane 1 is used as the <code>trg</code> for the dominated plant, and the same computation than for the dominant plant is performed for the shaded and sunlit components of the dominated plant, and then integrated at species-scale using both light interception and relative surface.</p>
-<p>To conclude, we see that the interrow spacing can only impact the light interception as a density effect (more plants per m2, closer intra-species canopy), but not as a pure geometrical effect.</p>
+<p>To conclude on this point, we see that the interrow spacing can only impact the light interception as a density effect (more plants per m2, closer intra-species canopy), but not as a pure geometrical effect.</p>
 <p>For more details on how the <code>trg</code> is computed, see Chapter <a href="trg.html#trg">3</a>, and for more details on light interception, see Chapter <a href="Light.html#Light">2</a>.</p>
 
 </div>
@@ -551,8 +557,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           </div>
         </div>
       </div>
-<a href="plantdensity.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="plantdensity.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="design.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
