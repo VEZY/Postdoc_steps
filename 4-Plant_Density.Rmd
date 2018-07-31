@@ -46,13 +46,38 @@ In sole crops, the density effect is straightforward. However, under the case of
 
 Then the density effect is computed as an equivalent density instead (`densiteequiv`), that can differ from the sowing density for the dominated crop to increase the negative effect of `efdensite` compared to a sole crop.
 
-The previous implementation in STICS was simple. As soon as a plant become dominated, it had an increased equivalent density compared to its actual density (*e.g.* doubled). After some discussion with the STICS intercrop team, Sebastian Munz modified the STICS code to implement a new formalism to define the equivalent density as a function of the height difference between the plants as follow:
+The previous implementation in STICS was simple. As soon as a plant become dominated, it had an increased equivalent density compared to its actual density (*e.g.* doubled). After some discussion with the STICS intercrop team, this formalism was considered not suitable for two reasons: 
 
-$density_{Equivalent} =\begin{cases}\Delta_{height} > hauteur_{threshold} & density_{p2} + \frac{density_{p1}}{P_{bdensp1}}\cdot P_{bdensp2}  \\ \Delta_{height} < hauteur_{threshold} & density_{p2}+slope\cdot abs\left|\Delta_{height}\right| \end{cases}$
+* Whenever a plant become shorter its density drastically increases regardless of the height difference. We propose to modify the formalism to consider the height difference explicitly while computing the equivalent density.
 
+* For the moment, the competition induced by the density of the other species (*i.e.* interspecies competition) was re-included in the equivalent density computation using the `P_bdensp1` and `P_bdensp2` parameters, which come from the sole crop formalism, where it is used to consider intra-species competition effect. The equivalent density was originally set up to consider the decrease in light quality when a plant has another plant above it. Adding another computation of competition based on the density of the other plant could be redundant, because it is already considered during the light interception (see Chapter \@ref(Interrow) and \@ref(Light)). Consequently, we propose to remove this computation from the equivalent density formalism, and to let the `P_bdensp1` and `P_bdensp2` parameters being used to compute the `efdensite` variable only.
+ 
+## Proposition for new equivalent density formalism
+
+### Definition of the different propositions 
+
+The user will now have four options to compute the equivalent density, depending on the value of the `P_code_calc_equi_density` parameter: 
+
+* (1): Previous computation : $density_{Equivalent}= density_{p2} + \frac{density_{p1}}{P_{bdensp1}}\cdot P_{bdensp2}$
+
+* (2): Improved computation to define the equivalent density as a function of the height difference between the plants as follow: 
+$density_{Equivalent} =\begin{cases}\Delta_{height} > hauteur_{threshold} & density_{p2} + \frac{density_{p1}}{P_{bdensp1}}\cdot P_{bdensp2}  \\ \Delta_{height} < hauteur_{threshold} & density_{p2}+slope\cdot abs\left|\Delta_{height}\right| \end{cases}$  
 with $diffx= \frac{density_{p1}}{P_{bdensp1}}\cdot P_{bdensp2}$ and $slope= \frac{diffx}{hauteur_{threshold}}$
 
+* (3): Improved computation to define the equivalent density as a function of the height difference between the plants, and using different parameters for intraspecific and interspecific competition, with simpler meanings. This formalism would give no increase in equivalent density until a given threshold (`hauteur_threshold`), after which a progressive increase in the equivalent density would happen until the maximum allowed. In this computation, the slope would be computed by the model, and the equivalent density would be computed as follows:  $density_{Equivalent} =\begin{cases}\Delta_{height} < hauteur_{threshold} & density_{p2} \\ \Delta_{height} > hauteur_{threshold} & b + \Delta_{height}\cdot slope \\ \Delta_{height} > hauteur_{threshold_2} & Max_{equDens} \end{cases}$  
+with $slope= \frac{Max_{equDens}}{hauteur_{threshold_2}-hauteur_{threshold}}$.
+This formalism would include three parameters:
+    * `hauteur_threshold`: the difference in height below which no competition is occuring
 
+    * `hauteur_threshold_2`: the difference in height below which a progressive competition is occuring
+
+    * `Max_equDens`: the maximum equivalent density allowed (generally the sole crop density).
+
+* Any other value: the equivalent density is equal to the true plant density 
+
+### Visual representation of the options 
+
+The two new formalisms are both linking the equivalent density to the difference of height between the two plants, but using different parameters and outputs.
 ```{r}
 df_DE= data.frame(Delta_height= seq(from= 0.01, to= 1, by= 0.01))
 density_p1= 140
@@ -63,9 +88,9 @@ diffx = density_p1 / P_bdensp1 * P_bdensp2
 slope= diffx/hauteur_threshold
 ```
 
-Here is an exemple with a wheat-pea intercrop with a plant density of `r density_p1` for the wheat as the principal species and `r density_p2` for the pea as the associated species:
+Here is a visual representation of the equivalent density when `P_code_calc_equi_density= 2` for a wheat-pea intercrop with a plant density of `r density_p1` for the wheat as the principal species and `r density_p2` for the pea as the associated species:
 
-```{r}
+```{r P_code_calc_equi_density_2}
 df_DE%>%
   mutate(Equ_density= 
            ifelse(Delta_height>hauteur_threshold,
@@ -80,41 +105,22 @@ df_DE%>%
        title= "New formalism for equivalent plant density")
 ```
 
-
-The new formalism has several implications in the model, notably that the dominated plant is less impacted by the competition with the dominant plant when both have approximately the same height.
-A comparison of the two formalisms was made using the [sticRs](https://github.com/VEZY/sticRs) package, from which a summary plot was extracted, and the results are shown in Figure \@ref(fig:trgcomparison2).
-
-![(\#fig:trgcomparison2)trg comparison](img/Equ-dens-computation.png)
-The results showed that the new equvalent density computation is less severe for the dominated plant compared to the previous formalism. Consequently, the dominated plant intercepts more light (see `cumraint` and `fapar`) and has a higher `LAI`.
-
-Now the next step is to parameterize well the parameters for the wheat and the pea.
+This option has several implications in the model, notably that the dominated plant is less impacted by the competition with the dominant plant when both have approximately the same height.
 
 
-## Proposition for a newer equivalent density
+Here is a visual representation of the same output when `P_code_calc_equi_density= 3`:
 
-E.Justes, proposed a new (third) equivalent density computation that would have no increase in equivalent density until a given threshold (`hauteur_threshold_1`), after which a progressive increase in the equivalent density would happen until the maximum allowed. in this computation, the slope would be computed by the model, and the resulting equivalent density would be as follows:
-
-$density_{Equivalent} =\begin{cases}\Delta_{height} < hauteur_{threshold_1} & density_{p2} \\ \Delta_{height} > hauteur_{threshold_1} & b + \Delta_{height}\cdot slope \\ \Delta_{height} > hauteur_{threshold_2} & Max_{equDens} \end{cases}$
-
-with $slope= \frac{Max_{equDens}}{hauteur_{threshold_2}-hauteur_{threshold_1}}$
-
-Here is the resulting plot for the same Wheat-Pea intercrop:
-
-
-```{r}
+```{r P_code_calc_equi_density_3}
 df_DE= data.frame(Delta_height= seq(from= 0.01, to= 1, by= 0.01))
-density_p1= 140
-density_p2= 30
-hauteur_threshold_1= 0.2
 hauteur_threshold_2= 0.8
 Max_equDens= 60
-slope= (Max_equDens)/(hauteur_threshold_2-hauteur_threshold_1)
-b= density_p2-slope*hauteur_threshold_1
+slope= (Max_equDens)/(hauteur_threshold_2-hauteur_threshold)
+b= density_p2-slope*hauteur_threshold
   
 df_DE%>%
-  mutate(slope= (Max_equDens)/(hauteur_threshold_2-hauteur_threshold_1),
+  mutate(slope= (Max_equDens)/(hauteur_threshold_2-hauteur_threshold),
          Equ_density= 
-           ifelse(Delta_height>hauteur_threshold_1,
+           ifelse(Delta_height>hauteur_threshold,
                   slope*abs(Delta_height)+b,density_p2))%>%
   mutate(Equ_density= ifelse(Equ_density>Max_equDens,
                              Max_equDens,Equ_density))%>%
@@ -126,21 +132,12 @@ df_DE%>%
        title= "New (third) formalism for equivalent plant density")
 ```
 
+This formalism considers no interspecific competition for the quality of light while the difference in height is low, and then an increased competition until a maximum is reached.  
 
-This formalism would include three parameters: 
+### Comparison between options
 
-* hauteur_threshold_1: the difference in height below which no competition is occuring
+A comparison of the different formalisms was made using the [sticRs](https://github.com/VEZY/sticRs) package, from which a summary plot was extracted, and the results are shown in Figure \@ref(fig:trgcomparison2).
 
-* hauteur_threshold_2: the difference in height below which a progressive competition is occuring
+![(\#fig:trgcomparison2)Comparing options for the equivalent density computation](img/Equi_dens_3.png)
 
-* Max_equDens: the maximum equivalent density allowed.
-
-## Proposition to remove the old explicit interspecies density competition effect
-
-For the moment, the competition induced by the density of the other species was re-included in the equivalent density computation using the `P_bdensp1` and `P_bdensp2` parameters, which come from the sole crop formalism, where it is used to consider intra-species competition effect. 
-
-The equivalent density was originally set up to consider the decrease in light quality when a plant has another plant above it. Adding another computation of competition based on the density of the other plant could be redundant, because it is already considered during the light interception (see \@ref(Interrow) and \@ref(Light)). 
-
-Consequently, we propose to remove this computation from the equivalent density formalism, and to let the `P_bdensp1` and `P_bdensp2` parameters being used to compute the `efdensite` variable only.
-
-We now have to test this proposition.
+It is not very clear from the figure, but the second and third options (*i.e.* `P_code_calc_equi_density= 2` and `P_code_calc_equi_density= 3`) for the equivalent density computation are both less severe than the previous one (`P_code_calc_equi_density= 1`) for the dominated plant. The second one has effect on the equivalent effect for limited time only (dashed red curve), while the third one show no increase in equivalent density all along the crop life because the height difference remains below the first threshold. Consequently, the dominated plant intercepts more light (see `cumraint` and `fapar`) and has a higher `LAI` using the third option.

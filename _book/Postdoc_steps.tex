@@ -125,7 +125,7 @@
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{2018-06-21}
+    \date{2018-07-03}
 
 \usepackage{booktabs}
 
@@ -505,171 +505,6 @@ of each point.
 Here is an example of the computation of the direct proportion received
 at each X point for a crop using the \texttt{kgeom()} function:
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{decangle=}\StringTok{ }\ControlFlowTok{function}\NormalTok{(j)\{}
-\NormalTok{  theta1 =}\StringTok{ }\DecValTok{2} \OperatorTok{*}\StringTok{ }\NormalTok{pi }\OperatorTok{*}\StringTok{ }\NormalTok{(j }\OperatorTok{-}\StringTok{ }\DecValTok{80}\NormalTok{) }\OperatorTok{/}\StringTok{ }\DecValTok{365}
-\NormalTok{  theta2 =}\StringTok{ }\FloatTok{0.034} \OperatorTok{*}\StringTok{ }\NormalTok{(}\KeywordTok{sin}\NormalTok{(}\DecValTok{2} \OperatorTok{*}\StringTok{ }\NormalTok{pi }\OperatorTok{*}\StringTok{ }\NormalTok{j }\OperatorTok{/}\StringTok{ }\DecValTok{365}\NormalTok{) }\OperatorTok{-}\StringTok{ }\KeywordTok{sin}\NormalTok{(}\DecValTok{2} \OperatorTok{*}\StringTok{ }\NormalTok{pi }\OperatorTok{*}\StringTok{ }\DecValTok{80} \OperatorTok{/}\StringTok{ }\DecValTok{365}\NormalTok{))}
-\NormalTok{  theta =}\StringTok{ }\NormalTok{theta1 }\OperatorTok{-}\StringTok{ }\NormalTok{theta2}
-\NormalTok{  decangle =}\StringTok{ }\KeywordTok{asin}\NormalTok{(}\FloatTok{0.3978} \OperatorTok{*}\StringTok{ }\KeywordTok{sin}\NormalTok{(theta))}
-\NormalTok{\}}
-
-\NormalTok{thetacrit=}\StringTok{ }\ControlFlowTok{function}\NormalTok{(lat,j,tgh,alpha)\{}
-  
-\NormalTok{  acrit =}\StringTok{ }\FloatTok{0.0}
-\NormalTok{  bcrit =}\StringTok{ }\FloatTok{0.0}
-\NormalTok{  a =}\StringTok{ }\FloatTok{0.0}
-\NormalTok{  b =}\StringTok{ }\FloatTok{0.0}
-\NormalTok{  thetacr =}\StringTok{ }\FloatTok{0.0}
-\NormalTok{  hcritprec=}\StringTok{ }\DecValTok{0}
-\NormalTok{  n  =}\StringTok{ }\DecValTok{3}
-\NormalTok{  dec =}\StringTok{ }\KeywordTok{decangle}\NormalTok{(j)}
-\NormalTok{  hprec =}\StringTok{ }\FloatTok{0.0}
-\NormalTok{  pi =}\StringTok{ }\DecValTok{4} \OperatorTok{*}\StringTok{ }\KeywordTok{atan}\NormalTok{(}\FloatTok{1.0}\NormalTok{)}
-\NormalTok{  theta=}\StringTok{ }\KeywordTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{180}\NormalTok{)}
-  
-  \ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\NormalTok{(}\DecValTok{18} \OperatorTok{*}\StringTok{ }\NormalTok{n))\{}
-\NormalTok{    theta[i] =}\StringTok{ }\DecValTok{10}\NormalTok{. }\OperatorTok{/}\StringTok{ }\NormalTok{n }\OperatorTok{*}\StringTok{ }\NormalTok{(i }\OperatorTok{-}\StringTok{ }\DecValTok{1}\NormalTok{)}
-\NormalTok{    theta[i] =}\StringTok{ }\NormalTok{(theta[i] }\OperatorTok{-}\StringTok{ }\DecValTok{90}\NormalTok{) }\OperatorTok{/}\StringTok{ }\DecValTok{180} \OperatorTok{*}\StringTok{ }\NormalTok{pi}
-    \CommentTok{# Sun position (h,azim)}
-\NormalTok{    sinh =}\StringTok{ }\KeywordTok{sin}\NormalTok{(lat) }\OperatorTok{*}\StringTok{ }\KeywordTok{sin}\NormalTok{(dec) }\OperatorTok{+}\StringTok{ }\KeywordTok{cos}\NormalTok{(lat) }\OperatorTok{*}\StringTok{ }\KeywordTok{cos}\NormalTok{(dec) }\OperatorTok{*}\StringTok{ }\KeywordTok{cos}\NormalTok{(theta[i])}
-\NormalTok{    h =}\StringTok{ }\KeywordTok{asin}\NormalTok{(sinh)}
-\NormalTok{    cosazim =}\StringTok{ }\NormalTok{(}\OperatorTok{-}\KeywordTok{cos}\NormalTok{(lat) }\OperatorTok{*}\StringTok{ }\KeywordTok{sin}\NormalTok{(dec) }\OperatorTok{+}\StringTok{ }\KeywordTok{sin}\NormalTok{(lat) }\OperatorTok{*}\StringTok{ }\KeywordTok{cos}\NormalTok{(dec) }\OperatorTok{*}\StringTok{ }\KeywordTok{cos}\NormalTok{(theta[i])) }\OperatorTok{/}\StringTok{ }\KeywordTok{cos}\NormalTok{(h)}
-\NormalTok{    cosazim =}\StringTok{ }\KeywordTok{pmin}\NormalTok{(}\FloatTok{1.0}\NormalTok{,cosazim)}
-    \ControlFlowTok{if}\NormalTok{(theta[i]}\OperatorTok{!=}\FloatTok{0.0}\NormalTok{)\{}
-\NormalTok{      azim =}\StringTok{ }\KeywordTok{acos}\NormalTok{(cosazim) }\OperatorTok{*}\StringTok{ }\NormalTok{theta[i] }\OperatorTok{/}\StringTok{ }\KeywordTok{abs}\NormalTok{(theta[i])}
-\NormalTok{    \}}\ControlFlowTok{else}\NormalTok{\{}
-\NormalTok{      azim =}\StringTok{ }\FloatTok{0.0}
-\NormalTok{    \}}
-    \ControlFlowTok{if}\NormalTok{(sinh}\OperatorTok{<}\FloatTok{0.0}\NormalTok{)\{h =}\StringTok{ }\FloatTok{0.0}\NormalTok{\}}
-    
-    \CommentTok{# Critical height}
-\NormalTok{    hcrit =}\StringTok{ }\KeywordTok{atan}\NormalTok{(tgh }\OperatorTok{*}\StringTok{ }\KeywordTok{abs}\NormalTok{(}\KeywordTok{sin}\NormalTok{(azim }\OperatorTok{+}\StringTok{ }\NormalTok{alpha }\OperatorTok{+}\StringTok{ }\FloatTok{0.00001}\NormalTok{)))}
-    \CommentTok{# test for h = hcrit}
-    \ControlFlowTok{if}\NormalTok{ (hcritprec }\OperatorTok{>=}\StringTok{ }\NormalTok{hprec }\OperatorTok{&}\StringTok{ }\NormalTok{hcrit }\OperatorTok{<=}\StringTok{ }\NormalTok{h }\OperatorTok{&}\StringTok{ }\NormalTok{i }\OperatorTok{>}\StringTok{ }\DecValTok{1}\NormalTok{)\{}
-      \CommentTok{# Linear interpolation:}
-\NormalTok{      acrit =}\StringTok{ }\NormalTok{(hcrit }\OperatorTok{-}\StringTok{ }\NormalTok{hcritprec) }\OperatorTok{/}\StringTok{ }\NormalTok{(theta[i] }\OperatorTok{-}\StringTok{ }\NormalTok{theta[i}\OperatorTok{-}\DecValTok{1}\NormalTok{])}
-\NormalTok{      bcrit =}\StringTok{ }\NormalTok{hcrit }\OperatorTok{-}\StringTok{ }\NormalTok{acrit }\OperatorTok{*}\StringTok{ }\NormalTok{theta[i]}
-\NormalTok{      a =}\StringTok{ }\NormalTok{(h }\OperatorTok{-}\StringTok{ }\NormalTok{hprec) }\OperatorTok{/}\StringTok{ }\NormalTok{(theta[i] }\OperatorTok{-}\StringTok{ }\NormalTok{theta[i}\OperatorTok{-}\DecValTok{1}\NormalTok{])}
-\NormalTok{      b =}\StringTok{ }\NormalTok{h }\OperatorTok{-}\StringTok{ }\NormalTok{a }\OperatorTok{*}\StringTok{ }\NormalTok{theta[i]}
-      
-      \ControlFlowTok{if}\NormalTok{(a}\OperatorTok{!=}\NormalTok{acrit)\{thetacr =}\StringTok{ }\NormalTok{(b }\OperatorTok{-}\StringTok{ }\NormalTok{bcrit) }\OperatorTok{/}\StringTok{ }\NormalTok{(acrit }\OperatorTok{-}\StringTok{ }\NormalTok{a)\}}
-\NormalTok{      hcritprec =}\StringTok{ }\NormalTok{hcrit}
-\NormalTok{      hprec =}\StringTok{ }\NormalTok{h}
-\NormalTok{    \}}
-\NormalTok{  \}}
-  \KeywordTok{return}\NormalTok{(thetacr)}
-\NormalTok{\}}
-
-\NormalTok{e =}\StringTok{ }\KeywordTok{abs}\NormalTok{(l }\OperatorTok{*}\StringTok{ }\NormalTok{rap) }\CommentTok{# Thickness of the plant crown}
-\NormalTok{xprec=}\StringTok{ }\DecValTok{0}         \CommentTok{# Init.}
-\NormalTok{limite =}\StringTok{ }\NormalTok{l }\OperatorTok{/}\StringTok{ }\DecValTok{2}
-
-\ControlFlowTok{if}\NormalTok{(ir}\OperatorTok{<}\FloatTok{1.0}\NormalTok{)\{interval =}\StringTok{ }\DecValTok{200}\NormalTok{.\}}\ControlFlowTok{else}\NormalTok{\{interval =}\StringTok{ }\DecValTok{20}\NormalTok{.\}}
-\ControlFlowTok{if}\NormalTok{(l}\OperatorTok{>}\NormalTok{ir}\OperatorTok{/}\DecValTok{2}\NormalTok{.)\{l =}\StringTok{ }\NormalTok{ir}\OperatorTok{/}\DecValTok{2}\NormalTok{.\}}
-
-\ControlFlowTok{if}\NormalTok{(e}\OperatorTok{>}\FloatTok{0.0}\NormalTok{)\{}
-\NormalTok{  limite2 =}\StringTok{ }\NormalTok{l}\OperatorTok{/}\DecValTok{2} \OperatorTok{*}\StringTok{ }\NormalTok{(haut}\OperatorTok{/}\NormalTok{e}\OperatorTok{+}\DecValTok{1}\NormalTok{)}
-\NormalTok{\}}\ControlFlowTok{else}\NormalTok{\{}
-\NormalTok{  P_forme =}\StringTok{ }\DecValTok{1}
-\NormalTok{\}}
-\CommentTok{# NB : is it sure that it is (haut/e+1) and not (haut/(e+1)) ? }
-
-\CommentTok{# Saving some intermediate results for output here (not in the real function):}
-\NormalTok{x_s=}\StringTok{ }\NormalTok{(}\DecValTok{1}\OperatorTok{:}\NormalTok{(ir }\OperatorTok{/}\StringTok{ }\DecValTok{2} \OperatorTok{*}\StringTok{ }\NormalTok{interval))}
-\NormalTok{Output=}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{x_index=}\NormalTok{ x_s,}
-                   \DataTypeTok{x_value=}\NormalTok{ (x_s}\OperatorTok{-}\DecValTok{1}\NormalTok{)}\OperatorTok{/}\NormalTok{interval,}
-                   \DataTypeTok{theta1=} \KeywordTok{rep}\NormalTok{(}\OtherTok{NA_real_}\NormalTok{,}\KeywordTok{length}\NormalTok{(x_s)),}
-                   \DataTypeTok{theta2=} \KeywordTok{rep}\NormalTok{(}\OtherTok{NA_real_}\NormalTok{,}\KeywordTok{length}\NormalTok{(x_s)),}
-                   \DataTypeTok{theta1_deg=} \KeywordTok{rep}\NormalTok{(}\OtherTok{NA_real_}\NormalTok{,}\KeywordTok{length}\NormalTok{(x_s)),}
-                   \DataTypeTok{theta2_deg=} \KeywordTok{rep}\NormalTok{(}\OtherTok{NA_real_}\NormalTok{,}\KeywordTok{length}\NormalTok{(x_s)),}
-                   \DataTypeTok{kg=} \KeywordTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{,}\KeywordTok{length}\NormalTok{(x_s)))}
-
-\CommentTok{# Loop over Xs:}
-
-\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in}\NormalTok{ x_s)\{}
-\NormalTok{  x =}\StringTok{ }\NormalTok{(i}\OperatorTok{-}\DecValTok{1}\NormalTok{) }\OperatorTok{/}\StringTok{ }\NormalTok{interval}
-  \ControlFlowTok{if}\NormalTok{(xprec}\OperatorTok{<=}\NormalTok{l}\OperatorTok{/}\DecValTok{2}\OperatorTok{&}\NormalTok{x}\OperatorTok{>=}\NormalTok{l}\OperatorTok{/}\DecValTok{2}\NormalTok{)\{ilim =}\StringTok{ }\NormalTok{i\}}
-\NormalTok{  xprec =}\StringTok{ }\NormalTok{x}
-  
-  \CommentTok{# kdir:}
-  
-  \CommentTok{# Rectangle:}
-  \ControlFlowTok{if}\NormalTok{(P_forme}\OperatorTok{==}\DecValTok{1}\NormalTok{)\{}
-\NormalTok{    tgh1 =}\StringTok{ }\NormalTok{(haut }\OperatorTok{+}\StringTok{ }\NormalTok{e) }\OperatorTok{/}\StringTok{ }\NormalTok{(ir }\OperatorTok{-}\StringTok{ }\NormalTok{x }\OperatorTok{-}\StringTok{ }\NormalTok{limite)}
-\NormalTok{    theta1 =}\StringTok{ }\KeywordTok{thetacrit}\NormalTok{(lat,j,tgh1,alpha)}
-    \ControlFlowTok{if}\NormalTok{(x}\OperatorTok{>}\NormalTok{limite)\{}
-\NormalTok{      tgh2 =}\StringTok{ }\NormalTok{(haut }\OperatorTok{+}\StringTok{ }\NormalTok{e) }\OperatorTok{/}\StringTok{ }\NormalTok{(x }\OperatorTok{-}\StringTok{ }\NormalTok{limite)}
-\NormalTok{      theta2 =}\StringTok{ }\KeywordTok{thetacrit}\NormalTok{(lat,j,tgh2,alpha)}
-\NormalTok{    \}}\ControlFlowTok{else} \ControlFlowTok{if}\NormalTok{(x }\OperatorTok{<}\StringTok{ }\NormalTok{limite)\{}
-\NormalTok{      tgh2 =}\StringTok{ }\NormalTok{haut }\OperatorTok{/}\StringTok{ }\NormalTok{( }\OperatorTok{-}\NormalTok{x }\OperatorTok{+}\StringTok{ }\NormalTok{limite)}
-\NormalTok{      theta2 =}\StringTok{ }\OperatorTok{-}\KeywordTok{thetacrit}\NormalTok{(lat,j,tgh2,alpha)}
-\NormalTok{    \}}\ControlFlowTok{else}\NormalTok{\{}
-      \CommentTok{# x == limite}
-\NormalTok{      theta2 =}\StringTok{ }\DecValTok{0}
-\NormalTok{    \}}
-\NormalTok{  \}}
-  
-  \CommentTok{# Downside Triangle:}
-  \ControlFlowTok{if}\NormalTok{ (P_forme}\OperatorTok{==}\DecValTok{2} \OperatorTok{&}\StringTok{ }\NormalTok{rap}\OperatorTok{<}\DecValTok{0}\NormalTok{.)\{}
-\NormalTok{    tgh1 =}\StringTok{ }\NormalTok{(haut }\OperatorTok{+}\StringTok{ }\NormalTok{e) }\OperatorTok{/}\StringTok{ }\NormalTok{(ir }\OperatorTok{-}\StringTok{ }\NormalTok{x }\OperatorTok{-}\StringTok{ }\NormalTok{limite)}
-\NormalTok{    theta1 =}\StringTok{ }\KeywordTok{thetacrit}\NormalTok{(lat,j,tgh1,alpha)}
-    \ControlFlowTok{if}\NormalTok{ (x }\OperatorTok{>}\StringTok{ }\NormalTok{limite)\{}
-\NormalTok{      tgh2 =}\StringTok{ }\NormalTok{(haut }\OperatorTok{+}\StringTok{ }\NormalTok{e) }\OperatorTok{/}\StringTok{ }\NormalTok{(x }\OperatorTok{-}\StringTok{ }\NormalTok{limite)}
-\NormalTok{      theta2 =}\StringTok{ }\KeywordTok{thetacrit}\NormalTok{(lat,j,tgh2,alpha)}
-\NormalTok{    \}}\ControlFlowTok{else} \ControlFlowTok{if}\NormalTok{(x }\OperatorTok{<}\StringTok{ }\NormalTok{limite)\{}
-\NormalTok{      tgh2 =}\StringTok{ }\NormalTok{(haut }\OperatorTok{+}\StringTok{ }\NormalTok{e) }\OperatorTok{/}\StringTok{ }\NormalTok{( x }\OperatorTok{-}\StringTok{ }\NormalTok{limite)}
-\NormalTok{      theta2 =}\StringTok{ }\OperatorTok{-}\KeywordTok{thetacrit}\NormalTok{(lat,j,tgh2,alpha)}
-\NormalTok{    \}}\ControlFlowTok{else}\NormalTok{\{}
-\NormalTok{      theta2 =}\StringTok{ }\DecValTok{0}
-\NormalTok{    \}}
-\NormalTok{  \}}
-  
-  \CommentTok{# Upside Triangle:}
-  \ControlFlowTok{if}\NormalTok{ (P_forme}\OperatorTok{==}\DecValTok{2}\OperatorTok{&}\NormalTok{rap}\OperatorTok{>}\DecValTok{0}\NormalTok{.)\{ then}
-\NormalTok{    tgh1 =}\StringTok{ }\NormalTok{(haut }\OperatorTok{+}\StringTok{ }\NormalTok{e) }\OperatorTok{/}\StringTok{ }\NormalTok{(ir }\OperatorTok{-}\StringTok{ }\NormalTok{x }\OperatorTok{-}\StringTok{ }\NormalTok{limite)}
-\NormalTok{    theta1 =}\StringTok{ }\KeywordTok{thetacrit}\NormalTok{(lat,j,tgh1,alpha)}
-    \ControlFlowTok{if}\NormalTok{ (x }\OperatorTok{<}\StringTok{ }\NormalTok{limite2)\{}
-      \ControlFlowTok{if}\NormalTok{ (x }\OperatorTok{>}\StringTok{ }\NormalTok{limite)\{}
-\NormalTok{        tgh2 =}\StringTok{ }\NormalTok{haut }\OperatorTok{/}\StringTok{ }\NormalTok{( x }\OperatorTok{-}\StringTok{ }\NormalTok{limite)}
-\NormalTok{        theta2 =}\StringTok{ }\KeywordTok{thetacrit}\NormalTok{(lat,j,tgh2,alpha)}
-\NormalTok{      \}}\ControlFlowTok{else} \ControlFlowTok{if}\NormalTok{(x }\OperatorTok{<}\StringTok{ }\NormalTok{limite)\{}
-\NormalTok{        tgh2 =}\StringTok{ }\NormalTok{haut }\OperatorTok{/}\StringTok{ }\NormalTok{(limite }\OperatorTok{-}\StringTok{ }\NormalTok{x)}
-\NormalTok{        theta2 =}\StringTok{ }\OperatorTok{-}\KeywordTok{thetacrit}\NormalTok{(lat,j,tgh2,alpha)}
-\NormalTok{      \}}\ControlFlowTok{else}\NormalTok{\{}
-\NormalTok{        theta2 =}\StringTok{ }\FloatTok{0.0}
-\NormalTok{      \}}
-\NormalTok{    \}}\ControlFlowTok{else} \ControlFlowTok{if}\NormalTok{(x }\OperatorTok{>=}\StringTok{ }\NormalTok{limite2)\{}
-\NormalTok{      tgh2 =}\StringTok{ }\NormalTok{(haut }\OperatorTok{+}\StringTok{ }\NormalTok{e) }\OperatorTok{/}\StringTok{ }\NormalTok{x}
-\NormalTok{      theta2 =}\StringTok{ }\KeywordTok{thetacrit}\NormalTok{(lat,j,tgh2,alpha)}
-\NormalTok{    \}}
-\NormalTok{  \}}
-  
-  \CommentTok{# NB: is there a missing else here ? kg is modified just after...}
-  \ControlFlowTok{if}\NormalTok{(e }\OperatorTok{>}\StringTok{ }\FloatTok{2.1e-2}\NormalTok{)\{}
-\NormalTok{    kg =}\StringTok{ }\KeywordTok{cos}\NormalTok{(theta1)}
-\NormalTok{    kg =}\StringTok{ }\KeywordTok{cos}\NormalTok{(theta2)}
-\NormalTok{  \}}
-\NormalTok{  kg =}\StringTok{ }\FloatTok{0.5} \OperatorTok{*}\StringTok{ }\NormalTok{(}\KeywordTok{cos}\NormalTok{(pi}\OperatorTok{/}\DecValTok{2} \OperatorTok{+}\StringTok{ }\NormalTok{theta1) }\OperatorTok{+}\StringTok{ }\KeywordTok{cos}\NormalTok{(pi}\OperatorTok{/}\DecValTok{2} \OperatorTok{+}\StringTok{ }\NormalTok{theta2))}
-\NormalTok{  kg =}\StringTok{ }\KeywordTok{max}\NormalTok{(kg,}\FloatTok{0.0}\NormalTok{)}
-  
-\NormalTok{  Output}\OperatorTok{$}\NormalTok{theta1[Output}\OperatorTok{$}\NormalTok{x_index}\OperatorTok{==}\NormalTok{i]=}\StringTok{ }\NormalTok{theta1}
-\NormalTok{  Output}\OperatorTok{$}\NormalTok{theta2[Output}\OperatorTok{$}\NormalTok{x_index}\OperatorTok{==}\NormalTok{i]=}\StringTok{ }\NormalTok{theta2}
-\NormalTok{  Output}\OperatorTok{$}\NormalTok{kg[Output}\OperatorTok{$}\NormalTok{x_index}\OperatorTok{==}\NormalTok{i]=}\StringTok{ }\NormalTok{kg}
-\NormalTok{\}}
-
-\NormalTok{Output}\OperatorTok{$}\NormalTok{theta1_deg=}\StringTok{ }\NormalTok{(pi}\OperatorTok{/}\DecValTok{2}\OperatorTok{+}\NormalTok{Output}\OperatorTok{$}\NormalTok{theta1)}\OperatorTok{*}\DecValTok{180}\OperatorTok{/}\NormalTok{pi}
-\NormalTok{Output}\OperatorTok{$}\NormalTok{theta2_deg=}\StringTok{ }\NormalTok{(pi}\OperatorTok{/}\DecValTok{2}\OperatorTok{-}\NormalTok{Output}\OperatorTok{$}\NormalTok{theta2)}\OperatorTok{*}\DecValTok{180}\OperatorTok{/}\NormalTok{pi}
-
-\KeywordTok{colnames}\NormalTok{(Output)=}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"X index"}\NormalTok{,}\StringTok{"X value (m)"}\NormalTok{,}\StringTok{"Theta 1 (rad)"}\NormalTok{,}\StringTok{"Theta 2 (rad)"}\NormalTok{,}
-                    \StringTok{"Theta 1 (deg)"}\NormalTok{,}\StringTok{"Theta 2 (deg)"}\NormalTok{,}\StringTok{"kgdirect"}\NormalTok{)}
-
-\KeywordTok{kable}\NormalTok{(Output, }\DataTypeTok{caption=} \KeywordTok{paste}\NormalTok{(}\StringTok{"Example of the computation of the incident direct"}\NormalTok{,}
-                             \StringTok{"radiation ratio kgdirect. See introduction section"}\NormalTok{,}
-                             \StringTok{"for further details on the crop."}\NormalTok{))}
-\end{Highlighting}
-\end{Shaded}
-
 \begin{table}
 
 \caption{\label{tab:kdir}Example of the computation of the incident direct radiation ratio kgdirect. See introduction section for further details on the crop.}
@@ -731,96 +566,6 @@ at each X point for the same crop as above (interrow= 1 meter, width=
 0.2 meter, thickness= 0.1 meter, height= 1 meter) using the
 \texttt{kdif()} function:
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{# Initializations:}
-\NormalTok{htab=}\StringTok{ }\KeywordTok{c}\NormalTok{(}\FloatTok{9.23}\NormalTok{, }\FloatTok{9.23}\NormalTok{, }\FloatTok{9.23}\NormalTok{, }\FloatTok{9.23}\NormalTok{, }\FloatTok{9.23}\NormalTok{, }\FloatTok{10.81}\NormalTok{, }\FloatTok{10.81}\NormalTok{, }\FloatTok{26.57}\NormalTok{,}
-        \FloatTok{26.57}\NormalTok{, }\FloatTok{26.57}\NormalTok{, }\FloatTok{31.08}\NormalTok{, }\FloatTok{31.08}\NormalTok{, }\FloatTok{31.08}\NormalTok{, }\FloatTok{31.08}\NormalTok{, }\FloatTok{31.08}\NormalTok{, }\FloatTok{47.41}\NormalTok{,}
-        \FloatTok{47.41}\NormalTok{, }\FloatTok{47.41}\NormalTok{, }\FloatTok{52.62}\NormalTok{, }\FloatTok{52.62}\NormalTok{, }\FloatTok{69.16}\NormalTok{, }\FloatTok{69.16}\NormalTok{, }\FloatTok{69.16}\NormalTok{)}
-\NormalTok{aztab=}\StringTok{ }\KeywordTok{c}\NormalTok{(}\FloatTok{12.23}\NormalTok{,}\FloatTok{59.77}\NormalTok{,}\FloatTok{84.23}\NormalTok{,}\FloatTok{131.77}\NormalTok{,}\FloatTok{156.23}\NormalTok{,}\DecValTok{36}\NormalTok{,}\DecValTok{108}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{72}\NormalTok{,}\DecValTok{144}\NormalTok{,}\FloatTok{23.27}\NormalTok{,}\FloatTok{48.73}\NormalTok{,}\FloatTok{95.27}\NormalTok{,}
-         \FloatTok{120.73}\NormalTok{,}\FloatTok{167.27}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{72}\NormalTok{,}\DecValTok{144}\NormalTok{,}\DecValTok{36}\NormalTok{,}\DecValTok{108}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{72}\NormalTok{,}\DecValTok{144}\NormalTok{)}
-\NormalTok{SOCtab=}\StringTok{ }\KeywordTok{c}\NormalTok{(}\FloatTok{0.0043}\NormalTok{, }\FloatTok{0.0043}\NormalTok{, }\FloatTok{0.0043}\NormalTok{, }\FloatTok{0.0043}\NormalTok{, }\FloatTok{0.0043}\NormalTok{, }\FloatTok{0.0055}\NormalTok{,}
-          \FloatTok{0.0055}\NormalTok{, }\FloatTok{0.0140}\NormalTok{, }\FloatTok{0.0140}\NormalTok{, }\FloatTok{0.0140}\NormalTok{, }\FloatTok{0.0197}\NormalTok{, }\FloatTok{0.0197}\NormalTok{,}
-          \FloatTok{0.0197}\NormalTok{, }\FloatTok{0.0197}\NormalTok{, }\FloatTok{0.0197}\NormalTok{, }\FloatTok{0.0336}\NormalTok{, }\FloatTok{0.0336}\NormalTok{, }\FloatTok{0.0336}\NormalTok{,}
-          \FloatTok{0.0399}\NormalTok{, }\FloatTok{0.0399}\NormalTok{, }\FloatTok{0.0495}\NormalTok{, }\FloatTok{0.0495}\NormalTok{, }\FloatTok{0.0495}\NormalTok{)}
-\NormalTok{xprec=}\StringTok{ }\DecValTok{0}
-
-\ControlFlowTok{if}\NormalTok{(ir}\OperatorTok{<}\FloatTok{1.0}\NormalTok{)\{interval =}\StringTok{ }\DecValTok{200}\NormalTok{.\}}\ControlFlowTok{else}\NormalTok{\{interval =}\StringTok{ }\DecValTok{20}\NormalTok{.\}}
-\ControlFlowTok{if}\NormalTok{(l}\OperatorTok{>}\NormalTok{ir}\OperatorTok{/}\DecValTok{2}\NormalTok{.)\{l =}\StringTok{ }\NormalTok{ir}\OperatorTok{/}\DecValTok{2}\NormalTok{.\}}
-
-\CommentTok{# Saving some intermediate results for Output_diff here (not in the real function):}
-\NormalTok{x_s=}\StringTok{ }\NormalTok{(}\DecValTok{1}\OperatorTok{:}\NormalTok{(ir }\OperatorTok{/}\StringTok{ }\DecValTok{2} \OperatorTok{*}\StringTok{ }\NormalTok{interval))}
-\NormalTok{Output_diff=}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{x_index=} \KeywordTok{rep}\NormalTok{(x_s,}\DataTypeTok{each=}\DecValTok{23}\NormalTok{),}
-                   \DataTypeTok{x_value=} \KeywordTok{rep}\NormalTok{((x_s}\OperatorTok{-}\DecValTok{1}\NormalTok{)}\OperatorTok{/}\NormalTok{interval,}\DataTypeTok{each=}\DecValTok{23}\NormalTok{),}
-                   \DataTypeTok{Angle =} \KeywordTok{rep}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\DecValTok{23}\NormalTok{, }\KeywordTok{length}\NormalTok{(x_s)),}
-                   \DataTypeTok{G1=} \KeywordTok{rep}\NormalTok{(}\OtherTok{NA_real_}\NormalTok{,}\KeywordTok{length}\NormalTok{(x_s)}\OperatorTok{*}\DecValTok{23}\NormalTok{),}
-                   \DataTypeTok{G2=} \KeywordTok{rep}\NormalTok{(}\OtherTok{NA_real_}\NormalTok{,}\KeywordTok{length}\NormalTok{(x_s)}\OperatorTok{*}\DecValTok{23}\NormalTok{),}
-                   \DataTypeTok{hcrit=} \KeywordTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{,}\KeywordTok{length}\NormalTok{(x_s)}\OperatorTok{*}\DecValTok{23}\NormalTok{),}
-                   \DataTypeTok{kgdiffus=} \KeywordTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{,}\KeywordTok{length}\NormalTok{(x_s)}\OperatorTok{*}\DecValTok{23}\NormalTok{))}
-
-
-\CommentTok{# Loop over Xs:}
-
-\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in}\NormalTok{ x_s)\{}
-\NormalTok{  x =}\StringTok{ }\NormalTok{(i}\OperatorTok{-}\DecValTok{1}\NormalTok{) }\OperatorTok{/}\StringTok{ }\NormalTok{interval}
-  \ControlFlowTok{if}\NormalTok{(xprec}\OperatorTok{<=}\NormalTok{l}\OperatorTok{/}\DecValTok{2}\OperatorTok{&}\NormalTok{x}\OperatorTok{>=}\NormalTok{l}\OperatorTok{/}\DecValTok{2}\NormalTok{)\{ilim =}\StringTok{ }\NormalTok{i\}}
-\NormalTok{  xprec =}\StringTok{ }\NormalTok{x}
-  
-  \CommentTok{# kdif:}
-  
-\NormalTok{  x =}\StringTok{ }\KeywordTok{min}\NormalTok{(x,ir}\OperatorTok{/}\DecValTok{2}\NormalTok{)}
-\NormalTok{  e =}\StringTok{ }\KeywordTok{abs}\NormalTok{(l}\OperatorTok{*}\NormalTok{rap)}
-\NormalTok{  kgdiffus =}\StringTok{ }\DecValTok{0}\NormalTok{.}
-  
-  \CommentTok{# Computing for the right-hand of the row:}
-\NormalTok{  G1 =}\StringTok{ }\NormalTok{(haut}\OperatorTok{+}\NormalTok{e)}\OperatorTok{/}\NormalTok{(ir}\OperatorTok{-}\NormalTok{x}\OperatorTok{-}\NormalTok{l}\OperatorTok{/}\DecValTok{2}\NormalTok{.) }\CommentTok{# the apparent tangent h1}
-  \ControlFlowTok{for}\NormalTok{(j }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\DecValTok{23}\NormalTok{)\{}
-\NormalTok{    hcrit =}\StringTok{ }\KeywordTok{atan}\NormalTok{(G1}\OperatorTok{*}\KeywordTok{sin}\NormalTok{(aztab[j]}\OperatorTok{/}\DecValTok{180}\OperatorTok{*}\NormalTok{pi))}\OperatorTok{/}\NormalTok{pi}\OperatorTok{*}\DecValTok{180}
-    \ControlFlowTok{if}\NormalTok{(hcrit}\OperatorTok{<}\NormalTok{htab[j])\{}
-\NormalTok{      kgdiffus =}\StringTok{ }\NormalTok{kgdiffus}\OperatorTok{+}\NormalTok{SOCtab[j]}
-\NormalTok{      ######## Not in the real function ########}
-\NormalTok{      Output_diff}\OperatorTok{$}\NormalTok{kgdiffus[Output_diff}\OperatorTok{$}\NormalTok{x_index}\OperatorTok{==}\NormalTok{i}\OperatorTok{&}\NormalTok{Output_diff}\OperatorTok{$}\NormalTok{Angle}\OperatorTok{==}\NormalTok{j]=}\StringTok{ }\NormalTok{SOCtab[j]}
-\NormalTok{      ##########################################}
-\NormalTok{    \}}
-\NormalTok{    ######## Not in the real function ########}
-\NormalTok{    Output_diff}\OperatorTok{$}\NormalTok{hcrit[Output_diff}\OperatorTok{$}\NormalTok{x_index}\OperatorTok{==}\NormalTok{i}\OperatorTok{&}\NormalTok{Output_diff}\OperatorTok{$}\NormalTok{Angle}\OperatorTok{==}\NormalTok{j]=}\StringTok{ }\NormalTok{hcrit}
-\NormalTok{    Output_diff}\OperatorTok{$}\NormalTok{G1[Output_diff}\OperatorTok{$}\NormalTok{x_index}\OperatorTok{==}\NormalTok{i}\OperatorTok{&}\NormalTok{Output_diff}\OperatorTok{$}\NormalTok{Angle}\OperatorTok{==}\NormalTok{j]=}\StringTok{ }\NormalTok{G1}
-\NormalTok{    ##########################################}
-\NormalTok{  \}}
-  
-  \CommentTok{# Computing for the left-hand row, if the point is not a shaded point:}
-  \ControlFlowTok{if}\NormalTok{(x}\OperatorTok{>}\NormalTok{l}\OperatorTok{/}\DecValTok{2}\NormalTok{)\{}
-\NormalTok{    G2 =}\StringTok{ }\NormalTok{(haut}\OperatorTok{+}\NormalTok{e)}\OperatorTok{/}\NormalTok{(x}\OperatorTok{-}\NormalTok{l}\OperatorTok{/}\DecValTok{2}\NormalTok{) }\CommentTok{# the apparent tangent h2}
-    \ControlFlowTok{for}\NormalTok{(j }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\DecValTok{23}\NormalTok{)\{}
-\NormalTok{      hcrit =}\StringTok{ }\KeywordTok{atan}\NormalTok{(G2}\OperatorTok{*}\KeywordTok{sin}\NormalTok{(aztab[j]}\OperatorTok{/}\DecValTok{180}\OperatorTok{*}\NormalTok{pi))}\OperatorTok{/}\NormalTok{pi}\OperatorTok{*}\DecValTok{180}
-      \ControlFlowTok{if}\NormalTok{(hcrit }\OperatorTok{<}\StringTok{ }\NormalTok{htab[j])\{}
-\NormalTok{        kgdiffus =}\StringTok{ }\NormalTok{kgdiffus}\OperatorTok{+}\NormalTok{SOCtab[j]}
-\NormalTok{        ######## Not in the real function ########}
-\NormalTok{        Output_diff}\OperatorTok{$}\NormalTok{kgdiffus[Output_diff}\OperatorTok{$}\NormalTok{x_index}\OperatorTok{==}\NormalTok{i}\OperatorTok{&}\NormalTok{Output_diff}\OperatorTok{$}\NormalTok{Angle}\OperatorTok{==}\NormalTok{j]=}\StringTok{ }
-\StringTok{          }\NormalTok{Output_diff}\OperatorTok{$}\NormalTok{kgdiffus[Output_diff}\OperatorTok{$}\NormalTok{x_index}\OperatorTok{==}\NormalTok{i}\OperatorTok{&}\NormalTok{Output_diff}\OperatorTok{$}\NormalTok{Angle}\OperatorTok{==}\NormalTok{j]}\OperatorTok{+}\NormalTok{SOCtab[j]}
-\NormalTok{        ##########################################}
-\NormalTok{      \}}
-\NormalTok{      ######## Not in the real function ########}
-\NormalTok{      Output_diff}\OperatorTok{$}\NormalTok{hcrit[Output_diff}\OperatorTok{$}\NormalTok{x_index}\OperatorTok{==}\NormalTok{i}\OperatorTok{&}\NormalTok{Output_diff}\OperatorTok{$}\NormalTok{Angle}\OperatorTok{==}\NormalTok{j]=}\StringTok{ }\NormalTok{hcrit}
-\NormalTok{      Output_diff}\OperatorTok{$}\NormalTok{G2[Output_diff}\OperatorTok{$}\NormalTok{x_index}\OperatorTok{==}\NormalTok{i}\OperatorTok{&}\NormalTok{Output_diff}\OperatorTok{$}\NormalTok{Angle}\OperatorTok{==}\NormalTok{j]=}\StringTok{ }\NormalTok{G2}
-\NormalTok{      ##########################################}
-\NormalTok{    \}}
-\NormalTok{  \}}
-\NormalTok{\}}
-
-\KeywordTok{colnames}\NormalTok{(Output_diff)=}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"X index"}\NormalTok{,}\StringTok{"X value (m)"}\NormalTok{,}\StringTok{"angle"}\NormalTok{,}\StringTok{"G1 (tangent)"}\NormalTok{,}
-                         \StringTok{"G2 (tangent)"}\NormalTok{,}\StringTok{"hcrit"}\NormalTok{,}\StringTok{"kgdiffus"}\NormalTok{)}
-\ControlFlowTok{if}\NormalTok{(knitr}\OperatorTok{:::}\KeywordTok{pandoc_to}\NormalTok{() }\OperatorTok{==}\StringTok{ "html"}\NormalTok{) \{Output_diff\}}\ControlFlowTok{else}\NormalTok{\{}
-  \KeywordTok{kable}\NormalTok{(Output_diff[}\DecValTok{1}\OperatorTok{:}\DecValTok{10}\NormalTok{,],}
-        \DataTypeTok{caption =} \KeywordTok{paste}\NormalTok{(}\StringTok{"Computation of the diffuse light incident on each"}\NormalTok{,}
-                        \StringTok{"point x. Ten first rows only, for the full data,"}\NormalTok{,}
-                        \StringTok{"please refer to the html version of this book"}\NormalTok{),}
-        \DataTypeTok{col.names =} \KeywordTok{c}\NormalTok{(}\StringTok{"X index"}\NormalTok{,}\StringTok{"X value (m)"}\NormalTok{,}\StringTok{"angle"}\NormalTok{,}\StringTok{"G1 (tangent)"}\NormalTok{,}
-                      \StringTok{"G2 (tangent)"}\NormalTok{,}\StringTok{"hcrit"}\NormalTok{,}\StringTok{"kgdiffus"}\NormalTok{), }\DataTypeTok{longtable =} \OtherTok{TRUE}\NormalTok{)}
-\NormalTok{\}}
-\end{Highlighting}
-\end{Shaded}
-
 \begin{longtable}[t]{r|r|r|r|r|r|r}
 \caption{\label{tab:kdiff}Computation of the diffuse light incident on each point x. Ten first rows only, for the full data, please refer to the html version of this book}\\
 \hline
@@ -850,18 +595,6 @@ X index & X value (m) & angle & G1 (tangent) & G2 (tangent) & hcrit & kgdiffus\\
 
 The total diffuse radiation incident to each point X is simply the
 cumulative of each angle:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{suppressWarnings}\NormalTok{(}\KeywordTok{suppressPackageStartupMessages}\NormalTok{(}\KeywordTok{library}\NormalTok{(dplyr)))}
-\NormalTok{Output_diff}\OperatorTok{%<>%}
-\StringTok{  }\KeywordTok{group_by}\NormalTok{(}\StringTok{`}\DataTypeTok{X index}\StringTok{`}\NormalTok{)}\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{summarise}\NormalTok{(}\DataTypeTok{kgdiffus=} \KeywordTok{sum}\NormalTok{(kgdiffus))}
-
-\KeywordTok{kable}\NormalTok{(Output_diff,}\DataTypeTok{caption=} \KeywordTok{paste}\NormalTok{(}\StringTok{"Example of the computation of the incident diffuse"}\NormalTok{,}
-\StringTok{"radiation ratio kgdiffus. See introduction section for further details on the crop."}\NormalTok{))}
-\end{Highlighting}
-\end{Shaded}
 
 \begin{table}
 
@@ -967,11 +700,9 @@ plane below the plant canopy. This light either comes directly from the
 sky (\texttt{rdroit}) or passing through the plant canopy
 (\texttt{rtransmis}). Consequently, the first point \texttt{X} of our
 example that is right under the plant canopy receives in average
-\texttt{incident\_light\$Total{[}1{]}*100}\% of the light coming from
-the atmosphere: \texttt{incident\_light\$rdroit{[}1{]}*100}\% of the
-light directly from the sky (either direct or diffuse light) +
-\texttt{incident\_light\$rtransmis{[}1{]}*100}\% of the light that is
-transmitted by the plant above.
+77.2720162\% of the light coming from the atmosphere: 31.0604617\% of
+the light directly from the sky (either direct or diffuse light) +
+46.2115545\% of the light that is transmitted by the plant above.
 
 \subsection{Total radiation incident to the
 plane}\label{total-radiation-incident-to-the-plane}
@@ -1010,10 +741,10 @@ relative surfaces (0 to 1) of the shaded and sunlit components of the
 plane. The computation of \texttt{trg} is further described in Chapter
 \ref{trg}.
 
-For our example, the crop would have intercepted NA, NA MJ m-2 day-1 of
-radiation, with a PAR of 12.5 W m-2, an \texttt{rombre} of 0.7755858,
-NA, an \texttt{rsoleil} of NA, 0.7943134 and a relative surface of 0.2
-and 0.8 for the shaded and sunlit component respectively.
+For our example, the crop would have intercepted 2.62 MJ m-2 day-1 of
+radiation, with a PAR of 12.5 W m-2, an \texttt{rombre} of 0.7755858, an
+\texttt{rsoleil} of 0.7943134 and a relative surface of 0.2 and 0.8 for
+the shaded and sunlit component respectively.
 
 \begin{quote}
 The relative surfaces (0 to 1) of the shaded and sunlit components of
@@ -1239,9 +970,8 @@ associated species:
 
 The new formalism has several implications in the model, notably that
 the dominated plant is less impacted by the competition with the
-dominant plant when both have approximately the same height.
-
-A comparison of the two formalisms was made using the
+dominant plant when both have approximately the same height. A
+comparison of the two formalisms was made using the
 \href{https://github.com/VEZY/sticRs}{sticRs} package, from which a
 summary plot was extracted, and the results are shown in Figure
 \ref{fig:trgcomparison2}.
@@ -1426,6 +1156,20 @@ Indeed, strips implies that interspecies light competition is only
 present on the border of each strip, making the Dominant/Dominated
 paradigm unreallistic for this design. The model could simulate large
 strips as two separated crops though.
+
+\chapter{Issue on LAI not decreasing}\label{LAI_issue}
+
+\section{Introduction}\label{introduction-5}
+
+The \texttt{LAI} is not decreasing on the end of the crop cycle for the
+dominant plant (Figure @ref(fig:LAI\_high)).
+
+\begin{figure}
+\centering
+\includegraphics{img/LAI_high.png}
+\caption{(\#fig:LAI\_high)Leaf Area Index in a self-intercrop of
+Wheat-Wheat}
+\end{figure}
 
 \bibliography{book.bib,packages.bib}
 
