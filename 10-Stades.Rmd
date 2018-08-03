@@ -69,5 +69,5 @@ This value could be too low compared to actual conditions, so we increased the v
 
 ![(\#fig:laicomp)STICS outputs comparison with laicomp= 0.304 and corrected to 0.6 on a wheat-wheat intercropping simulation experiment (Auzeville 2005-2006)](img/laicomp.png)
 
-The new parameterization of `laicomp` gives simulated `lai` that are closer to the observations when coupling with the new parameterization of `ilev`. These two new values will be kept for future simulations.
+The new parameterization of `laicomp` gives simulated `lai` that are closer to the observations when coupling with the new parameterization of `ilev`. These two new values (`ilev`= 329 and `laicomp`= 0.6) will be kept for future simulations.
 

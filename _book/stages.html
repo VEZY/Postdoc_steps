@@ -527,9 +527,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="10.1" data-path="height.html"><a href="height.html#introduction-7"><i class="fa fa-check"></i><b>10.1</b> Introduction</a></li>
 <li class="chapter" data-level="10.2" data-path="height.html"><a href="height.html#link-between-height-and-lai-and-dry-mass"><i class="fa fa-check"></i><b>10.2</b> Link between height and lai and dry mass</a></li>
 </ul></li>
-<li class="chapter" data-level="11" data-path="stages.html"><a href="stages.html"><i class="fa fa-check"></i><b>11</b> Developpment stages</a><ul>
+<li class="chapter" data-level="11" data-path="stages.html"><a href="stages.html"><i class="fa fa-check"></i><b>11</b> Developpment stages and LAI dynamic</a><ul>
 <li class="chapter" data-level="11.1" data-path="stages.html"><a href="stages.html#introduction-8"><i class="fa fa-check"></i><b>11.1</b> Introduction</a></li>
 <li class="chapter" data-level="11.2" data-path="stages.html"><a href="stages.html#checking-the-ilev"><i class="fa fa-check"></i><b>11.2</b> Checking the ilev</a></li>
+<li class="chapter" data-level="11.3" data-path="stages.html"><a href="stages.html#checking-laicomp"><i class="fa fa-check"></i><b>11.3</b> Checking laicomp</a></li>
 </ul></li>
 <li class="chapter" data-level="12" data-path="misc.html"><a href="misc.html"><i class="fa fa-check"></i><b>12</b> Miscellaneous</a><ul>
 <li class="chapter" data-level="12.1" data-path="misc.html"><a href="misc.html#introduction-9"><i class="fa fa-check"></i><b>12.1</b> Introduction</a></li>
@@ -557,7 +558,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
             <section class="normal" id="section-">
 <div id="stages" class="section level1">
-<h1><span class="header-section-number">Chapter 11</span> Developpment stages</h1>
+<h1><span class="header-section-number">Chapter 11</span> Developpment stages and LAI dynamic</h1>
 <div id="introduction-8" class="section level2">
 <h2><span class="header-section-number">11.1</span> Introduction</h2>
 <p>Bedoussac (2009) showed the different development stages for the crops, which are reproduced in Figure <a href="stages.html#fig:stademeas">11.1</a>).</p>
@@ -605,6 +606,19 @@ met<span class="op">%&gt;%</span>
 <img src="img/ilev.png" alt="STICS outputs comparison with ilev= 380 and corrected to 329 on a wheat-wheat intercropping simulation experiment (Auzeville 2005-2006)" />
 <p class="caption">Figure 11.2: STICS outputs comparison with ilev= 380 and corrected to 329 on a wheat-wheat intercropping simulation experiment (Auzeville 2005-2006)</p>
 </div>
+<p>The new parameter values better describe the observations for the development stages, and give simulated <code>lai</code> that are closer to the observations. However, the plant height is now increasing way too soon compared to the observations.</p>
+<blockquote>
+<p>These simulations were made using a version of STICS that uses the <code>lai</code> as a proxy for plant height. The model will soon be modified to compute it using other variables.</p>
+</blockquote>
+</div>
+<div id="checking-laicomp" class="section level2">
+<h2><span class="header-section-number">11.3</span> Checking laicomp</h2>
+<p>The <code>laicomp</code> parameter is used to stop the exponential rate of <code>lai</code> growth, and is set to 0.304 for the moment. This value could be too low compared to actual conditions, so we increased the value to 0.6 and compared the outputs in Figure <a href="stages.html#fig:laicomp">11.3</a>).</p>
+<div class="figure"><span id="fig:laicomp"></span>
+<img src="img/laicomp.png" alt="STICS outputs comparison with laicomp= 0.304 and corrected to 0.6 on a wheat-wheat intercropping simulation experiment (Auzeville 2005-2006)" />
+<p class="caption">Figure 11.3: STICS outputs comparison with laicomp= 0.304 and corrected to 0.6 on a wheat-wheat intercropping simulation experiment (Auzeville 2005-2006)</p>
+</div>
+<p>The new parameterization of <code>laicomp</code> gives simulated <code>lai</code> that are closer to the observations when coupling with the new parameterization of <code>ilev</code>. These two new values will be kept for future simulations.</p>
 
 </div>
 </div>
