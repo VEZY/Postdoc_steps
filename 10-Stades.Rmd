@@ -42,7 +42,7 @@ met%>%
   select(d_jul)
 ```
 
-Figure \@ref(fig:ilev)) shows a comparison of some STICS outputs with `ilev` set either at 380 like before or corrected at 329. The code used to make this output is as follows:
+Figure \@ref(fig:ilevIC) and Figure \@ref(fig:ilevSC) shows a comparison of some STICS outputs for a wheat self-intercrop and a wheat sole crop respectively, with `ilev` set either at 380 like before or corrected at 329. The code used to make this output is as follows:
 
 ```{r eval=FALSE, message=FALSE, warning=FALSE}
 Eval_stics= 
@@ -55,8 +55,9 @@ Eval_stics=
              Title = "Wheat-Wheat Auzeville 2005-2006 N0", plot_it = T)
 ```
 
-![(\#fig:ilev)STICS outputs comparison with ilev= 380 and corrected to 329 on a wheat-wheat intercropping simulation experiment (Auzeville 2005-2006)](img/ilev.png)
+![(\#fig:ilevIC)STICS outputs comparison with ilev= 380 and corrected to 329 on a wheat-wheat intercropping simulation experiment (Auzeville 2005-2006)](img/ilev.png)
 
+![(\#fig:ilevSC)STICS outputs comparison with ilev= 380 and corrected to 329 on a wheat sole crop simulation experiment (Auzeville 2005-2006)](img/ilevSC.png)
 The new parameter values better describe the observations for the development stages, and give simulated `lai` that are closer to the observations. However, the plant height is now increasing way too soon compared to the observations.
 
 > These simulations were made using a version of STICS that uses the `lai` as a proxy for plant height. The model will soon be modified to compute it using other variables.
@@ -70,4 +71,28 @@ This value could be too low compared to actual conditions, so we increased the v
 ![(\#fig:laicomp)STICS outputs comparison with laicomp= 0.304 and corrected to 0.6 on a wheat-wheat intercropping simulation experiment (Auzeville 2005-2006)](img/laicomp.png)
 
 The new parameterization of `laicomp` gives simulated `lai` that are closer to the observations when coupling with the new parameterization of `ilev`. These two new values (`ilev`= 329 and `laicomp`= 0.6) will be kept for future simulations.
+
+## Comparing simulated and observed lai and masec in self-IC
+
+The simulated `masec` for each plant of wheat or pea in self-intercrop (*i.e* half the density) was rightfully compared to half the plot-scale observations. However, the `lai` was wrongly compared to the full observation value, whereas it should be compared to half its value likewise, because the full value has to be compared to the total `lai`, that is computed by summing both plants `lai`.  
+The observations were then divided by two to fit the `lai` simulations outputs that correspond to each plant, so to half values.
+The new outputs are shown in Figure \@ref(fig:laiobs)). The modification tells us that the plant `lai` is overestimated in self-intercrop.
+
+![(\#fig:laicomp)STICS outputs comparison with half lai values on a wheat-wheat intercropping simulation experiment (Auzeville 2005-2006)](img/laiobs.png)
+
+## Checking durvieI
+
+The lifespan of the early leaves is expressed as a proportion of the lifespan of the late leaves, and is called `durvieI`. This parameter help control the steepness of the decreasing part of the `lai` through leaf mortality (*i.e.* senescence).  
+It appears that the leaf senescence is not well simulated in the wheat sole crop, because the `lai` do not drop as fast as in the observations. We propose to decrease the value of `durvieI` from 0.8 to 0.6. A comparison of the effect of changing this value is shown in Figure \@ref(fig:durvieISC)) for sole crop and for \@ref(fig:durvieIIC)) self-intercrop.
+
+![(\#fig:durvieISC)STICS outputs comparison with durvieI= 0.8 compared to 0.6 on a wheat sole crop simulation experiment (Auzeville 2005-2006)](img/durvieISC.png)
+
+![(\#fig:durvieIIC)STICS outputs comparison with durvieI= 0.8 compared to 0.6 on a wheat-wheat intercropping simulation experiment (Auzeville 2005-2006)](img/durvieIIC.png)
+
+
+
+
+
+
+
 

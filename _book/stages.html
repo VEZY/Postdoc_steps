@@ -25,7 +25,7 @@
 <meta name="author" content="R. Vezy">
 
 
-<meta name="date" content="2018-08-03">
+<meta name="date" content="2018-08-06">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -531,6 +531,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="11.1" data-path="stages.html"><a href="stages.html#introduction-8"><i class="fa fa-check"></i><b>11.1</b> Introduction</a></li>
 <li class="chapter" data-level="11.2" data-path="stages.html"><a href="stages.html#checking-the-ilev"><i class="fa fa-check"></i><b>11.2</b> Checking the ilev</a></li>
 <li class="chapter" data-level="11.3" data-path="stages.html"><a href="stages.html#checking-laicomp"><i class="fa fa-check"></i><b>11.3</b> Checking laicomp</a></li>
+<li class="chapter" data-level="11.4" data-path="stages.html"><a href="stages.html#comparing-simulated-and-observed-lai-and-masec-in-self-ic"><i class="fa fa-check"></i><b>11.4</b> Comparing simulated and observed lai and masec in self-IC</a></li>
+<li class="chapter" data-level="11.5" data-path="stages.html"><a href="stages.html#checking-durviei"><i class="fa fa-check"></i><b>11.5</b> Checking durvieI</a></li>
 </ul></li>
 <li class="chapter" data-level="12" data-path="misc.html"><a href="misc.html"><i class="fa fa-check"></i><b>12</b> Miscellaneous</a><ul>
 <li class="chapter" data-level="12.1" data-path="misc.html"><a href="misc.html#introduction-9"><i class="fa fa-check"></i><b>12.1</b> Introduction</a></li>
@@ -593,7 +595,7 @@ met<span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">cumT=</span> <span class="kw">cumsum</span>(cumT))<span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">filter</span>(cumT<span class="op">&gt;=</span><span class="dv">151</span><span class="op">&amp;</span>cumT<span class="op">&lt;=</span><span class="dv">155</span>)<span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">select</span>(d_jul)</code></pre></div>
-<p>Figure <a href="stages.html#fig:ilev">11.2</a>) shows a comparison of some STICS outputs with <code>ilev</code> set either at 380 like before or corrected at 329. The code used to make this output is as follows:</p>
+<p>Figure <a href="stages.html#fig:ilevIC">11.2</a> and Figure <a href="#fig:ilevSC">11.3</a> shows a comparison of some STICS outputs for a wheat self-intercrop and a wheat sole crop respectively, with <code>ilev</code> set either at 380 like before or corrected at 329. The code used to make this output is as follows:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Eval_stics=<span class="st"> </span>
 <span class="st">  </span><span class="kw">stics_eval</span>(<span class="dt">dir.orig =</span> <span class="st">&quot;0-DATA/dummy/IC_Wheat_Wheat&quot;</span>, 
              <span class="dt">dir.targ =</span> <span class="st">&quot;2-Simulations/Stics_Exe/EquDens&quot;</span>,
@@ -602,23 +604,45 @@ met<span class="op">%&gt;%</span>
              <span class="dt">obs_name =</span>  <span class="kw">c</span>(<span class="st">&quot;6_IC_Wheat1_N0.obs&quot;</span>,<span class="st">&quot;6_IC_Wheat2_N0.obs&quot;</span>),
              <span class="dt">Out_var =</span> <span class="kw">c</span>(<span class="st">&quot;hauteur&quot;</span>,<span class="st">&quot;laisen(n)&quot;</span>,<span class="st">&quot;lai(n)&quot;</span>,<span class="st">&quot;masec(n)&quot;</span>,<span class="st">&quot;dominant&quot;</span>,<span class="st">&quot;somcour&quot;</span>),
              <span class="dt">Title =</span> <span class="st">&quot;Wheat-Wheat Auzeville 2005-2006 N0&quot;</span>, <span class="dt">plot_it =</span> T)</code></pre></div>
-<div class="figure"><span id="fig:ilev"></span>
+<div class="figure"><span id="fig:ilevIC"></span>
 <img src="img/ilev.png" alt="STICS outputs comparison with ilev= 380 and corrected to 329 on a wheat-wheat intercropping simulation experiment (Auzeville 2005-2006)" />
 <p class="caption">Figure 11.2: STICS outputs comparison with ilev= 380 and corrected to 329 on a wheat-wheat intercropping simulation experiment (Auzeville 2005-2006)</p>
 </div>
-<p>The new parameter values better describe the observations for the development stages, and give simulated <code>lai</code> that are closer to the observations. However, the plant height is now increasing way too soon compared to the observations.</p>
+<p><img src="img/ilevSC.png" alt="STICS outputs comparison with ilev= 380 and corrected to 329 on a wheat sole crop simulation experiment (Auzeville 2005-2006)" /> The new parameter values better describe the observations for the development stages, and give simulated <code>lai</code> that are closer to the observations. However, the plant height is now increasing way too soon compared to the observations.</p>
 <blockquote>
 <p>These simulations were made using a version of STICS that uses the <code>lai</code> as a proxy for plant height. The model will soon be modified to compute it using other variables.</p>
 </blockquote>
 </div>
 <div id="checking-laicomp" class="section level2">
 <h2><span class="header-section-number">11.3</span> Checking laicomp</h2>
-<p>The <code>laicomp</code> parameter is used to stop the exponential rate of <code>lai</code> growth, and is set to 0.304 for the moment. This value could be too low compared to actual conditions, so we increased the value to 0.6 and compared the outputs in Figure <a href="stages.html#fig:laicomp">11.3</a>).</p>
+<p>The <code>laicomp</code> parameter is used to stop the exponential rate of <code>lai</code> growth, and is set to 0.304 for the moment. This value could be too low compared to actual conditions, so we increased the value to 0.6 and compared the outputs in Figure <a href="stages.html#fig:laicomp">11.4</a>).</p>
 <div class="figure"><span id="fig:laicomp"></span>
 <img src="img/laicomp.png" alt="STICS outputs comparison with laicomp= 0.304 and corrected to 0.6 on a wheat-wheat intercropping simulation experiment (Auzeville 2005-2006)" />
-<p class="caption">Figure 11.3: STICS outputs comparison with laicomp= 0.304 and corrected to 0.6 on a wheat-wheat intercropping simulation experiment (Auzeville 2005-2006)</p>
+<p class="caption">Figure 11.4: STICS outputs comparison with laicomp= 0.304 and corrected to 0.6 on a wheat-wheat intercropping simulation experiment (Auzeville 2005-2006)</p>
 </div>
-<p>The new parameterization of <code>laicomp</code> gives simulated <code>lai</code> that are closer to the observations when coupling with the new parameterization of <code>ilev</code>. These two new values will be kept for future simulations.</p>
+<p>The new parameterization of <code>laicomp</code> gives simulated <code>lai</code> that are closer to the observations when coupling with the new parameterization of <code>ilev</code>. These two new values (<code>ilev</code>= 329 and <code>laicomp</code>= 0.6) will be kept for future simulations.</p>
+</div>
+<div id="comparing-simulated-and-observed-lai-and-masec-in-self-ic" class="section level2">
+<h2><span class="header-section-number">11.4</span> Comparing simulated and observed lai and masec in self-IC</h2>
+<p>The simulated <code>masec</code> for each plant of wheat or pea in self-intercrop (<em>i.e</em> half the density) was rightfully compared to half the plot-scale observations. However, the <code>lai</code> was wrongly compared to the full observation value, whereas it should be compared to half its value likewise, because the full value has to be compared to the total <code>lai</code>, that is computed by summing both plants <code>lai</code>.<br />
+The observations were then divided by two to fit the <code>lai</code> simulations outputs that correspond to each plant, so to half values. The new outputs are shown in Figure <a href="#fig:laiobs"><strong>??</strong></a>). The modification tells us that the plant <code>lai</code> is overestimated in self-intercrop.</p>
+<div class="figure"><span id="fig:laicomp"></span>
+<img src="img/laiobs.png" alt="STICS outputs comparison with half lai values on a wheat-wheat intercropping simulation experiment (Auzeville 2005-2006)" />
+<p class="caption">Figure 11.4: STICS outputs comparison with half lai values on a wheat-wheat intercropping simulation experiment (Auzeville 2005-2006)</p>
+</div>
+</div>
+<div id="checking-durviei" class="section level2">
+<h2><span class="header-section-number">11.5</span> Checking durvieI</h2>
+<p>The lifespan of the early leaves is expressed as a proportion of the lifespan of the late leaves, and is called <code>durvieI</code>. This parameter help control the steepness of the decreasing part of the <code>lai</code> through leaf mortality (<em>i.e.</em> senescence).<br />
+It appears that the leaf senescence is not well simulated in the wheat sole crop, because the <code>lai</code> do not drop as fast as in the observations. We propose to decrease the value of <code>durvieI</code> from 0.8 to 0.6. A comparison of the effect of changing this value is shown in Figure <a href="stages.html#fig:durvieISC">11.5</a>) for sole crop and for <a href="stages.html#fig:durvieIIC">11.6</a>) self-intercrop.</p>
+<div class="figure"><span id="fig:durvieISC"></span>
+<img src="img/durvieISC.png" alt="STICS outputs comparison with durvieI= 0.8 compared to 0.6 on a wheat sole crop simulation experiment (Auzeville 2005-2006)" />
+<p class="caption">Figure 11.5: STICS outputs comparison with durvieI= 0.8 compared to 0.6 on a wheat sole crop simulation experiment (Auzeville 2005-2006)</p>
+</div>
+<div class="figure"><span id="fig:durvieIIC"></span>
+<img src="img/durvieIIC.png" alt="STICS outputs comparison with durvieI= 0.8 compared to 0.6 on a wheat-wheat intercropping simulation experiment (Auzeville 2005-2006)" />
+<p class="caption">Figure 11.6: STICS outputs comparison with durvieI= 0.8 compared to 0.6 on a wheat-wheat intercropping simulation experiment (Auzeville 2005-2006)</p>
+</div>
 
 </div>
 </div>
