@@ -3,7 +3,7 @@
 
 ## Introduction
 
-Plant `height` is not very well simulated for the moment. It is computated using the plant width, which depends itself on the plant `lai` (`lai`+`eai`+`laisen`). Please see Chapter \@ref(Light) for more details. Figure \@ref(fig:height1)) shows the simulated `height` of wheat in Auzeville, and the variables from which it is computed.
+Plant `height` is not very well simulated for the moment. It is computated using the plant width, which depends itself on the plant `lai` (`lai`+`eai`+`laisen`). Please see Chapter \@ref(Light) for more details. Figure \@ref(fig:height1) shows the simulated `height` of wheat in Auzeville, and the variables from which it is computed.
 
 ![(\#fig:height1)Simulated height compared to the observed values, and variables from which it is computed from, in a self-intercrop of Wheat-Wheat](img/height1.png)
 
@@ -31,17 +31,48 @@ We can also see that no values of `P_rapforme` gave satisfactory plant `height`,
 
 ## Link between height and lai and dry mass
 
-Using the observations from Auzeville, we plotted the evolution of the plant `height` through time along the `lai` and the `masec` (*i.e.* dry mass) to see if and how they are correlated. The Figure \@ref(fig:height2)) shows this evolution with standardized and linearly interpolated observed values for all variables to make it easier to compare.
+Using the observations from Auzeville, we plotted the evolution of the plant `height` through time along the `lai` and the `masec` (*i.e.* dry mass) to see if and how they are correlated. The Figure \@ref(fig:height2) shows this evolution with standardized and linearly interpolated observed values for all variables to make it easier to compare.
 
-![(\#fig:height2)Observed plant height compared to the lai and dry mass for both wheat and pea in sole crop. Values are standardized for comparison](img/height2.png)
+![(\#fig:height2)Observed plant height compared to the lai and dry mass for both wheat and pea in sole crop.](img/height2.png)
 
-The Figure \@ref(fig:height2)) shows that the plant `height` is better correlated to the `masec` than to the `lai`. We propose to either use the `masec` or `somcour` to compute it rather than the `lai`.
+The Figure \@ref(fig:height2) shows that the plant `height` is better correlated to the `masec` than to the `lai`. We propose to either use the `masec` or `somcour` to compute it rather than the `lai`.
 
 ## Computing plant height
 
+### Observations
+
 The plant `height` could be computed by either using the plant dry mass (`masec`) or more simply the development stage, derived from cumulated degree days (`somcour`).
-The second method could be much simpler to parameterize from field, however, both plants experience the same microclimate in STICS for intercrops, which give the exact same developmental stages, and therefore the same `height` if using `somcour`. This method can not be implement as long as both plants have the same `somcour`, because the plant dominance depends on the `height` difference between the two plants.
+The second method could be much simpler to parameterize from field, however, both plants experience the same microclimate in STICS for intercrops, so a plant growing dominated by an another plant could have the same cumulative temperature than a plant in sunlit conditions. Hence, this method would not consider the competition effect in interspecies for `height`, so it cannot be implemented as long as both plants have the same `somcour`.
 
-Hence, we will implement a computation of the plant `height` using the plant dry mass (`masec`), that will be corrected by water and nitrogen stresses.
+To document further this phenomenon, Figure \@ref(fig:Peaheight) shows that a Pea grown in intercrop with a wheat has a lower `height` than a Pea grown in solecrop, and that the dry mass is a good proxy to predict this behaviour.
 
+![(\#fig:Peaheight)Observed Pea height and dry mass for a Pea grown in sole crop or in intercrop with wheat.](img/Pea_height.png)
+
+Hence, we will implement a computation of the plant `height` using the plant dry mass (`masec`).
+
+### Stresses
+
+Water and nitrogen stresses can both influence the `height` of a plant. Figure \@ref(fig:wheatheightN) shows that the maximum `height` is reduced for the wheat grown under nitrogen stress (*i.e.* no nitrogen feritilization). However, the `height` and massec relationship are very close for both management, only the dry mass is higher for fertilized wheat, which gives a higher `height` in the end.
+
+![(\#fig:wheatheightN)Observed relationship between height and dry mass for a wheat grown in sole crop.](img/wheat_height_N.png)
+
+Consequently, height is indeed influenced by nitrogen stress, but it appears from our data that it is only through the `height~masen_n` relationship. Conequently, the `height` computation shouldn't be corrected by any nitrogen indices, because this stress is already accounted for in the dry mass computation.
+
+
+### Computation
+
+The new computation is implemented in STICS as a new subroutine (`formplante_mas`) that is called instead of `formplante` if the newly defined `P_code_shape` parameter is equal to `2`. This subroutine is largely based on the previous one, conserving all side effects of `P_hautmax`, `P_hautmaxtec`, `P_largtec` and `originehaut` but add a computation of the plant height using an allometric relationship with the dry mass as follow :  
+$ hauteur= P_{hautbase} + P_{hautK} \cdot masec^{P_{hautA}}$
+
+The `P_hautbase` parameter is a parameter from `formplante`, and is used as the intercept of the relationship, *i.e* the base height when the dry mass is equal to 0. `P_hautK` is a new parameter that defines the constant of proportionality that reflects the importance of the relationship, and `P_hautA` the scaling exponent, or the allometric coefficient. Allometric relationships are simple yet powerfull laws used to describe diverse relationships for wide range of situations. Further documentation can be found on the [wikipedia webpage](https://en.wikipedia.org/wiki/Allometry).
+
+
+### Results
+
+Two simulations of a wheat in sole crop and a pea in sole crop were run using STICS to asses the potential of the new computation for height modelling, and the outputs are displayed in Figure \@ref(fig:heightWheatSC).  
+
+![(\#fig:heightWheatSC)STICS simulation output for a simulation on two sole crops: wheat and pea](img/height_Wheat_SC.png)
+
+
+The results show that using `masec` instead of the `lai` to model plant height gives better results. The model will now be used with this formalism.
 
