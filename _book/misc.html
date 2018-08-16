@@ -25,14 +25,14 @@
 <meta name="author" content="R. Vezy">
 
 
-<meta name="date" content="2018-08-14">
+<meta name="date" content="2018-08-16">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="stages.html">
+<link rel="prev" href="LAItoohigh.html">
 
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -540,10 +540,15 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="11.4" data-path="stages.html"><a href="stages.html#comparing-simulated-and-observed-lai-and-masec-in-self-ic"><i class="fa fa-check"></i><b>11.4</b> Comparing simulated and observed lai and masec in self-IC</a></li>
 <li class="chapter" data-level="11.5" data-path="stages.html"><a href="stages.html#checking-durviei"><i class="fa fa-check"></i><b>11.5</b> Checking durvieI</a></li>
 </ul></li>
-<li class="chapter" data-level="12" data-path="misc.html"><a href="misc.html"><i class="fa fa-check"></i><b>12</b> Miscellaneous</a><ul>
-<li class="chapter" data-level="12.1" data-path="misc.html"><a href="misc.html#introduction-9"><i class="fa fa-check"></i><b>12.1</b> Introduction</a></li>
-<li class="chapter" data-level="12.2" data-path="misc.html"><a href="misc.html#extra-code-from-transrad"><i class="fa fa-check"></i><b>12.2</b> Extra code from transrad</a></li>
-<li class="chapter" data-level="12.3" data-path="misc.html"><a href="misc.html#sowing-density-in-auzeville"><i class="fa fa-check"></i><b>12.3</b> Sowing density in Auzeville</a></li>
+<li class="chapter" data-level="12" data-path="LAItoohigh.html"><a href="LAItoohigh.html"><i class="fa fa-check"></i><b>12</b> The LAI in intercropping is too high</a><ul>
+<li class="chapter" data-level="12.1" data-path="LAItoohigh.html"><a href="LAItoohigh.html#introduction-9"><i class="fa fa-check"></i><b>12.1</b> Introduction</a></li>
+<li class="chapter" data-level="12.2" data-path="LAItoohigh.html"><a href="LAItoohigh.html#investigating-the-ulai-hypothesis"><i class="fa fa-check"></i><b>12.2</b> Investigating the <code>ulai</code> hypothesis</a></li>
+<li class="chapter" data-level="12.3" data-path="LAItoohigh.html"><a href="LAItoohigh.html#investigating-the-density-hypothesis"><i class="fa fa-check"></i><b>12.3</b> Investigating the density hypothesis</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="misc.html"><a href="misc.html"><i class="fa fa-check"></i><b>13</b> Miscellaneous</a><ul>
+<li class="chapter" data-level="13.1" data-path="misc.html"><a href="misc.html#introduction-10"><i class="fa fa-check"></i><b>13.1</b> Introduction</a></li>
+<li class="chapter" data-level="13.2" data-path="misc.html"><a href="misc.html#extra-code-from-transrad"><i class="fa fa-check"></i><b>13.2</b> Extra code from transrad</a></li>
+<li class="chapter" data-level="13.3" data-path="misc.html"><a href="misc.html#sowing-density-in-auzeville"><i class="fa fa-check"></i><b>13.3</b> Sowing density in Auzeville</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -566,13 +571,13 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
             <section class="normal" id="section-">
 <div id="misc" class="section level1">
-<h1><span class="header-section-number">Chapter 12</span> Miscellaneous</h1>
-<div id="introduction-9" class="section level2">
-<h2><span class="header-section-number">12.1</span> Introduction</h2>
+<h1><span class="header-section-number">Chapter 13</span> Miscellaneous</h1>
+<div id="introduction-10" class="section level2">
+<h2><span class="header-section-number">13.1</span> Introduction</h2>
 <p>This chapter keep trace of several little issues resolving with not much significance.</p>
 </div>
 <div id="extra-code-from-transrad" class="section level2">
-<h2><span class="header-section-number">12.2</span> Extra code from transrad</h2>
+<h2><span class="header-section-number">13.2</span> Extra code from transrad</h2>
 <p>Some pointless code was present in the <code>kgeom</code> subroutine in the <code>transrad.f90</code> file. The code assignated values to the <code>kg</code> variable twice in a row, and then <code>kg</code> was always recomputed anyway:</p>
 <div class="sourceCode"><pre class="sourceCode fortran"><code class="sourceCode fortran"><span class="kw">if</span> (e <span class="op">&gt;</span> <span class="fl">2.1e-2</span>) <span class="kw">then</span>
   kg <span class="kw">=</span> <span class="bu">cos</span>(teta1)
@@ -584,7 +589,7 @@ kg <span class="kw">=</span> <span class="bu">max</span>(kg,<span class="fl">0.0
 <p>We propose to remove the <code>if...endif</code> code bloc. The effect of the removal of this part of code was tested against the Auzeville dataset, and as expected no change was observed in the outputs.</p>
 </div>
 <div id="sowing-density-in-auzeville" class="section level2">
-<h2><span class="header-section-number">12.3</span> Sowing density in Auzeville</h2>
+<h2><span class="header-section-number">13.3</span> Sowing density in Auzeville</h2>
 <p>The sowing density in Auzeville was set to 168 for the wheat at half-density in intercropping. We change that to the real value of 140 instead.</p>
 
 </div>
@@ -594,7 +599,7 @@ kg <span class="kw">=</span> <span class="bu">max</span>(kg,<span class="fl">0.0
           </div>
         </div>
       </div>
-<a href="stages.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="LAItoohigh.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 
     </div>
   </div>
