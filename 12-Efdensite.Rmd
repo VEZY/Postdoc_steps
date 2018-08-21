@@ -1,0 +1,15 @@
+# Effect of plant density on LAI and equivalent plant density {#efdens}
+
+```{r, include=FALSE}
+if(knitr:::pandoc_to() == "html") {
+  knitr::opts_chunk$set(echo = TRUE)
+}else{
+  knitr::opts_chunk$set(echo = FALSE)
+}
+```
+
+## Introduction
+
+The plant density, which is related to the interrow distance, seems to be an important formalism to describe the crop, and particularly for mixed crops. Several computations are made to represent plant competition in the STICS model, making the density effect a complex process. Lets describe each step of the process to have a clearer representation in mind.
+
+## The density effect on LAI

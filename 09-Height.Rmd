@@ -62,7 +62,7 @@ Consequently, height is indeed influenced by nitrogen stress, but it appears fro
 ### Computation
 
 The new computation is implemented in STICS as a new subroutine (`formplante_mas`) that is called instead of `formplante` if the newly defined `P_code_shape` parameter is equal to `2`. This subroutine is largely based on the previous one, conserving all side effects of `P_hautmax`, `P_hautmaxtec`, `P_largtec` and `originehaut` but add a computation of the plant height using an allometric relationship with the dry mass as follow :  
-$ hauteur= P_{hautbase} + P_{hautK} \cdot masec^{P_{hautA}}$
+$hauteur= P_{hautbase} + P_{hautK} \cdot masec^{P_{hautA}}$
 
 The `P_hautbase` parameter is a parameter from `formplante`, and is used as the intercept of the relationship, *i.e* the base height when the dry mass is equal to 0. `P_hautK` is a new parameter that defines the constant of proportionality that reflects the importance of the relationship, and `P_hautA` the scaling exponent, or the allometric coefficient. Allometric relationships are simple yet powerfull laws used to describe diverse relationships for wide range of situations. Further documentation can be found on the [wikipedia webpage](https://en.wikipedia.org/wiki/Allometry).
 

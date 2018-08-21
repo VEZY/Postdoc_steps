@@ -25,7 +25,7 @@
 <meta name="author" content="R. Vezy">
 
 
-<meta name="date" content="2018-08-16">
+<meta name="date" content="2018-08-21">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -33,7 +33,7 @@
   
   
 <link rel="prev" href="stages.html">
-<link rel="next" href="misc.html">
+<link rel="next" href="efdens.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -49,13 +49,6 @@
 
 <link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
 <script src="libs/pagedtable-1.1/js/pagedtable.js"></script>
-<script src="libs/htmlwidgets-1.2/htmlwidgets.js"></script>
-<script src="libs/plotly-binding-4.7.1/plotly.js"></script>
-<script src="libs/typedarray-0.1/typedarray.min.js"></script>
-<link href="libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
-<script src="libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
-<link href="libs/plotlyjs-1.29.2/plotly-htmlwidgets.css" rel="stylesheet" />
-<script src="libs/plotlyjs-1.29.2/plotly-latest.min.js"></script>
 
 <script>
 /* ========================================================================
@@ -545,10 +538,14 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="12.2" data-path="LAItoohigh.html"><a href="LAItoohigh.html#investigating-the-ulai-hypothesis"><i class="fa fa-check"></i><b>12.2</b> Investigating the <code>ulai</code> hypothesis</a></li>
 <li class="chapter" data-level="12.3" data-path="LAItoohigh.html"><a href="LAItoohigh.html#investigating-the-density-hypothesis"><i class="fa fa-check"></i><b>12.3</b> Investigating the density hypothesis</a></li>
 </ul></li>
-<li class="chapter" data-level="13" data-path="misc.html"><a href="misc.html"><i class="fa fa-check"></i><b>13</b> Miscellaneous</a><ul>
-<li class="chapter" data-level="13.1" data-path="misc.html"><a href="misc.html#introduction-10"><i class="fa fa-check"></i><b>13.1</b> Introduction</a></li>
-<li class="chapter" data-level="13.2" data-path="misc.html"><a href="misc.html#extra-code-from-transrad"><i class="fa fa-check"></i><b>13.2</b> Extra code from transrad</a></li>
-<li class="chapter" data-level="13.3" data-path="misc.html"><a href="misc.html#sowing-density-in-auzeville"><i class="fa fa-check"></i><b>13.3</b> Sowing density in Auzeville</a></li>
+<li class="chapter" data-level="13" data-path="efdens.html"><a href="efdens.html"><i class="fa fa-check"></i><b>13</b> Effect of plant density on LAI and equivalent plant density</a><ul>
+<li class="chapter" data-level="13.1" data-path="efdens.html"><a href="efdens.html#introduction-10"><i class="fa fa-check"></i><b>13.1</b> Introduction</a></li>
+<li class="chapter" data-level="13.2" data-path="efdens.html"><a href="efdens.html#the-density-effect-on-lai-1"><i class="fa fa-check"></i><b>13.2</b> The density effect on LAI</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="misc.html"><a href="misc.html"><i class="fa fa-check"></i><b>14</b> Miscellaneous</a><ul>
+<li class="chapter" data-level="14.1" data-path="misc.html"><a href="misc.html#introduction-11"><i class="fa fa-check"></i><b>14.1</b> Introduction</a></li>
+<li class="chapter" data-level="14.2" data-path="misc.html"><a href="misc.html#extra-code-from-transrad"><i class="fa fa-check"></i><b>14.2</b> Extra code from transrad</a></li>
+<li class="chapter" data-level="14.3" data-path="misc.html"><a href="misc.html#sowing-density-in-auzeville"><i class="fa fa-check"></i><b>14.3</b> Sowing density in Auzeville</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -604,6 +601,29 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <img src="img/density_effect.png" alt="Simulated densite, efdensite and the resulting density from their multiplication in a self-intercrop of Pea-Pea compared to a sole crop of Pea" />
 <p class="caption">Figure 12.3: Simulated densite, efdensite and the resulting density from their multiplication in a self-intercrop of Pea-Pea compared to a sole crop of Pea</p>
 </div>
+<p>Furthermore, we can see that the plant density is reduced twice for both Pea in SC and for the dominant plant in IC. The first is because some plants are lost in the first growing stage (<code>densite_lev</code>), and the second because of frost damage. However, the frost does not affect the associated plant density in IC. This does not reflect reality and should be changed. The error came from a piece of code in the <code>senescen</code> subroutine where the computation differed between dominant and dominated plants.</p>
+<div class="sourceCode"><pre class="sourceCode fortran"><code class="sourceCode fortran"><span class="kw">if</span> (ipl <span class="op">==</span> <span class="dv">1</span>) <span class="kw">then</span>
+  densite <span class="kw">=</span> <span class="bu">min</span>(densite, densitelev<span class="kw">*</span>fgellev)
+<span class="kw">else</span>
+  densite <span class="kw">=</span> <span class="bu">min</span>(densite, (densitelev <span class="kw">+</span> densiteassoc)<span class="kw">*</span>fgellev)
+<span class="kw">endif</span></code></pre></div>
+<p>The code was changed into only one condition for both plants:</p>
+<div class="sourceCode"><pre class="sourceCode fortran"><code class="sourceCode fortran">densite <span class="kw">=</span> <span class="bu">min</span>(densite, densitelev<span class="kw">*</span>fgellev)</code></pre></div>
+<blockquote>
+<p>SHA: f525211036a7b4b683252093187298324f4cd80b</p>
+</blockquote>
+<p>The code modification lead to better results, with an effect of frost that is equal between dominant and dominated plants as seen in Figure <a href="LAItoohigh.html#fig:densitefrost">12.4</a>.</p>
+<div class="figure"><span id="fig:densitefrost"></span>
+<img src="img/densitefrost.png" alt="Simulated density in a self-intercrop of Pea-Pea compared to a sole crop of Pea. NB: Both plants density have the same value in the self-intercrop (half the value of sole crop)" />
+<p class="caption">Figure 12.4: Simulated density in a self-intercrop of Pea-Pea compared to a sole crop of Pea. NB: Both plants density have the same value in the self-intercrop (half the value of sole crop)</p>
+</div>
+<p>However, an evaluation of the model on Auzeville data showed that the problem of a high <code>lai</code> persisted, so the issue did not come from this bug alone. More investigation showed that <code>efdensite</code> was lower in self-intercrops compared to sole crop simulations, because the equivalent density of both dominant and dominated plants were set equal to the plant density or higher for the dominated plant if the difference in height is large (see Chapter <a href="plantdensity.html#plantdensity">5</a>). However, the plant equivalent density should refer to the plant density as if it were in sole crop to have the same density effect while using sole crop parameters for <code>efdensite</code>, and not to be equal to the half-density, as it is for the moment.<br />
+The equivalent density computation was then modified to match a density equivalent to a sole crop density, that is to say, twice the value of the sowing density in intercrop, <em>i.e.</em> the same density as if the other plant was from the same species.</p>
+<p>As expected, the code modification led to the simulation of the same <code>efdensite</code> in SC and in IC for both plants, as seen in Figure <a href="LAItoohigh.html#fig:efdensite">12.5</a>.</p>
+<div class="figure"><span id="fig:efdensite"></span>
+<img src="img/efdensite.png" alt="Simulated density and density effect in a self-intercrop of Pea-Pea compared to a sole crop of Pea. NB: Both plants density have the same value in the self-intercrop (half the value of sole crop), all plants/managements have the same value of efdensite." />
+<p class="caption">Figure 12.5: Simulated density and density effect in a self-intercrop of Pea-Pea compared to a sole crop of Pea. NB: Both plants density have the same value in the self-intercrop (half the value of sole crop), all plants/managements have the same value of efdensite.</p>
+</div>
 
 </div>
 </div>
@@ -613,7 +633,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
         </div>
       </div>
 <a href="stages.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="misc.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="efdens.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -654,19 +674,6 @@ gitbook.start({
 });
 </script>
 
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    var src = "";
-    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:" && /^https?:/.test(src))
-      src = src.replace(/^https?:/, '');
-    script.src = src;
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
 </body>
 
 </html>
