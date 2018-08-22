@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="LAItoohigh.html">
-<link rel="next" href="summary1.html">
+<link rel="prev" href="misc.html">
+
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -578,28 +578,54 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="misc" class="section level1">
-<h1><span class="header-section-number">Chapter 13</span> Miscellaneous</h1>
-<div id="introduction-10" class="section level2">
-<h2><span class="header-section-number">13.1</span> Introduction</h2>
-<p>This chapter keep trace of several little issues resolving with not much significance.</p>
+<div id="summary1" class="section level1">
+<h1><span class="header-section-number">Chapter 14</span> First summary</h1>
+<div id="introduction-11" class="section level2">
+<h2><span class="header-section-number">14.1</span> Introduction</h2>
+<p>A lot of code and parameterization has changed since the beginning of this book. Here is a little summary of all changes, starting with the outputs we have at this stage, followed with a step-by-step parameterization help for the new formalism.</p>
 </div>
-<div id="extra-code-from-transrad" class="section level2">
-<h2><span class="header-section-number">13.2</span> Extra code from transrad</h2>
-<p>Some pointless code was present in the <code>kgeom</code> subroutine in the <code>transrad.f90</code> file. The code assignated values to the <code>kg</code> variable twice in a row, and then <code>kg</code> was always recomputed anyway:</p>
-<div class="sourceCode"><pre class="sourceCode fortran"><code class="sourceCode fortran"><span class="kw">if</span> (e <span class="op">&gt;</span> <span class="fl">2.1e-2</span>) <span class="kw">then</span>
-  kg <span class="kw">=</span> <span class="bu">cos</span>(teta1)
-  kg <span class="kw">=</span> <span class="bu">cos</span>(teta2)
-<span class="kw">endif</span>
-
-kg <span class="kw">=</span> <span class="fl">0.5</span> <span class="kw">*</span> (<span class="bu">cos</span>(pi<span class="kw">/</span><span class="dv">2</span> <span class="kw">+</span> teta1) <span class="kw">+</span> <span class="bu">cos</span>(pi<span class="kw">/</span><span class="dv">2</span> <span class="kw">+</span> teta2))
-kg <span class="kw">=</span> <span class="bu">max</span>(kg,<span class="fl">0.0</span>)</code></pre></div>
-<p>We propose to remove the <code>if...endif</code> code bloc. The effect of the removal of this part of code was tested against the Auzeville dataset, and as expected no change was observed in the outputs.</p>
+<div id="model-outputs" class="section level2">
+<h2><span class="header-section-number">14.2</span> Model outputs</h2>
+<p>The model was tested on a series of experimentations on Wheat and Pea from Auzeville. It consists on a set of observations made on either sole crops or intercrops, and the model was run on each case to evaluate its simulation outputs. The model was also tested to simulate a sole crop as an intercrop with both plants from the same species and variety.<br />
+The results of this evaluation are available on <a href="Auzeville_summary.html">this separate page</a>. You can consider this page as a snapshot of the evaluation of the model version used as : 22 août, 2018. This version of the model can be retrieved from my GIT repository using this SHA: <code>c9638aafb924949b630d273608d2b3c45369cd0c</code>.</p>
 </div>
-<div id="sowing-density-in-auzeville" class="section level2">
-<h2><span class="header-section-number">13.3</span> Sowing density in Auzeville</h2>
-<p>The sowing density in Auzeville was set to 168 for the wheat at half-density in intercropping. We change that to the real value of 140 instead.</p>
+<div id="model-parameterization" class="section level2">
+<h2><span class="header-section-number">14.3</span> Model parameterization</h2>
+<div id="height" class="section level3">
+<h3><span class="header-section-number">14.3.1</span> Height</h3>
+<p>The height can be computed using two different paradigms:</p>
+<ul>
+<li>The previous one, that uses the plant <code>lai</code> and foliar density (which depends also on the <code>lai</code>) to compute the plant width, and then uses a ratio to retrieve the plant height.<br />
+</li>
+<li>The new one that simply links the plant dry mass (<code>masec(n)</code>) to its height using an allometric relationship.</li>
+</ul>
+<p>The computation is chosen using the <code>P_code_shape</code>. If <code>P_code_shape</code> is equal to <code>2</code>, the model will use the second one (using <code>masec</code>), and for any other value, it will use the first one.</p>
+<p>The allometric equation is simply defined as:<br />
+<span class="math inline">\(hauteur= P_{hautbase} + P_{hautK} \cdot masec^{P_{hautA}}\)</span><br />
+So it has two new parameters: <code>P_hautK</code> and <code>P_hautA</code>. This equation is well known across a wide range of fields, can describe a large panel of relationships, is robust, and is quite simple to parameterize. In the case of STICS, the user should use sole crop data only for parameterization, because the hauteur~masec relationship is hard-coded for this situation. In the case of intercrop, the model will adapt the computation accordingly.</p>
+<p>For our case experiment in Auzeville, these parameters were fitted thanks to the nls function in R using observations for each species independently.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">obs_data.frame<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">nls</span>(hauteur<span class="op">~</span>K<span class="op">*</span>masec<span class="op">^</span>A,<span class="dt">data =</span> .,<span class="dt">start =</span> <span class="kw">list</span>(<span class="dt">A=</span><span class="dv">1</span>,<span class="dt">K=</span><span class="dv">1</span>))</code></pre></div>
+<p>At first, we were afraid that the relationship would differ according to the nitogen management, but only the dry mass was impacted by the nitrogen treatments, not the height~masec relationship. However, the relationship changed a little between sole crops and intercrops, but was still robust enough to use it as is as shown in the results from <a href="Auzeville_summary.html">this separate page</a>, also shown in the first paragraph.</p>
+</div>
+<div id="equivalent-density" class="section level3">
+<h3><span class="header-section-number">14.3.2</span> Equivalent density</h3>
+<p>The equivalent density is the density the plant would have if the other plant was of the same species, <em>i.e.</em> if the field was a sole crop. This equivalent density is used to compute the plant <code>LAI</code>. It is computed in three different ways in STICS, that are all described in Chapter <a href="plantdensity.html#plantdensity">5</a>. The third computation is re-explained here for ease:</p>
+<p>The third formalism is chosen by setting <code>P_code_calc_equi_density=3</code>. It is an improved computation to define the equivalent density as a function of the height difference between the plants, and using different parameters for intraspecific and interspecific competition, with simpler meanings. This formalism gives an equivalent density equal to the double of the true density to match a density equivalent to a sole crop, and increases this equivalent density until a given threshold (<code>hauteur_threshold</code>), after which a progressive increase in the equivalent density happen until the maximum allowed. In this computation, the slope is computed by the model, and the equivalent density is computed as follows:<br />
+<span class="math inline">\(density_{Equivalent} =\begin{cases}\Delta_{height} &lt; hauteur_{threshold} &amp; density_{p2} \\ \Delta_{height} &gt; hauteur_{threshold} &amp; b + \Delta_{height}\cdot slope \\ \Delta_{height} &gt; hauteur_{threshold_2} &amp; Max_{equDens} \end{cases}\)</span><br />
+with <span class="math inline">\(slope= \frac{Max_{equDens}}{hauteur_{threshold_2}-hauteur_{threshold}}\)</span>.</p>
+<p>Hence, this formalism include three parameters (named here as used in the model):</p>
+<ul>
+<li><code>P_hauteur_threshold</code>: the difference in height below which no competition is occuring</li>
+<li><code>P_hauteur_threshold_2</code>: the difference in height below which a progressive competition is occuring</li>
+<li><code>P_eqdens_max</code>: the maximum density allowed in intercrop, <em>i.e.</em> generally the sole crop density.</li>
+</ul>
+<p>These three parameters are quite simple to parameterize also. The first one should be set to represent the moment the height difference between two plants start increasing competition. We set this parameter to 0.2 meters, because we considered no competition increase before a difference of 20 centimeters between both plants. The second threshold was set to 0.8 meters, because we considered the competition would increase linearly until this difference in height, reaching its maximum at this point. The <code>Max_equDens</code> was set to 240 for wheat and 60 for Pea. These densities correspond to a full density in a sole crop.</p>
+<blockquote>
+<p>Note: the increased equivalent density with height or whatever formalism used is only there to represent competitions comming from other processes than light interception, as it is already accounted for by the light interception subroutines. The model must be well parameterized for the light interception first, using no increase in equivalent density first (<em>e.g.</em> by setting a high <code>P_hauteur_threshold</code>), and then the equivalent density formalism can be used to better match the plants competition if needed.</p>
+</blockquote>
 
+</div>
 </div>
 </div>
             </section>
@@ -607,8 +633,8 @@ kg <span class="kw">=</span> <span class="bu">max</span>(kg,<span class="fl">0.0
           </div>
         </div>
       </div>
-<a href="LAItoohigh.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="summary1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="misc.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
