@@ -25,7 +25,7 @@
 <meta name="author" content="R. Vezy">
 
 
-<meta name="date" content="2018-08-22">
+<meta name="date" content="2018-09-03">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -549,6 +549,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="13.1" data-path="misc.html"><a href="misc.html#introduction-10"><i class="fa fa-check"></i><b>13.1</b> Introduction</a></li>
 <li class="chapter" data-level="13.2" data-path="misc.html"><a href="misc.html#extra-code-from-transrad"><i class="fa fa-check"></i><b>13.2</b> Extra code from transrad</a></li>
 <li class="chapter" data-level="13.3" data-path="misc.html"><a href="misc.html#sowing-density-in-auzeville"><i class="fa fa-check"></i><b>13.3</b> Sowing density in Auzeville</a></li>
+<li class="chapter" data-level="13.4" data-path="misc.html"><a href="misc.html#energy-balance"><i class="fa fa-check"></i><b>13.4</b> Energy balance</a></li>
 </ul></li>
 <li class="chapter" data-level="14" data-path="summary1.html"><a href="summary1.html"><i class="fa fa-check"></i><b>14</b> First summary</a><ul>
 <li class="chapter" data-level="14.1" data-path="summary1.html"><a href="summary1.html#introduction-11"><i class="fa fa-check"></i><b>14.1</b> Introduction</a></li>
@@ -582,7 +583,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h1><span class="header-section-number">Chapter 13</span> Miscellaneous</h1>
 <div id="introduction-10" class="section level2">
 <h2><span class="header-section-number">13.1</span> Introduction</h2>
-<p>This chapter keep trace of several little issues resolving with not much significance.</p>
+<p>This chapter keep trace of several little issues resolved rapidly and with no high significance.</p>
 </div>
 <div id="extra-code-from-transrad" class="section level2">
 <h2><span class="header-section-number">13.2</span> Extra code from transrad</h2>
@@ -599,6 +600,18 @@ kg <span class="kw">=</span> <span class="bu">max</span>(kg,<span class="fl">0.0
 <div id="sowing-density-in-auzeville" class="section level2">
 <h2><span class="header-section-number">13.3</span> Sowing density in Auzeville</h2>
 <p>The sowing density in Auzeville was set to 168 for the wheat at half-density in intercropping. We change that to the real value of 140 instead.</p>
+</div>
+<div id="energy-balance" class="section level2">
+<h2><span class="header-section-number">13.4</span> Energy balance</h2>
+<p>A new variable was added in STICS to keep track of the plant layers net radiation to make an energy balance. This variable is called <code>rnet_plant</code>, and is computed in the <code>shutwall</code> subroutine. It is computed using the radiation intercepted by each plant layer. The net radiation is computed as:</p>
+<p><span class="math inline">\(rnet= rnet_{plant_1}+rnet_{plant_2}+rnet_{soil}\)</span></p>
+<p>Now it can be checked ad hoc using the new outputs, such as shown in Figure <a href="#fig:netradiation">13.1</a> that shows as expected that the net radiation output from STICS (<em>i.e.</em> <code>rnet</code>) is equal to the sum of the net radiation of the dominant (<code>p(1)%rnet_plant</code>) and dominated (<code>p(2)%rnet_plant</code>) plant as well as the net radiation from the soil (<code>rnetS</code>).</p>
+<p><img src="img/energy_balance.png" alt="Net radiation computed in the model and out of the model" /> ## Non-0 Raint with 0 LAI+EAI</p>
+<p><code>raint</code> was not equal to 0 (and so <code>fapar</code>) when the <code>lai</code>+<code>eai</code> was equal to 0, instead it remained at the last computed value when <code>lai</code>+<code>eai</code> was &gt;0. A little modification of the model was made to fix the bug as seen in Figure <a href="misc.html#fig:bugraint">13.2</a>. Note that a little modification on the computation of leaf senescence fix also a bug for the <code>lai</code> at the end (see e027b8efd93fe77aa7ac7242ce3496589003eb41).</p>
+<div class="figure"><span id="fig:bugraint"></span>
+<img src="img/raintbug.png" alt="Bug fix for raint when lai+eai=0" />
+<p class="caption">Figure 13.2: Bug fix for raint when lai+eai=0</p>
+</div>
 
 </div>
 </div>
