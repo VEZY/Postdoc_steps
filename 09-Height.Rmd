@@ -76,3 +76,12 @@ Two simulations of a wheat in sole crop and a pea in sole crop were run using ST
 
 The results show that using `masec` instead of the `lai` to model plant height gives better results. The model will now be used with this formalism.
 
+### Stop height~masec link at stage X
+
+The height~masec link can stop existing as soon as a plant reach a certain development stage. For example, wheat stops growing in height from the moment it is flowering. 
+
+Hence, a new parameter (`P_stage_const_height`) was added to have the choice to break this link at any developing stage from this list : "lax", "sen", "flo", "mat" or "rec".
+
+Figure \@ref(fig:constheight) shows the new results, with `P_stage_const_height= flo` for both plants.  
+
+![(\#fig:constheight)STICS simulation output for a simulation on two sole crops: wheat and pea](img/const_height.png)

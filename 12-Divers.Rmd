@@ -35,7 +35,9 @@ $rnet= rnet_{plant_1}+rnet_{plant_2}+rnet_{soil}$
 Now it can be checked ad hoc using the new outputs, such as shown in Figure \@ref(fig:netradiation) that shows as expected that the net radiation output from STICS (*i.e.* `rnet`) is equal to the sum of the net radiation of the dominant (`p(1)%rnet_plant`) and dominated (`p(2)%rnet_plant`) plant as well as the net radiation from the soil (`rnetS`).
 
 ![(\#fig:netradiation)Net radiation computed in the model and out of the model](img/energy_balance.png)
-## Non-0 Raint with 0 LAI+EAI
+
+
+## Positive raint with zero LAI+EAI
 
 `raint` was not equal to 0 (and so `fapar`) when the `lai`+`eai` was equal to 0, instead it remained at the last computed value when `lai`+`eai` was >0. A little modification of the model was made to fix the bug as seen in Figure \@ref(fig:bugraint). Note that a little modification on the computation of leaf senescence fix also a bug for the `lai` at the end (see e027b8efd93fe77aa7ac7242ce3496589003eb41).
 
