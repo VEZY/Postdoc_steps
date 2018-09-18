@@ -57,7 +57,7 @@ else
 endif
 ```
  
-The new computation fix the bug, making `nsencour` more progressive as for the dominant plant (Figure \@ref(fig:nsencourfix)).
+The new computation fix the bug, making `nsencour` more progressive as for the dominated plant (Figure \@ref(fig:nsencourfix)).
 
 ![(\#fig:nsencourfix)Leaf (lai) appearence day (`nsencour`) compared to the day (`day`) they become senescent using the new computation of durvie (self-intercrop of Wheat-Wheat)](img/LAIhigh_nsencourfix.png) 
  
@@ -91,7 +91,7 @@ Three main variables were badly used to compute the senescence: `dltams`, `delta
 
 Unfortunately, the dominance of the plant can change over time, so a dominant plant with no shaded component can have one afterwards. If a dominant plant becomes dominated, the model was trying to use `dltams`, `deltai` and `pfeuilverte` of the shaded part of the plant that all were equal to 0 (as their initialization) because they were not computed before, making no senescence at all for the shaded part of the plant.
 
-We propose to replace the use of a separated shaded and sunlit `dltams`, `deltai` and `pfeuilverte` by a their total at plant level, weighted by their relative surface under shaded and sunlit environment. For example, the `deltai` input to the `senescen` function would be `p(i)%deltai(0,1:sc%nbjmax)*p(i)%surf(ens)` instead of `p(i)%deltai(ens,1:sc%nbjmax))`, with `p(i)%deltai(0,n) = p(i)%deltai(sc%AS,n)* p(i)%surf(sc%AS) + p(i)%deltai(sc%AO,n)* p(i)%surf(sc%AO)`. This new computation has the advantage of considering all the lai that was incremented before, with a drawback being not to consider the previous relative surface of the plant.
+We propose to replace the use of a separated shaded and sunlit `dltams`, `deltai` and `pfeuilverte` by their total at plant level, weighted by their relative surface under shaded and sunlit environment. For example, the `deltai` input to the `senescen` function would be `p(i)%deltai(0,1:sc%nbjmax)*p(i)%surf(ens)` instead of `p(i)%deltai(ens,1:sc%nbjmax))`, with `p(i)%deltai(0,n) = p(i)%deltai(sc%AS,n)* p(i)%surf(sc%AS) + p(i)%deltai(sc%AO,n)* p(i)%surf(sc%AO)`. This new computation has the advantage of considering all the lai that was incremented before, with a drawback being not to consider the previous relative surface of the plant.
 
 Figure \@ref(fig:Newsen) shows the resulting outputs, which are more realistic.
 
