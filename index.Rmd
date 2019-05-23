@@ -7,7 +7,7 @@ documentclass: book
 bibliography: [book.bib, packages.bib]
 biblio-style: apalike
 link-citations: yes
-description: "This book is made to keep track of my work during my post-doctorate position for the ReMIX project."
+description: "This book is made to keep track of the work made during the post-doctorate position on STICS-intercrop for the ReMIX project."
 ---
 
 ```{r, include=FALSE}
