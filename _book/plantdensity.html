@@ -5,11 +5,11 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>STICS intercrop: a work in progress for the ReMIX H2020 project</title>
+  <title>Chapter 5 Plant density and equivalent plant density | STICS intercrop: a work in progress for the ReMIX H2020 project</title>
   <meta name="description" content="This book is made to keep track of my work during my post-doctorate position for the ReMIX project.">
-  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
 
-  <meta property="og:title" content="STICS intercrop: a work in progress for the ReMIX H2020 project" />
+  <meta property="og:title" content="Chapter 5 Plant density and equivalent plant density | STICS intercrop: a work in progress for the ReMIX H2020 project" />
   <meta property="og:type" content="book" />
   
   
@@ -17,7 +17,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="STICS intercrop: a work in progress for the ReMIX H2020 project" />
+  <meta name="twitter:title" content="Chapter 5 Plant density and equivalent plant density | STICS intercrop: a work in progress for the ReMIX H2020 project" />
   
   <meta name="twitter:description" content="This book is made to keep track of my work during my post-doctorate position for the ReMIX project." />
   
@@ -25,7 +25,7 @@
 <meta name="author" content="R. Vezy">
 
 
-<meta name="date" content="2018-09-05">
+<meta name="date" content="2019-05-23">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -36,6 +36,7 @@
 <link rel="next" href="Interrow.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
@@ -49,13 +50,13 @@
 
 <link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
 <script src="libs/pagedtable-1.1/js/pagedtable.js"></script>
-<script src="libs/htmlwidgets-1.2/htmlwidgets.js"></script>
-<script src="libs/plotly-binding-4.7.1/plotly.js"></script>
+<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.8.0/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
 <link href="libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
 <script src="libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
-<link href="libs/plotlyjs-1.29.2/plotly-htmlwidgets.css" rel="stylesheet" />
-<script src="libs/plotlyjs-1.29.2/plotly-latest.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-1.39.2/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-1.39.2/plotly-latest.min.js"></script>
 
 <script>
 /* ========================================================================
@@ -406,41 +407,67 @@ $(document).ready(function () {
 
 
 <style type="text/css">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code > span.dt { color: #902000; } /* DataType */
-code > span.dv { color: #40a070; } /* DecVal */
-code > span.bn { color: #40a070; } /* BaseN */
-code > span.fl { color: #40a070; } /* Float */
-code > span.ch { color: #4070a0; } /* Char */
-code > span.st { color: #4070a0; } /* String */
-code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code > span.ot { color: #007020; } /* Other */
-code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code > span.fu { color: #06287e; } /* Function */
-code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #880000; } /* Constant */
-code > span.sc { color: #4070a0; } /* SpecialChar */
-code > span.vs { color: #4070a0; } /* VerbatimString */
-code > span.ss { color: #bb6688; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #19177c; } /* Variable */
-code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #666666; } /* Operator */
-code > span.bu { } /* BuiltIn */
-code > span.ex { } /* Extension */
-code > span.pp { color: #bc7a00; } /* Preprocessor */
-code > span.at { color: #7d9029; } /* Attribute */
-code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -557,9 +584,13 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="14.1" data-path="summary1.html"><a href="summary1.html#introduction-11"><i class="fa fa-check"></i><b>14.1</b> Introduction</a></li>
 <li class="chapter" data-level="14.2" data-path="summary1.html"><a href="summary1.html#model-outputs"><i class="fa fa-check"></i><b>14.2</b> Model outputs</a></li>
 <li class="chapter" data-level="14.3" data-path="summary1.html"><a href="summary1.html#model-parameterization"><i class="fa fa-check"></i><b>14.3</b> Model parameterization</a><ul>
-<li class="chapter" data-level="14.3.1" data-path="height.html"><a href="height.html#height"><i class="fa fa-check"></i><b>14.3.1</b> Height</a></li>
+<li class="chapter" data-level="14.3.1" data-path="summary1.html"><a href="summary1.html#height-1"><i class="fa fa-check"></i><b>14.3.1</b> Height</a></li>
 <li class="chapter" data-level="14.3.2" data-path="summary1.html"><a href="summary1.html#equivalent-density"><i class="fa fa-check"></i><b>14.3.2</b> Equivalent density</a></li>
 </ul></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="intercfix.html"><a href="intercfix.html"><i class="fa fa-check"></i><b>15</b> Interception fix</a><ul>
+<li class="chapter" data-level="15.1" data-path="intercfix.html"><a href="intercfix.html#introduction-12"><i class="fa fa-check"></i><b>15.1</b> Introduction</a></li>
+<li class="chapter" data-level="15.2" data-path="intercfix.html"><a href="intercfix.html#model-parameterization-1"><i class="fa fa-check"></i><b>15.2</b> Model parameterization</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -589,12 +620,16 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </div>
 <div id="the-density-effect-on-lai" class="section level2">
 <h2><span class="header-section-number">5.2</span> The density effect on LAI</h2>
-<p>In the model, the plant density is taken as a negative effect upon the <code>LAI</code> growth as soon as a threshold of <code>LAI</code> is reached. This threshold (<code>P_laicomp</code>) represents the moment when the leaf surface of a plant start becoming competitive for light against another plant (from the same species or not). So whenever the <code>LAI</code> is higher than <code>P_laicomp</code>, the effect of the density (<code>efdensite</code>) become closer to 0 (the effect is null when equal to 1, and maximum at 0). This effect is computed as: <span class="math inline">\(ef_{densite}=\min\left\{1.0\ ;\ e^{P_{adens}\cdot\frac{log(densiteequiv)}{P_{bdens}}}\right\}\)</span> or more simply: <span class="math inline">\(ef_{densite}=\min\left\{1.0\ ;\ (\frac{densiteequiv}{P_{bdens}})^{P_{adens}}\right\}\)</span></p>
+<p>In the model, the plant density is taken as a negative effect upon the <code>LAI</code> growth as soon as a threshold of <code>LAI</code> is reached. This threshold (<code>P_laicomp</code>) represents the moment when the leaf surface of a plant start becoming competitive for light against another plant (from the same species or not). So whenever the <code>LAI</code> is higher than <code>P_laicomp</code>, the effect of the density (<code>efdensite</code>) become closer to 0 (the effect is null when equal to 1, and maximum at 0).
+This effect is computed as:
+<span class="math inline">\(ef_{densite}=\min\left\{1.0\ ;\ e^{P_{adens}\cdot\frac{log(densiteequiv)}{P_{bdens}}}\right\}\)</span>
+or more simply:
+<span class="math inline">\(ef_{densite}=\min\left\{1.0\ ;\ (\frac{densiteequiv}{P_{bdens}})^{P_{adens}}\right\}\)</span></p>
 <blockquote>
 <p>Replace the equation in the model to simplify too ?</p>
 </blockquote>
 <p>Here is a plot representing the density effect along the equivalent density:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
 <span class="kw">expand.grid</span>(<span class="dt">densiteequiv=</span> <span class="dv">140</span><span class="op">:</span><span class="dv">280</span>, <span class="dt">P_adens=</span><span class="kw">c</span>(<span class="op">-</span><span class="fl">0.54</span>,<span class="op">-</span><span class="fl">0.7</span>),<span class="dt">P_bdens=</span><span class="kw">c</span>(<span class="dv">7</span>,<span class="dv">10</span>))<span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">transmute</span>(<span class="dt">Parameters=</span> <span class="kw">paste</span>(<span class="st">&quot;P_adens=&quot;</span>,P_adens,<span class="st">&quot;P_bdens=&quot;</span>,P_bdens, <span class="dt">sep=</span><span class="st">&quot;, &quot;</span>),
             densiteequiv,
@@ -603,7 +638,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>densiteequiv))<span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">y=</span>efdensite,<span class="dt">colour=</span> Parameters))<span class="op">+</span>
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span> <span class="st">&quot;Equivalent density&quot;</span>, <span class="dt">y=</span> <span class="st">&quot;Density effect (0-1)&quot;</span>, <span class="dt">colour=</span> <span class="st">&quot;a and b parameters values&quot;</span>,
-       <span class="dt">title=</span><span class="st">&quot;Equivalent density / density effect&quot;</span>)</code></pre></div>
+       <span class="dt">title=</span><span class="st">&quot;Equivalent density / density effect&quot;</span>)</code></pre>
 <p><img src="Postdoc_steps_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
 <p>So the higher the density, the higher the negative effect on <code>LAI</code>.</p>
 </div>
@@ -624,10 +659,12 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>The user will now have four options to compute the equivalent density, depending on the value of the <code>P_code_calc_equi_density</code> parameter:</p>
 <ul>
 <li><p>(1): Previous computation : <span class="math inline">\(density_{Equivalent}= density_{p2} + \frac{density_{p1}}{P_{bdensp1}}\cdot P_{bdensp2}\)</span></p></li>
-<li><p>(2): Improved computation to define the equivalent density as a function of the height difference between the plants as follow: <span class="math inline">\(density_{Equivalent} =\begin{cases}\Delta_{height} &gt; hauteur_{threshold} &amp; density_{p2} + \frac{density_{p1}}{P_{bdensp1}}\cdot P_{bdensp2} \\ \Delta_{height} &lt; hauteur_{threshold} &amp; density_{p2}+slope\cdot abs\left|\Delta_{height}\right| \end{cases}\)</span><br />
+<li><p>(2): Improved computation to define the equivalent density as a function of the height difference between the plants as follow:
+<span class="math inline">\(density_{Equivalent} =\begin{cases}\Delta_{height} &gt; hauteur_{threshold} &amp; density_{p2} + \frac{density_{p1}}{P_{bdensp1}}\cdot P_{bdensp2} \\ \Delta_{height} &lt; hauteur_{threshold} &amp; density_{p2}+slope\cdot abs\left|\Delta_{height}\right| \end{cases}\)</span><br />
 with <span class="math inline">\(diffx= \frac{density_{p1}}{P_{bdensp1}}\cdot P_{bdensp2}\)</span> and <span class="math inline">\(slope= \frac{diffx}{hauteur_{threshold}}\)</span></p></li>
 <li>(3): Improved computation to define the equivalent density as a function of the height difference between the plants, and using different parameters for intraspecific and interspecific competition, with simpler meanings. This formalism would give no increase in equivalent density until a given threshold (<code>hauteur_threshold</code>), after which a progressive increase in the equivalent density would happen until the maximum allowed. In this computation, the slope would be computed by the model, and the equivalent density would be computed as follows: <span class="math inline">\(density_{Equivalent} =\begin{cases}\Delta_{height} &lt; hauteur_{threshold} &amp; density_{p2} \\ \Delta_{height} &gt; hauteur_{threshold} &amp; b + \Delta_{height}\cdot slope \\ \Delta_{height} &gt; hauteur_{threshold_2} &amp; Max_{equDens} \end{cases}\)</span><br />
-with <span class="math inline">\(slope= \frac{Max_{equDens}}{hauteur_{threshold_2}-hauteur_{threshold}}\)</span>. This formalism would include three parameters:
+with <span class="math inline">\(slope= \frac{Max_{equDens}}{hauteur_{threshold_2}-hauteur_{threshold}}\)</span>.
+This formalism would include three parameters:
 <ul>
 <li><p><code>hauteur_threshold</code>: the difference in height below which no competition is occuring</p></li>
 <li><p><code>hauteur_threshold_2</code>: the difference in height below which a progressive competition is occuring</p></li>
@@ -639,15 +676,15 @@ with <span class="math inline">\(slope= \frac{Max_{equDens}}{hauteur_{threshold_
 <div id="visual-representation-of-the-options" class="section level3">
 <h3><span class="header-section-number">5.4.2</span> Visual representation of the options</h3>
 <p>The two new formalisms are both linking the equivalent density to the difference of height between the two plants, but using different parameters and outputs.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df_DE=<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">Delta_height=</span> <span class="kw">seq</span>(<span class="dt">from=</span> <span class="fl">0.01</span>, <span class="dt">to=</span> <span class="dv">1</span>, <span class="dt">by=</span> <span class="fl">0.01</span>))
+<pre class="sourceCode r"><code class="sourceCode r">df_DE=<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">Delta_height=</span> <span class="kw">seq</span>(<span class="dt">from=</span> <span class="fl">0.01</span>, <span class="dt">to=</span> <span class="dv">1</span>, <span class="dt">by=</span> <span class="fl">0.01</span>))
 density_p1=<span class="st"> </span><span class="dv">140</span>
 density_p2=<span class="st"> </span><span class="dv">30</span>
 P_bdensp1=<span class="st"> </span><span class="dv">7</span> ; P_bdensp2=<span class="st"> </span><span class="fl">1.5</span>
 hauteur_threshold=<span class="st"> </span><span class="fl">0.2</span>
 diffx =<span class="st"> </span>density_p1 <span class="op">/</span><span class="st"> </span>P_bdensp1 <span class="op">*</span><span class="st"> </span>P_bdensp2
-slope=<span class="st"> </span>diffx<span class="op">/</span>hauteur_threshold</code></pre></div>
+slope=<span class="st"> </span>diffx<span class="op">/</span>hauteur_threshold</code></pre>
 <p>Here is a visual representation of the equivalent density when <code>P_code_calc_equi_density= 2</code> for a wheat-pea intercrop with a plant density of 140 for the wheat as the principal species and 30 for the pea as the associated species:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df_DE<span class="op">%&gt;%</span>
+<pre class="sourceCode r"><code class="sourceCode r">df_DE<span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Equ_density=</span> 
            <span class="kw">ifelse</span>(Delta_height<span class="op">&gt;</span>hauteur_threshold,
                   density_p2 <span class="op">+</span><span class="st"> </span>density_p1<span class="op">/</span>P_bdensp1 <span class="op">*</span>P_bdensp2,
@@ -658,11 +695,11 @@ slope=<span class="st"> </span>diffx<span class="op">/</span>hauteur_threshold</
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">colour =</span> <span class="st">&quot;Equivalent density&quot;</span>,
        <span class="dt">x =</span> <span class="st">&quot;Delta height (Dominant Plant Height-Dominated Plant Height)&quot;</span>,
        <span class="dt">y=</span> <span class="st">&quot;Dominated plant equivalent density&quot;</span>,
-       <span class="dt">title=</span> <span class="st">&quot;New formalism for equivalent plant density&quot;</span>)</code></pre></div>
+       <span class="dt">title=</span> <span class="st">&quot;New formalism for equivalent plant density&quot;</span>)</code></pre>
 <p><img src="Postdoc_steps_files/figure-html/P_code_calc_equi_density_2-1.png" width="672" /></p>
 <p>This option has several implications in the model, notably that the dominated plant is less impacted by the competition with the dominant plant when both have approximately the same height.</p>
 <p>Here is a visual representation of the same output when <code>P_code_calc_equi_density= 3</code>:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df_DE=<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">Delta_height=</span> <span class="kw">seq</span>(<span class="dt">from=</span> <span class="fl">0.01</span>, <span class="dt">to=</span> <span class="dv">1</span>, <span class="dt">by=</span> <span class="fl">0.01</span>))
+<pre class="sourceCode r"><code class="sourceCode r">df_DE=<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">Delta_height=</span> <span class="kw">seq</span>(<span class="dt">from=</span> <span class="fl">0.01</span>, <span class="dt">to=</span> <span class="dv">1</span>, <span class="dt">by=</span> <span class="fl">0.01</span>))
 hauteur_threshold_<span class="dv">2</span>=<span class="st"> </span><span class="fl">0.8</span>
 Max_equDens=<span class="st"> </span><span class="dv">60</span>
 slope=<span class="st"> </span>(Max_equDens)<span class="op">/</span>(hauteur_threshold_<span class="dv">2</span><span class="op">-</span>hauteur_threshold)
@@ -680,7 +717,7 @@ df_DE<span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">colour =</span> <span class="st">&quot;Equivalent density&quot;</span>,
        <span class="dt">x =</span> <span class="st">&quot;Delta height (Dominant Plant Height-Dominated Plant Height)&quot;</span>,
        <span class="dt">y=</span> <span class="st">&quot;Dominated plant equivalent density&quot;</span>,
-       <span class="dt">title=</span> <span class="st">&quot;New (third) formalism for equivalent plant density&quot;</span>)</code></pre></div>
+       <span class="dt">title=</span> <span class="st">&quot;New (third) formalism for equivalent plant density&quot;</span>)</code></pre>
 <p><img src="Postdoc_steps_files/figure-html/P_code_calc_equi_density_3-1.png" width="672" /></p>
 <p>This formalism considers no interspecific competition for the quality of light while the difference in height is low, and then an increased competition until a maximum is reached.</p>
 </div>
@@ -722,7 +759,7 @@ gitbook.start({
 "google": false,
 "linkedin": false,
 "weibo": false,
-"instapper": false,
+"instapaper": false,
 "vk": false,
 "all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
 },
@@ -732,6 +769,10 @@ gitbook.start({
 "size": 2
 },
 "edit": {
+"link": null,
+"text": null
+},
+"history": {
 "link": null,
 "text": null
 },
@@ -748,8 +789,8 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    var src = "";
-    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(src))
       src = src.replace(/^https?:/, '');
     script.src = src;

@@ -5,11 +5,11 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>STICS intercrop: a work in progress for the ReMIX H2020 project</title>
+  <title>Chapter 14 First summary | STICS intercrop: a work in progress for the ReMIX H2020 project</title>
   <meta name="description" content="This book is made to keep track of my work during my post-doctorate position for the ReMIX project.">
-  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
 
-  <meta property="og:title" content="STICS intercrop: a work in progress for the ReMIX H2020 project" />
+  <meta property="og:title" content="Chapter 14 First summary | STICS intercrop: a work in progress for the ReMIX H2020 project" />
   <meta property="og:type" content="book" />
   
   
@@ -17,7 +17,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="STICS intercrop: a work in progress for the ReMIX H2020 project" />
+  <meta name="twitter:title" content="Chapter 14 First summary | STICS intercrop: a work in progress for the ReMIX H2020 project" />
   
   <meta name="twitter:description" content="This book is made to keep track of my work during my post-doctorate position for the ReMIX project." />
   
@@ -25,7 +25,7 @@
 <meta name="author" content="R. Vezy">
 
 
-<meta name="date" content="2018-09-05">
+<meta name="date" content="2019-05-23">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -33,9 +33,10 @@
   
   
 <link rel="prev" href="misc.html">
-
+<link rel="next" href="intercfix.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
@@ -49,13 +50,13 @@
 
 <link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
 <script src="libs/pagedtable-1.1/js/pagedtable.js"></script>
-<script src="libs/htmlwidgets-1.2/htmlwidgets.js"></script>
-<script src="libs/plotly-binding-4.7.1/plotly.js"></script>
+<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.8.0/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
 <link href="libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
 <script src="libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
-<link href="libs/plotlyjs-1.29.2/plotly-htmlwidgets.css" rel="stylesheet" />
-<script src="libs/plotlyjs-1.29.2/plotly-latest.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-1.39.2/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-1.39.2/plotly-latest.min.js"></script>
 
 <script>
 /* ========================================================================
@@ -406,41 +407,67 @@ $(document).ready(function () {
 
 
 <style type="text/css">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code > span.dt { color: #902000; } /* DataType */
-code > span.dv { color: #40a070; } /* DecVal */
-code > span.bn { color: #40a070; } /* BaseN */
-code > span.fl { color: #40a070; } /* Float */
-code > span.ch { color: #4070a0; } /* Char */
-code > span.st { color: #4070a0; } /* String */
-code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code > span.ot { color: #007020; } /* Other */
-code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code > span.fu { color: #06287e; } /* Function */
-code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #880000; } /* Constant */
-code > span.sc { color: #4070a0; } /* SpecialChar */
-code > span.vs { color: #4070a0; } /* VerbatimString */
-code > span.ss { color: #bb6688; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #19177c; } /* Variable */
-code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #666666; } /* Operator */
-code > span.bu { } /* BuiltIn */
-code > span.ex { } /* Extension */
-code > span.pp { color: #bc7a00; } /* Preprocessor */
-code > span.at { color: #7d9029; } /* Attribute */
-code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -557,9 +584,13 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="14.1" data-path="summary1.html"><a href="summary1.html#introduction-11"><i class="fa fa-check"></i><b>14.1</b> Introduction</a></li>
 <li class="chapter" data-level="14.2" data-path="summary1.html"><a href="summary1.html#model-outputs"><i class="fa fa-check"></i><b>14.2</b> Model outputs</a></li>
 <li class="chapter" data-level="14.3" data-path="summary1.html"><a href="summary1.html#model-parameterization"><i class="fa fa-check"></i><b>14.3</b> Model parameterization</a><ul>
-<li class="chapter" data-level="14.3.1" data-path="height.html"><a href="height.html#height"><i class="fa fa-check"></i><b>14.3.1</b> Height</a></li>
+<li class="chapter" data-level="14.3.1" data-path="summary1.html"><a href="summary1.html#height-1"><i class="fa fa-check"></i><b>14.3.1</b> Height</a></li>
 <li class="chapter" data-level="14.3.2" data-path="summary1.html"><a href="summary1.html#equivalent-density"><i class="fa fa-check"></i><b>14.3.2</b> Equivalent density</a></li>
 </ul></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="intercfix.html"><a href="intercfix.html"><i class="fa fa-check"></i><b>15</b> Interception fix</a><ul>
+<li class="chapter" data-level="15.1" data-path="intercfix.html"><a href="intercfix.html#introduction-12"><i class="fa fa-check"></i><b>15.1</b> Introduction</a></li>
+<li class="chapter" data-level="15.2" data-path="intercfix.html"><a href="intercfix.html#model-parameterization-1"><i class="fa fa-check"></i><b>15.2</b> Model parameterization</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -590,11 +621,12 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="model-outputs" class="section level2">
 <h2><span class="header-section-number">14.2</span> Model outputs</h2>
 <p>The model was tested on a series of experimentations on Wheat and Pea from Auzeville. It consists on a set of observations made on either sole crops or intercrops, and the model was run on each case to evaluate its simulation outputs. The model was also tested to simulate a sole crop as an intercrop with both plants from the same species and variety.<br />
-The results of this evaluation are available on <a href="Auzeville_summary.html">this separate page</a>. You can consider this page as a snapshot of the evaluation of the model version used as : 05 septembre, 2018. This version of the model can be retrieved from my GIT repository using this SHA: <code>c9638aafb924949b630d273608d2b3c45369cd0c</code>.</p>
+The results of this evaluation are available on <a href="Auzeville_summary.html">this separate page</a>.
+You can consider this page as a snapshot of the evaluation of the model version used as : 23 mai, 2019. This version of the model can be retrieved from my GIT repository using this SHA: <code>c9638aafb924949b630d273608d2b3c45369cd0c</code>.</p>
 </div>
 <div id="model-parameterization" class="section level2">
 <h2><span class="header-section-number">14.3</span> Model parameterization</h2>
-<div id="height" class="section level3">
+<div id="height-1" class="section level3">
 <h3><span class="header-section-number">14.3.1</span> Height</h3>
 <p>The height can be computed using two different paradigms:</p>
 <ul>
@@ -605,10 +637,11 @@ The results of this evaluation are available on <a href="Auzeville_summary.html"
 <p>The computation is chosen using the <code>P_code_shape</code>. If <code>P_code_shape</code> is equal to <code>2</code>, the model will use the second one (using <code>masec</code>), and for any other value, it will use the first one.</p>
 <p>The allometric equation is simply defined as:<br />
 <span class="math inline">\(hauteur= P_{hautbase} + P_{hautK} \cdot masec^{P_{hautA}}\)</span><br />
-So it has two new parameters: <code>P_hautK</code> and <code>P_hautA</code>. This equation is well known across a wide range of fields, can describe a large panel of relationships, is robust, and is quite simple to parameterize. In the case of STICS, the user should use sole crop data only for parameterization, because the hauteur~masec relationship is hard-coded for this situation. In the case of intercrop, the model will adapt the computation accordingly.</p>
+So it has two new parameters: <code>P_hautK</code> and <code>P_hautA</code>.
+This equation is well known across a wide range of fields, can describe a large panel of relationships, is robust, and is quite simple to parameterize. In the case of STICS, the user should use sole crop data only for parameterization, because the hauteur~masec relationship is hard-coded for this situation. In the case of intercrop, the model will adapt the computation accordingly.</p>
 <p>For our case experiment in Auzeville, these parameters were fitted thanks to the nls function in R using observations for each species independently.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">obs_data.frame<span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">nls</span>(hauteur<span class="op">~</span>K<span class="op">*</span>masec<span class="op">^</span>A,<span class="dt">data =</span> .,<span class="dt">start =</span> <span class="kw">list</span>(<span class="dt">A=</span><span class="dv">1</span>,<span class="dt">K=</span><span class="dv">1</span>))</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">obs_data.frame<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">nls</span>(hauteur<span class="op">~</span>K<span class="op">*</span>masec<span class="op">^</span>A,<span class="dt">data =</span> .,<span class="dt">start =</span> <span class="kw">list</span>(<span class="dt">A=</span><span class="dv">1</span>,<span class="dt">K=</span><span class="dv">1</span>))</code></pre>
 <p>At first, we were afraid that the relationship would differ according to the nitogen management, but only the dry mass was impacted by the nitrogen treatments, not the height~masec relationship. However, the relationship changed a little between sole crops and intercrops, but was still robust enough to use it as is as shown in the results from <a href="Auzeville_summary.html">this separate page</a>, also shown in the first paragraph.</p>
 </div>
 <div id="equivalent-density" class="section level3">
@@ -636,8 +669,8 @@ with <span class="math inline">\(slope= \frac{Max_{equDens}}{hauteur_{threshold_
           </div>
         </div>
       </div>
-<a href="misc.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="misc.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="intercfix.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -657,7 +690,7 @@ gitbook.start({
 "google": false,
 "linkedin": false,
 "weibo": false,
-"instapper": false,
+"instapaper": false,
 "vk": false,
 "all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
 },
@@ -667,6 +700,10 @@ gitbook.start({
 "size": 2
 },
 "edit": {
+"link": null,
+"text": null
+},
+"history": {
 "link": null,
 "text": null
 },
@@ -683,8 +720,8 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    var src = "";
-    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(src))
       src = src.replace(/^https?:/, '');
     script.src = src;

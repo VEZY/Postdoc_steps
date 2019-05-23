@@ -80,7 +80,14 @@ The results show that using `masec` instead of the `lai` to model plant height g
 
 The height~masec link can stop existing as soon as a plant reach a certain development stage. For example, wheat stops growing in height from the moment it is flowering. 
 
-Hence, a new parameter (`P_stage_const_height`) was added to have the choice to break this link at any developing stage from this list : "lax", "sen", "flo", "mat" or "rec".
+Hence, a new parameter (`P_stage_const_height`) was added to have the choice to break this link at any developing stage from this list : 
+
+* "lax": maximum leaf area index, end or leaf growth.  
+* "sen": start of leaf senescene   
+* "flo": flowering   
+* "drp": start of grain filling   
+* "mat": physiological maturity   
+* "rec": harvest   
 
 Figure \@ref(fig:constheight) shows the new results, with `P_stage_const_height= flo` for both plants.  
 

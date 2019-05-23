@@ -1,0 +1,27 @@
+# Interception fix {#intercfix}
+
+```{r, include=FALSE}
+if(knitr:::pandoc_to() == "html") {
+  knitr::opts_chunk$set(echo = TRUE)
+}else{
+  knitr::opts_chunk$set(echo = FALSE)
+}
+```
+
+## Introduction
+
+When simulating a self-intercrop, *i.e.* a monocrop simulated as if it was an intercrop, both plants outputs were quite different.
+
+This was arising from the computation of the light competition between the two plants: one was considered dominant over the other one, so the received by the dominated plant was only the light transmitted by the other. 
+
+This computation needed to change, so we included two cases to compute the light incident to the plants:
+
+1. The dominant plant is considered above the dominated plant (dominancy case): `p(i-1)%rsoleil` represents the fraction of the radiation incoming right above the plant i, i.e. the light transmitted to the associated plant, for the sunlit part (rombre is used for the shaded one). So `trg_bak * p(i-1)%rsoleil` is the actual amount of radiation transmitted to the sunlit part of the associated plant, and `trg_bak * p(i-1)%rombre` is the actual amount of radiation transmitted to the shaded part of the associated plant.
+    
+1. There is no clear dominancy because both plants have approx. the same height (Delta height<hauteur_threshold): the trg is not transmitted from one plant to the other, but shared between both plants. In that case, the competition for light arises only through the LAI of each plant.
+
+The new version of the model integrating this code can be retrieved from the repository using this SHA: `591cd8db5aeaf8db2cdb5b62008c54d04d833df8`.
+
+## Model parameterization
+
+The model does not need any further parameterization because this new formalism uses one parameter that is already available: `hauteur_threshold`.

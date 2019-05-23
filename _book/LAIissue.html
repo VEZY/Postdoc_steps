@@ -5,11 +5,11 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>STICS intercrop: a work in progress for the ReMIX H2020 project</title>
+  <title>Chapter 8 Issue on LAI not decreasing | STICS intercrop: a work in progress for the ReMIX H2020 project</title>
   <meta name="description" content="This book is made to keep track of my work during my post-doctorate position for the ReMIX project.">
-  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
 
-  <meta property="og:title" content="STICS intercrop: a work in progress for the ReMIX H2020 project" />
+  <meta property="og:title" content="Chapter 8 Issue on LAI not decreasing | STICS intercrop: a work in progress for the ReMIX H2020 project" />
   <meta property="og:type" content="book" />
   
   
@@ -17,7 +17,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="STICS intercrop: a work in progress for the ReMIX H2020 project" />
+  <meta name="twitter:title" content="Chapter 8 Issue on LAI not decreasing | STICS intercrop: a work in progress for the ReMIX H2020 project" />
   
   <meta name="twitter:description" content="This book is made to keep track of my work during my post-doctorate position for the ReMIX project." />
   
@@ -25,7 +25,7 @@
 <meta name="author" content="R. Vezy">
 
 
-<meta name="date" content="2018-09-05">
+<meta name="date" content="2019-05-23">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -36,6 +36,7 @@
 <link rel="next" href="FAPARissue.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
@@ -49,13 +50,13 @@
 
 <link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
 <script src="libs/pagedtable-1.1/js/pagedtable.js"></script>
-<script src="libs/htmlwidgets-1.2/htmlwidgets.js"></script>
-<script src="libs/plotly-binding-4.7.1/plotly.js"></script>
+<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.8.0/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
 <link href="libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
 <script src="libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
-<link href="libs/plotlyjs-1.29.2/plotly-htmlwidgets.css" rel="stylesheet" />
-<script src="libs/plotlyjs-1.29.2/plotly-latest.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-1.39.2/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-1.39.2/plotly-latest.min.js"></script>
 
 <script>
 /* ========================================================================
@@ -406,41 +407,67 @@ $(document).ready(function () {
 
 
 <style type="text/css">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code > span.dt { color: #902000; } /* DataType */
-code > span.dv { color: #40a070; } /* DecVal */
-code > span.bn { color: #40a070; } /* BaseN */
-code > span.fl { color: #40a070; } /* Float */
-code > span.ch { color: #4070a0; } /* Char */
-code > span.st { color: #4070a0; } /* String */
-code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code > span.ot { color: #007020; } /* Other */
-code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code > span.fu { color: #06287e; } /* Function */
-code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #880000; } /* Constant */
-code > span.sc { color: #4070a0; } /* SpecialChar */
-code > span.vs { color: #4070a0; } /* VerbatimString */
-code > span.ss { color: #bb6688; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #19177c; } /* Variable */
-code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #666666; } /* Operator */
-code > span.bu { } /* BuiltIn */
-code > span.ex { } /* Extension */
-code > span.pp { color: #bc7a00; } /* Preprocessor */
-code > span.at { color: #7d9029; } /* Attribute */
-code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -557,9 +584,13 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="14.1" data-path="summary1.html"><a href="summary1.html#introduction-11"><i class="fa fa-check"></i><b>14.1</b> Introduction</a></li>
 <li class="chapter" data-level="14.2" data-path="summary1.html"><a href="summary1.html#model-outputs"><i class="fa fa-check"></i><b>14.2</b> Model outputs</a></li>
 <li class="chapter" data-level="14.3" data-path="summary1.html"><a href="summary1.html#model-parameterization"><i class="fa fa-check"></i><b>14.3</b> Model parameterization</a><ul>
-<li class="chapter" data-level="14.3.1" data-path="height.html"><a href="height.html#height"><i class="fa fa-check"></i><b>14.3.1</b> Height</a></li>
+<li class="chapter" data-level="14.3.1" data-path="summary1.html"><a href="summary1.html#height-1"><i class="fa fa-check"></i><b>14.3.1</b> Height</a></li>
 <li class="chapter" data-level="14.3.2" data-path="summary1.html"><a href="summary1.html#equivalent-density"><i class="fa fa-check"></i><b>14.3.2</b> Equivalent density</a></li>
 </ul></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="intercfix.html"><a href="intercfix.html"><i class="fa fa-check"></i><b>15</b> Interception fix</a><ul>
+<li class="chapter" data-level="15.1" data-path="intercfix.html"><a href="intercfix.html#introduction-12"><i class="fa fa-check"></i><b>15.1</b> Introduction</a></li>
+<li class="chapter" data-level="15.2" data-path="intercfix.html"><a href="intercfix.html#model-parameterization-1"><i class="fa fa-check"></i><b>15.2</b> Model parameterization</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -626,19 +657,19 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p class="caption">Figure 8.5: Leaf (lai) appearence day (<code>nsencour</code>) compared to the day (<code>day</code>) they become senescent (self-intercrop of Wheat-Wheat)</p>
 </div>
 <p>The leaf lifespan (<code>durvie(i)</code>) was computed as:</p>
-<div class="sourceCode"><pre class="sourceCode fortran"><code class="sourceCode fortran"><span class="kw">if</span> (i <span class="op">&lt;</span> fin) <span class="kw">then</span>
+<pre class="sourceCode fortran"><code class="sourceCode fortran"><span class="kw">if</span> (i <span class="op">&lt;</span> fin) <span class="kw">then</span>
   durvie(i) <span class="kw">=</span> <span class="bu">min</span>(durvie(i), durage <span class="kw">*</span> <span class="bu">min</span>(senstress, fstressgel))
 <span class="kw">else</span>
   durvie(i) <span class="kw">=</span> durage <span class="kw">*</span> <span class="bu">min</span>(senstress, fstressgel)
-<span class="kw">endif</span></code></pre></div>
+<span class="kw">endif</span></code></pre>
 <p>The bug came from the computation of <code>durvie(i)</code> that was initialized to 0, and always equal to 0 afterward until the <code>fin</code> was reached.<br />
 A correction is proposed to fix the bug, which make the same computation except on the first day on which the senescence is computed (<code>nsencour==nlev</code>):</p>
-<div class="sourceCode"><pre class="sourceCode fortran"><code class="sourceCode fortran"><span class="kw">if</span> (i <span class="op">&lt;</span> fin <span class="op">.and.</span> nsencour <span class="op">&gt;</span> nlev) <span class="kw">then</span>
+<pre class="sourceCode fortran"><code class="sourceCode fortran"><span class="kw">if</span> (i <span class="op">&lt;</span> fin <span class="op">.and.</span> nsencour <span class="op">&gt;</span> nlev) <span class="kw">then</span>
   durvie(i) <span class="kw">=</span> <span class="bu">min</span>(durvie(i), durage <span class="kw">*</span> <span class="bu">min</span>(senstress, fstressgel))
 <span class="kw">else</span>
   durvie(i) <span class="kw">=</span> durage <span class="kw">*</span> <span class="bu">min</span>(senstress, fstressgel)
-<span class="kw">endif</span></code></pre></div>
-<p>The new computation fix the bug, making <code>nsencour</code> more progressive as for the dominant plant (Figure <a href="LAIissue.html#fig:nsencourfix">8.6</a>).</p>
+<span class="kw">endif</span></code></pre>
+<p>The new computation fix the bug, making <code>nsencour</code> more progressive as for the dominated plant (Figure <a href="LAIissue.html#fig:nsencourfix">8.6</a>).</p>
 <div class="figure"><span id="fig:nsencourfix"></span>
 <img src="img/LAIhigh_nsencourfix.png" alt="Leaf (lai) appearence day (nsencour) compared to the day (day) they become senescent using the new computation of durvie (self-intercrop of Wheat-Wheat)" />
 <p class="caption">Figure 8.6: Leaf (lai) appearence day (<code>nsencour</code>) compared to the day (<code>day</code>) they become senescent using the new computation of durvie (self-intercrop of Wheat-Wheat)</p>
@@ -646,7 +677,8 @@ A correction is proposed to fix the bug, which make the same computation except 
 </div>
 <div id="stress-indices" class="section level3">
 <h3><span class="header-section-number">8.3.2</span> Stress indices</h3>
-<p>The senescence is computed using leaf life span, but also two different stress indices: <code>senfac</code> for the water stress and <code>innsenes</code> for the nitrogen stress. Figure <a href="LAIissue.html#fig:senstress">8.7</a> shows that the plant with non-decreasing <code>LAI</code> has a higher stress compared with the other plant, rejecting again the hypothesis of a too low stress indices.</p>
+<p>The senescence is computed using leaf life span, but also two different stress indices: <code>senfac</code> for the water stress and <code>innsenes</code> for the nitrogen stress.
+Figure <a href="LAIissue.html#fig:senstress">8.7</a> shows that the plant with non-decreasing <code>LAI</code> has a higher stress compared with the other plant, rejecting again the hypothesis of a too low stress indices.</p>
 <div class="figure"><span id="fig:senstress"></span>
 <img src="img/sen_stress.png" alt="Stress index to compute leaf lifespan in a self-intercrop of Wheat-Wheat" />
 <p class="caption">Figure 8.7: Stress index to compute leaf lifespan in a self-intercrop of Wheat-Wheat</p>
@@ -674,7 +706,7 @@ A correction is proposed to fix the bug, which make the same computation except 
 <h2><span class="header-section-number">8.4</span> The solution to the first issue</h2>
 <p>Three main variables were badly used to compute the senescence: <code>dltams</code>, <code>deltai</code> and <code>pfeuilverte</code>. These variables correspond to the daily increment in dry mass, daily increment in lai, and the green leaves proportion. The model used the values from previous computations kept in memory to compute the different components of the senescence for each light environment of the plant (<em>i.e.</em> sunlit or shaded) separately.</p>
 <p>Unfortunately, the dominance of the plant can change over time, so a dominant plant with no shaded component can have one afterwards. If a dominant plant becomes dominated, the model was trying to use <code>dltams</code>, <code>deltai</code> and <code>pfeuilverte</code> of the shaded part of the plant that all were equal to 0 (as their initialization) because they were not computed before, making no senescence at all for the shaded part of the plant.</p>
-<p>We propose to replace the use of a separated shaded and sunlit <code>dltams</code>, <code>deltai</code> and <code>pfeuilverte</code> by a their total at plant level, weighted by their relative surface under shaded and sunlit environment. For example, the <code>deltai</code> input to the <code>senescen</code> function would be <code>p(i)%deltai(0,1:sc%nbjmax)*p(i)%surf(ens)</code> instead of <code>p(i)%deltai(ens,1:sc%nbjmax))</code>, with <code>p(i)%deltai(0,n) = p(i)%deltai(sc%AS,n)* p(i)%surf(sc%AS) + p(i)%deltai(sc%AO,n)* p(i)%surf(sc%AO)</code>. This new computation has the advantage of considering all the lai that was incremented before, with a drawback being not to consider the previous relative surface of the plant.</p>
+<p>We propose to replace the use of a separated shaded and sunlit <code>dltams</code>, <code>deltai</code> and <code>pfeuilverte</code> by their total at plant level, weighted by their relative surface under shaded and sunlit environment. For example, the <code>deltai</code> input to the <code>senescen</code> function would be <code>p(i)%deltai(0,1:sc%nbjmax)*p(i)%surf(ens)</code> instead of <code>p(i)%deltai(ens,1:sc%nbjmax))</code>, with <code>p(i)%deltai(0,n) = p(i)%deltai(sc%AS,n)* p(i)%surf(sc%AS) + p(i)%deltai(sc%AO,n)* p(i)%surf(sc%AO)</code>. This new computation has the advantage of considering all the lai that was incremented before, with a drawback being not to consider the previous relative surface of the plant.</p>
 <p>Figure <a href="LAIissue.html#fig:Newsen">8.10</a> shows the resulting outputs, which are more realistic.</p>
 <div class="figure"><span id="fig:Newsen"></span>
 <img src="img/Newsen.png" alt="Simulation of a Wheat-Wheat self-intercrop leaf area index using the modified STICS version" />
@@ -694,10 +726,11 @@ A correction is proposed to fix the bug, which make the same computation except 
 <p class="caption">Figure 8.12: Partially fixed issue in the simulation of the lai at the end of the crop cycle</p>
 </div>
 <p>This same issue was also found happening for the senescent mass, and the code was modified accordingly to correct it. However, the problem is not entirely solved, because the <code>lai</code> and <code>mafeuilleverte</code> are not going down to 0 at the end of the crop cycle yet.<br />
-This came from the way the model compute the cumulative sunlit and shaded <code>deltai</code>, <code>dltaisen</code>, <code>dltams</code> and <code>pfeuilverte</code> at the plant level that is not compatible with their new computation anymore, because theiy already are weighted for plant level. For example, we computed <code>dltaisen</code>as :</p>
-<div class="sourceCode"><pre class="sourceCode fortran"><code class="sourceCode fortran">      p%dltaisen(<span class="dv">0</span>) <span class="kw">=</span> p%dltaisen(sc%AS) <span class="kw">*</span> p%surf(sc%AS) <span class="kw">+</span> p%dltaisen(sc%AO) <span class="kw">*</span> p%surf(sc%AO)</code></pre></div>
+This came from the way the model compute the cumulative sunlit and shaded <code>deltai</code>, <code>dltaisen</code>, <code>dltams</code> and <code>pfeuilverte</code> at the plant level that is not compatible with their new computation anymore, because theiy already are weighted for plant level.
+For example, we computed <code>dltaisen</code>as :</p>
+<pre class="sourceCode fortran"><code class="sourceCode fortran">      p%dltaisen(<span class="dv">0</span>) <span class="kw">=</span> p%dltaisen(sc%AS) <span class="kw">*</span> p%surf(sc%AS) <span class="kw">+</span> p%dltaisen(sc%AO) <span class="kw">*</span> p%surf(sc%AO)</code></pre>
 <p>So now it is simply computed as:</p>
-<div class="sourceCode"><pre class="sourceCode fortran"><code class="sourceCode fortran">      p%dltaisen(<span class="dv">0</span>) <span class="kw">=</span> p%dltaisen(sc%AS) <span class="kw">+</span> p%dltaisen(sc%AO)</code></pre></div>
+<pre class="sourceCode fortran"><code class="sourceCode fortran">      p%dltaisen(<span class="dv">0</span>) <span class="kw">=</span> p%dltaisen(sc%AS) <span class="kw">+</span> p%dltaisen(sc%AO)</code></pre>
 <p>Figure <a href="LAIissue.html#fig:ReSenFixed2">8.13</a> shows the results given by the modified STICS, which finally gives a <code>lai</code> and a <code>mafeuilleverte</code> equal to 0 at the end of the cycle.</p>
 <div class="figure"><span id="fig:ReSenFixed2"></span>
 <img src="img/ReSenFixed2.png" alt="Fixed issue in the simulation of the masec and lai at the end of the crop cycle" />
@@ -732,7 +765,7 @@ gitbook.start({
 "google": false,
 "linkedin": false,
 "weibo": false,
-"instapper": false,
+"instapaper": false,
 "vk": false,
 "all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
 },
@@ -742,6 +775,10 @@ gitbook.start({
 "size": 2
 },
 "edit": {
+"link": null,
+"text": null
+},
+"history": {
 "link": null,
 "text": null
 },
@@ -758,8 +795,8 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    var src = "";
-    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(src))
       src = src.replace(/^https?:/, '');
     script.src = src;
