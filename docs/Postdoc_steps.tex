@@ -1673,6 +1673,11 @@ The issue was corrected in commit \texttt{4f9d92595c870d9b08f3f0b986cbb321630ad0
 \caption{\label{fig:Qfix}\textbf{Issue with Qfix decreasing abruptly for Pea. Principal plant: Pea, Dominated: Wheat. Simulation for 2007, low nitrogen (N0)}}
 \end{figure}
 
+\hypertarget{efdensite_rac}{%
+\section{efdensite\_rac}\label{efdensite_rac}}
+
+The effect of the density on the roots (\texttt{efdensite\_rac}) was computed using the current plant density, bt for intercrops it should use \texttt{densiteequiv} because the parameters are fitted using a sole crop equivalent density. This computation was fixed in commit \texttt{ba45c6c73d1bb9a081393e84f648a9c90bf47428}.
+
 \hypertarget{summary1}{%
 \chapter{First summary}\label{summary1}}
 

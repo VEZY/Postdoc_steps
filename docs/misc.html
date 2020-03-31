@@ -581,6 +581,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="13.4" data-path="misc.html"><a href="misc.html#energy-balance"><i class="fa fa-check"></i><b>13.4</b> Energy balance</a></li>
 <li class="chapter" data-level="13.5" data-path="misc.html"><a href="misc.html#positive-raint-with-zero-laieai"><i class="fa fa-check"></i><b>13.5</b> Positive raint with zero LAI+EAI</a></li>
 <li class="chapter" data-level="13.6" data-path="misc.html"><a href="misc.html#qfix-decrease"><i class="fa fa-check"></i><b>13.6</b> Qfix decrease</a></li>
+<li class="chapter" data-level="13.7" data-path="misc.html"><a href="misc.html#efdensite_rac"><i class="fa fa-check"></i><b>13.7</b> efdensite_rac</a></li>
 </ul></li>
 <li class="chapter" data-level="14" data-path="summary1.html"><a href="summary1.html"><i class="fa fa-check"></i><b>14</b> First summary</a><ul>
 <li class="chapter" data-level="14.1" data-path="summary1.html"><a href="summary1.html#introduction-11"><i class="fa fa-check"></i><b>14.1</b> Introduction</a></li>
@@ -663,6 +664,10 @@ The issue was corrected in commit <code>4f9d92595c870d9b08f3f0b986cbb321630ad031
 <img src="img/Qfix_issue.png" alt="Issue with Qfix decreasing abruptly for Pea. Principal plant: Pea, Dominated: Wheat. Simulation for 2007, low nitrogen (N0)" />
 <p class="caption">Figure 13.3: <strong>Issue with Qfix decreasing abruptly for Pea. Principal plant: Pea, Dominated: Wheat. Simulation for 2007, low nitrogen (N0)</strong></p>
 </div>
+</div>
+<div id="efdensite_rac" class="section level2">
+<h2><span class="header-section-number">13.7</span> efdensite_rac</h2>
+<p>The effect of the density on the roots (<code>efdensite_rac</code>) was computed using the current plant density, bt for intercrops it should use <code>densiteequiv</code> because the parameters are fitted using a sole crop equivalent density. This computation was fixed in commit <code>ba45c6c73d1bb9a081393e84f648a9c90bf47428</code>.</p>
 
 </div>
 </div>

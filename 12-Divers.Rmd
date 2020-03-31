@@ -50,3 +50,7 @@ S. Munz discovered that Qfix decreased abruplty in some years in intercropping. 
 The issue was corrected in commit `4f9d92595c870d9b08f3f0b986cbb321630ad031`. The results are shown in figure \@ref(fig:Width).
 
 ![(\#fig:Qfix)**Issue with Qfix decreasing abruptly for Pea. Principal plant: Pea, Dominated: Wheat. Simulation for 2007, low nitrogen (N0)**](img/Qfix_issue.png)
+
+## efdensite_rac
+
+The effect of the density on the roots (`efdensite_rac`) was computed using the current plant density, bt for intercrops it should use `densiteequiv` because the parameters are fitted using a sole crop equivalent density. This computation was fixed in commit `ba45c6c73d1bb9a081393e84f648a9c90bf47428`.
