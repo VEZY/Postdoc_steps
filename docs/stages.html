@@ -1,13 +1,12 @@
 <!DOCTYPE html>
-<html >
-
+<html lang="" xml:lang="">
 <head>
 
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 11 Developpment stages and LAI dynamic | STICS intercrop: a work in progress for the ReMIX H2020 project</title>
-  <meta name="description" content="This book is made to keep track of the work made during the post-doctorate position on STICS-intercrop for the ReMIX project.">
-  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+  <meta name="description" content="This book is made to keep track of the work made during the post-doctorate position on STICS-intercrop for the ReMIX project." />
+  <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 11 Developpment stages and LAI dynamic | STICS intercrop: a work in progress for the ReMIX H2020 project" />
   <meta property="og:type" content="book" />
@@ -22,18 +21,18 @@
   <meta name="twitter:description" content="This book is made to keep track of the work made during the post-doctorate position on STICS-intercrop for the ReMIX project." />
   
 
-<meta name="author" content="R. Vezy">
+<meta name="author" content="R. Vezy" />
 
 
-<meta name="date" content="2019-05-23">
+<meta name="date" content="2020-03-31" />
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="height.html">
-<link rel="next" href="LAItoohigh.html">
+<link rel="prev" href="height.html"/>
+<link rel="next" href="LAItoohigh.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -41,6 +40,9 @@
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
 
 
 
@@ -50,13 +52,13 @@
 
 <link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
 <script src="libs/pagedtable-1.1/js/pagedtable.js"></script>
-<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
-<script src="libs/plotly-binding-4.8.0/plotly.js"></script>
+<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.9.2/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
-<link href="libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
-<script src="libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
-<link href="libs/plotly-htmlwidgets-css-1.39.2/plotly-htmlwidgets.css" rel="stylesheet" />
-<script src="libs/plotly-main-1.39.2/plotly-latest.min.js"></script>
+<link href="libs/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.1.0.1/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-1.52.2/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-1.52.2/plotly-latest.min.js"></script>
 
 <script>
 /* ========================================================================
@@ -412,7 +414,6 @@ a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
 a.sourceLine:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
-div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
@@ -579,6 +580,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="13.3" data-path="misc.html"><a href="misc.html#sowing-density-in-auzeville"><i class="fa fa-check"></i><b>13.3</b> Sowing density in Auzeville</a></li>
 <li class="chapter" data-level="13.4" data-path="misc.html"><a href="misc.html#energy-balance"><i class="fa fa-check"></i><b>13.4</b> Energy balance</a></li>
 <li class="chapter" data-level="13.5" data-path="misc.html"><a href="misc.html#positive-raint-with-zero-laieai"><i class="fa fa-check"></i><b>13.5</b> Positive raint with zero LAI+EAI</a></li>
+<li class="chapter" data-level="13.6" data-path="misc.html"><a href="misc.html#qfix-decrease"><i class="fa fa-check"></i><b>13.6</b> Qfix decrease</a></li>
 </ul></li>
 <li class="chapter" data-level="14" data-path="summary1.html"><a href="summary1.html"><i class="fa fa-check"></i><b>14</b> First summary</a><ul>
 <li class="chapter" data-level="14.1" data-path="summary1.html"><a href="summary1.html#introduction-11"><i class="fa fa-check"></i><b>14.1</b> Introduction</a></li>
@@ -592,6 +594,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="15.1" data-path="intercfix.html"><a href="intercfix.html#introduction-12"><i class="fa fa-check"></i><b>15.1</b> Introduction</a></li>
 <li class="chapter" data-level="15.2" data-path="intercfix.html"><a href="intercfix.html#model-parameterization-1"><i class="fa fa-check"></i><b>15.2</b> Model parameterization</a></li>
 </ul></li>
+<li class="chapter" data-level="16" data-path="lightcompetition.html"><a href="lightcompetition.html"><i class="fa fa-check"></i><b>16</b> Light competition effect</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -626,37 +629,37 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="checking-the-ilev" class="section level2">
 <h2><span class="header-section-number">11.2</span> Checking the ilev</h2>
 <p>The date of emergence is set using the <code>ilev</code> parameter. This parameter had a value of 380 in the STICS input files.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">read_param</span>(<span class="dt">dirpath =</span> <span class="st">&quot;0-DATA/Source_data/USMs/IC_Wheat_Wheat&quot;</span>, <span class="dt">param =</span> <span class="st">&quot;ilev&quot;</span>) 
-<span class="co"># 380</span></code></pre>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" title="1"><span class="kw">read_param</span>(<span class="dt">dirpath =</span> <span class="st">&quot;0-DATA/Source_data/USMs/IC_Wheat_Wheat&quot;</span>, <span class="dt">param =</span> <span class="st">&quot;ilev&quot;</span>) </a>
+<a class="sourceLine" id="cb25-2" title="2"><span class="co"># 380</span></a></code></pre></div>
 <p>The Fig. 3 of Bedoussac (2009) shows that <code>ilev</code> should occur 151 cumulated Celsius degrees per day after sewing, but a simple computation showed us that this conditions is met on the 329th day already, and not on the 380th as previously parameterized (see computation below).</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Extracting the day of sewing:</span>
-day_sewing=<span class="st"> </span>
-<span class="st">  </span><span class="kw">read_param</span>(<span class="dt">dirpath =</span> <span class="st">&quot;0-DATA/Source_data/USMs/IC_Wheat_Wheat&quot;</span>, <span class="dt">param =</span> <span class="st">&quot;iplt&quot;</span>)<span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">as.numeric</span>()<span class="op">%&gt;%</span>.[<span class="dv">1</span>]
- <span class="co"># 311th day of the year 2005.</span>
-
-<span class="co"># Reading the meteo file:</span>
-met=<span class="st"> </span><span class="kw">read_met</span>(<span class="st">&quot;0-DATA/Source_data/USMs/IC_Wheat_Wheat&quot;</span>)
-
-<span class="co"># Computing the day on which ilev should occur, i.e. at least 151 cumulated </span>
-<span class="co"># Celsius degrees per day after sewing:</span>
-met<span class="op">$</span>d_jul=<span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">format</span>(met<span class="op">$</span>Date, <span class="st">&quot;%j&quot;</span>))
-met<span class="op">$</span>Year=<span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">format</span>(met<span class="op">$</span>Date, <span class="st">&quot;%Y&quot;</span>))
-met<span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">filter</span>(Year<span class="op">==</span><span class="dv">2005</span><span class="op">&amp;</span>d_jul<span class="op">&gt;=</span><span class="dv">311</span>)
-  <span class="kw">mutate</span>(<span class="dt">cumT=</span> <span class="kw">ifelse</span>(Year<span class="op">==</span><span class="dv">2005</span><span class="op">&amp;</span>d_jul<span class="op">&lt;</span>day_sewing,<span class="dv">0</span>,(ttmin<span class="op">+</span>ttmax)<span class="op">/</span><span class="dv">2</span>))<span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">cumT=</span> <span class="kw">cumsum</span>(cumT))<span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">filter</span>(cumT<span class="op">&gt;=</span><span class="dv">151</span><span class="op">&amp;</span>cumT<span class="op">&lt;=</span><span class="dv">155</span>)<span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(d_jul)</code></pre>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" title="1"><span class="co"># Extracting the day of sewing:</span></a>
+<a class="sourceLine" id="cb26-2" title="2">day_sewing=<span class="st"> </span></a>
+<a class="sourceLine" id="cb26-3" title="3"><span class="st">  </span><span class="kw">read_param</span>(<span class="dt">dirpath =</span> <span class="st">&quot;0-DATA/Source_data/USMs/IC_Wheat_Wheat&quot;</span>, <span class="dt">param =</span> <span class="st">&quot;iplt&quot;</span>)<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb26-4" title="4"><span class="st">  </span><span class="kw">as.numeric</span>()<span class="op">%&gt;%</span>.[<span class="dv">1</span>]</a>
+<a class="sourceLine" id="cb26-5" title="5"> <span class="co"># 311th day of the year 2005.</span></a>
+<a class="sourceLine" id="cb26-6" title="6"></a>
+<a class="sourceLine" id="cb26-7" title="7"><span class="co"># Reading the meteo file:</span></a>
+<a class="sourceLine" id="cb26-8" title="8">met=<span class="st"> </span><span class="kw">read_met</span>(<span class="st">&quot;0-DATA/Source_data/USMs/IC_Wheat_Wheat&quot;</span>)</a>
+<a class="sourceLine" id="cb26-9" title="9"></a>
+<a class="sourceLine" id="cb26-10" title="10"><span class="co"># Computing the day on which ilev should occur, i.e. at least 151 cumulated </span></a>
+<a class="sourceLine" id="cb26-11" title="11"><span class="co"># Celsius degrees per day after sewing:</span></a>
+<a class="sourceLine" id="cb26-12" title="12">met<span class="op">$</span>d_jul=<span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">format</span>(met<span class="op">$</span>Date, <span class="st">&quot;%j&quot;</span>))</a>
+<a class="sourceLine" id="cb26-13" title="13">met<span class="op">$</span>Year=<span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">format</span>(met<span class="op">$</span>Date, <span class="st">&quot;%Y&quot;</span>))</a>
+<a class="sourceLine" id="cb26-14" title="14">met<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb26-15" title="15"><span class="st">  </span><span class="kw">filter</span>(Year<span class="op">==</span><span class="dv">2005</span><span class="op">&amp;</span>d_jul<span class="op">&gt;=</span><span class="dv">311</span>)</a>
+<a class="sourceLine" id="cb26-16" title="16">  <span class="kw">mutate</span>(<span class="dt">cumT=</span> <span class="kw">ifelse</span>(Year<span class="op">==</span><span class="dv">2005</span><span class="op">&amp;</span>d_jul<span class="op">&lt;</span>day_sewing,<span class="dv">0</span>,(ttmin<span class="op">+</span>ttmax)<span class="op">/</span><span class="dv">2</span>))<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb26-17" title="17"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">cumT=</span> <span class="kw">cumsum</span>(cumT))<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb26-18" title="18"><span class="st">  </span><span class="kw">filter</span>(cumT<span class="op">&gt;=</span><span class="dv">151</span><span class="op">&amp;</span>cumT<span class="op">&lt;=</span><span class="dv">155</span>)<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb26-19" title="19"><span class="st">  </span><span class="kw">select</span>(d_jul)</a></code></pre></div>
 <p>Figure <a href="stages.html#fig:ilevIC">11.2</a> and Figure <a href="#fig:ilevSC">11.3</a> shows a comparison of some STICS outputs for a wheat self-intercrop and a wheat sole crop respectively, with <code>ilev</code> set either at 380 like before or corrected at 329. The code used to make this output is as follows:</p>
-<pre class="sourceCode r"><code class="sourceCode r">Eval_stics=<span class="st"> </span>
-<span class="st">  </span><span class="kw">stics_eval</span>(<span class="dt">dir.orig =</span> <span class="st">&quot;0-DATA/dummy/IC_Wheat_Wheat&quot;</span>, 
-             <span class="dt">dir.targ =</span> <span class="st">&quot;2-Simulations/Stics_Exe/EquDens&quot;</span>,
-             <span class="dt">stics =</span> <span class="kw">list</span>(<span class="dt">EquivDens=</span> <span class="st">&quot;0-DATA/stics_executable/test/stics.exe&quot;</span>),
-             <span class="dt">Parameter =</span> <span class="kw">list</span>(<span class="dt">ilev=</span> <span class="kw">list</span>(<span class="dv">329</span>,<span class="dv">380</span>)),<span class="dt">Plant =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>),
-             <span class="dt">obs_name =</span>  <span class="kw">c</span>(<span class="st">&quot;6_IC_Wheat1_N0.obs&quot;</span>,<span class="st">&quot;6_IC_Wheat2_N0.obs&quot;</span>),
-             <span class="dt">Out_var =</span> <span class="kw">c</span>(<span class="st">&quot;hauteur&quot;</span>,<span class="st">&quot;laisen(n)&quot;</span>,<span class="st">&quot;lai(n)&quot;</span>,<span class="st">&quot;masec(n)&quot;</span>,<span class="st">&quot;dominant&quot;</span>,<span class="st">&quot;somcour&quot;</span>),
-             <span class="dt">Title =</span> <span class="st">&quot;Wheat-Wheat Auzeville 2005-2006 N0&quot;</span>, <span class="dt">plot_it =</span> T)</code></pre>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" title="1">Eval_stics=<span class="st"> </span></a>
+<a class="sourceLine" id="cb27-2" title="2"><span class="st">  </span><span class="kw">stics_eval</span>(<span class="dt">dir.orig =</span> <span class="st">&quot;0-DATA/dummy/IC_Wheat_Wheat&quot;</span>, </a>
+<a class="sourceLine" id="cb27-3" title="3">             <span class="dt">dir.targ =</span> <span class="st">&quot;2-Simulations/Stics_Exe/EquDens&quot;</span>,</a>
+<a class="sourceLine" id="cb27-4" title="4">             <span class="dt">stics =</span> <span class="kw">list</span>(<span class="dt">EquivDens=</span> <span class="st">&quot;0-DATA/stics_executable/test/stics.exe&quot;</span>),</a>
+<a class="sourceLine" id="cb27-5" title="5">             <span class="dt">Parameter =</span> <span class="kw">list</span>(<span class="dt">ilev=</span> <span class="kw">list</span>(<span class="dv">329</span>,<span class="dv">380</span>)),<span class="dt">Plant =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>),</a>
+<a class="sourceLine" id="cb27-6" title="6">             <span class="dt">obs_name =</span>  <span class="kw">c</span>(<span class="st">&quot;6_IC_Wheat1_N0.obs&quot;</span>,<span class="st">&quot;6_IC_Wheat2_N0.obs&quot;</span>),</a>
+<a class="sourceLine" id="cb27-7" title="7">             <span class="dt">Out_var =</span> <span class="kw">c</span>(<span class="st">&quot;hauteur&quot;</span>,<span class="st">&quot;laisen(n)&quot;</span>,<span class="st">&quot;lai(n)&quot;</span>,<span class="st">&quot;masec(n)&quot;</span>,<span class="st">&quot;dominant&quot;</span>,<span class="st">&quot;somcour&quot;</span>),</a>
+<a class="sourceLine" id="cb27-8" title="8">             <span class="dt">Title =</span> <span class="st">&quot;Wheat-Wheat Auzeville 2005-2006 N0&quot;</span>, <span class="dt">plot_it =</span> T)</a></code></pre></div>
 <div class="figure"><span id="fig:ilevIC"></span>
 <img src="img/ilev.png" alt="STICS outputs comparison with ilev= 380 and corrected to 329 on a wheat-wheat intercropping simulation experiment (Auzeville 2005-2006)" />
 <p class="caption">Figure 11.2: STICS outputs comparison with ilev= 380 and corrected to 329 on a wheat-wheat intercropping simulation experiment (Auzeville 2005-2006)</p>
@@ -713,11 +716,13 @@ It appears that the leaf senescence is not well simulated in the wheat sole crop
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
@@ -725,12 +730,11 @@ gitbook.start({
 "github": false,
 "facebook": true,
 "twitter": true,
-"google": false,
 "linkedin": false,
 "weibo": false,
 "instapaper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
@@ -742,6 +746,10 @@ gitbook.start({
 "text": null
 },
 "history": {
+"link": null,
+"text": null
+},
+"view": {
 "link": null,
 "text": null
 },
@@ -760,8 +768,9 @@ gitbook.start({
     script.type = "text/javascript";
     var src = "true";
     if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:" && /^https?:/.test(src))
-      src = src.replace(/^https?:/, '');
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
     script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();

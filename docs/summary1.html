@@ -1,13 +1,12 @@
 <!DOCTYPE html>
-<html >
-
+<html lang="" xml:lang="">
 <head>
 
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 14 First summary | STICS intercrop: a work in progress for the ReMIX H2020 project</title>
-  <meta name="description" content="This book is made to keep track of the work made during the post-doctorate position on STICS-intercrop for the ReMIX project.">
-  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+  <meta name="description" content="This book is made to keep track of the work made during the post-doctorate position on STICS-intercrop for the ReMIX project." />
+  <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 14 First summary | STICS intercrop: a work in progress for the ReMIX H2020 project" />
   <meta property="og:type" content="book" />
@@ -22,18 +21,18 @@
   <meta name="twitter:description" content="This book is made to keep track of the work made during the post-doctorate position on STICS-intercrop for the ReMIX project." />
   
 
-<meta name="author" content="R. Vezy">
+<meta name="author" content="R. Vezy" />
 
 
-<meta name="date" content="2019-05-23">
+<meta name="date" content="2020-03-31" />
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="misc.html">
-<link rel="next" href="intercfix.html">
+<link rel="prev" href="misc.html"/>
+<link rel="next" href="intercfix.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -41,6 +40,9 @@
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
 
 
 
@@ -50,13 +52,13 @@
 
 <link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
 <script src="libs/pagedtable-1.1/js/pagedtable.js"></script>
-<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
-<script src="libs/plotly-binding-4.8.0/plotly.js"></script>
+<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.9.2/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
-<link href="libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
-<script src="libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
-<link href="libs/plotly-htmlwidgets-css-1.39.2/plotly-htmlwidgets.css" rel="stylesheet" />
-<script src="libs/plotly-main-1.39.2/plotly-latest.min.js"></script>
+<link href="libs/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.1.0.1/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-1.52.2/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-1.52.2/plotly-latest.min.js"></script>
 
 <script>
 /* ========================================================================
@@ -412,7 +414,6 @@ a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
 a.sourceLine:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
-div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
@@ -579,6 +580,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="13.3" data-path="misc.html"><a href="misc.html#sowing-density-in-auzeville"><i class="fa fa-check"></i><b>13.3</b> Sowing density in Auzeville</a></li>
 <li class="chapter" data-level="13.4" data-path="misc.html"><a href="misc.html#energy-balance"><i class="fa fa-check"></i><b>13.4</b> Energy balance</a></li>
 <li class="chapter" data-level="13.5" data-path="misc.html"><a href="misc.html#positive-raint-with-zero-laieai"><i class="fa fa-check"></i><b>13.5</b> Positive raint with zero LAI+EAI</a></li>
+<li class="chapter" data-level="13.6" data-path="misc.html"><a href="misc.html#qfix-decrease"><i class="fa fa-check"></i><b>13.6</b> Qfix decrease</a></li>
 </ul></li>
 <li class="chapter" data-level="14" data-path="summary1.html"><a href="summary1.html"><i class="fa fa-check"></i><b>14</b> First summary</a><ul>
 <li class="chapter" data-level="14.1" data-path="summary1.html"><a href="summary1.html#introduction-11"><i class="fa fa-check"></i><b>14.1</b> Introduction</a></li>
@@ -592,6 +594,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="15.1" data-path="intercfix.html"><a href="intercfix.html#introduction-12"><i class="fa fa-check"></i><b>15.1</b> Introduction</a></li>
 <li class="chapter" data-level="15.2" data-path="intercfix.html"><a href="intercfix.html#model-parameterization-1"><i class="fa fa-check"></i><b>15.2</b> Model parameterization</a></li>
 </ul></li>
+<li class="chapter" data-level="16" data-path="lightcompetition.html"><a href="lightcompetition.html"><i class="fa fa-check"></i><b>16</b> Light competition effect</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -622,7 +625,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">14.2</span> Model outputs</h2>
 <p>The model was tested on a series of experimentations on Wheat and Pea from Auzeville. It consists on a set of observations made on either sole crops or intercrops, and the model was run on each case to evaluate its simulation outputs. The model was also tested to simulate a sole crop as an intercrop with both plants from the same species and variety.<br />
 The results of this evaluation are available on <a href="Auzeville_summary.html">this separate page</a>.
-You can consider this page as a snapshot of the evaluation of the model version used as : 23 mai, 2019. This version of the model can be retrieved from my GIT repository using this SHA: <code>c9638aafb924949b630d273608d2b3c45369cd0c</code>.</p>
+You can consider this page as a snapshot of the evaluation of the model version used as : 31 mars, 2020. This version of the model can be retrieved from my GIT repository using this SHA: <code>c9638aafb924949b630d273608d2b3c45369cd0c</code>.</p>
 </div>
 <div id="model-parameterization" class="section level2">
 <h2><span class="header-section-number">14.3</span> Model parameterization</h2>
@@ -640,8 +643,8 @@ You can consider this page as a snapshot of the evaluation of the model version 
 So it has two new parameters: <code>P_hautK</code> and <code>P_hautA</code>.
 This equation is well known across a wide range of fields, can describe a large panel of relationships, is robust, and is quite simple to parameterize. In the case of STICS, the user should use sole crop data only for parameterization, because the hauteur~masec relationship is hard-coded for this situation. In the case of intercrop, the model will adapt the computation accordingly.</p>
 <p>For our case experiment in Auzeville, these parameters were fitted thanks to the nls function in R using observations for each species independently.</p>
-<pre class="sourceCode r"><code class="sourceCode r">obs_data.frame<span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">nls</span>(hauteur<span class="op">~</span>K<span class="op">*</span>masec<span class="op">^</span>A,<span class="dt">data =</span> .,<span class="dt">start =</span> <span class="kw">list</span>(<span class="dt">A=</span><span class="dv">1</span>,<span class="dt">K=</span><span class="dv">1</span>))</code></pre>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" title="1">obs_data.frame<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb31-2" title="2"><span class="st">  </span><span class="kw">nls</span>(hauteur<span class="op">~</span>K<span class="op">*</span>masec<span class="op">^</span>A,<span class="dt">data =</span> .,<span class="dt">start =</span> <span class="kw">list</span>(<span class="dt">A=</span><span class="dv">1</span>,<span class="dt">K=</span><span class="dv">1</span>))</a></code></pre></div>
 <p>At first, we were afraid that the relationship would differ according to the nitogen management, but only the dry mass was impacted by the nitrogen treatments, not the height~masec relationship. However, the relationship changed a little between sole crops and intercrops, but was still robust enough to use it as is as shown in the results from <a href="Auzeville_summary.html">this separate page</a>, also shown in the first paragraph.</p>
 </div>
 <div id="equivalent-density" class="section level3">
@@ -675,11 +678,13 @@ with <span class="math inline">\(slope= \frac{Max_{equDens}}{hauteur_{threshold_
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
@@ -687,12 +692,11 @@ gitbook.start({
 "github": false,
 "facebook": true,
 "twitter": true,
-"google": false,
 "linkedin": false,
 "weibo": false,
 "instapaper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
@@ -704,6 +708,10 @@ gitbook.start({
 "text": null
 },
 "history": {
+"link": null,
+"text": null
+},
+"view": {
 "link": null,
 "text": null
 },
@@ -722,8 +730,9 @@ gitbook.start({
     script.type = "text/javascript";
     var src = "true";
     if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:" && /^https?:/.test(src))
-      src = src.replace(/^https?:/, '');
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
     script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();

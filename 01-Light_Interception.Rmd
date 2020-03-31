@@ -2,11 +2,11 @@
 # Light Interception {#Light}
 
 ```{r, include=FALSE}
-if(knitr:::pandoc_to() == "html") {
-  knitr::opts_chunk$set(echo = TRUE)
-}else{
-  knitr::opts_chunk$set(echo = FALSE)
-}
+# if(knitr:::pandoc_to() == "html") {
+#   knitr::opts_chunk$set(echo = TRUE)
+# }else{
+#   knitr::opts_chunk$set(echo = FALSE)
+# }
 ```
 
 ## Introduction
@@ -28,8 +28,8 @@ alpha= 0         # Row orientation
 lat= 43.61       # Latitude in degrees
 trg= 25          # Global radiation
 rdif= 0.4        # Diffuse fraction of the atmospheric radiation
-P_ktrou= 0.2     # Light extinction coefficient of the dominant plant
-lai= 2           # Leaf area index of the dominant plant
+P_ktrou= 0.8     # Light extinction coefficient of the dominant plant
+lai= 4           # Leaf area index of the dominant plant
 eai= 0           # Equivalent leaf area index, = photosynthetic surface that is not from
 # leaves (e.g. wheat ears, rapeseed siliquae, pea pods or grapes during their green stage)
 ```

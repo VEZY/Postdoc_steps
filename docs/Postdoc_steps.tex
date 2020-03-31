@@ -1,36 +1,46 @@
-\documentclass[]{book}
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{book}
 \usepackage{lmodern}
 \usepackage{amssymb,amsmath}
 \usepackage{ifxetex,ifluatex}
-\usepackage{fixltx2e} % provides \textsubscript
 \ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
-\else % if luatex or xelatex
-  \ifxetex
-    \usepackage{mathspec}
-  \else
-    \usepackage{fontspec}
-  \fi
-  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
 \fi
-% use upquote if available, for straight quotes in verbatim environments
+% Use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
-% use microtype if available
-\IfFileExists{microtype.sty}{%
-\usepackage{microtype}
-\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
 }{}
-\usepackage[margin=1in]{geometry}
-\usepackage{hyperref}
-\hypersetup{unicode=true,
-            pdftitle={STICS intercrop: a work in progress for the ReMIX H2020 project},
-            pdfauthor={R. Vezy},
-            pdfborder={0 0 0},
-            breaklinks=true}
-\urlstyle{same}  % don't use monospace font for urls
-\usepackage{natbib}
-\bibliographystyle{apalike}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={STICS intercrop: a work in progress for the ReMIX H2020 project},
+  pdfauthor={R. Vezy},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
 \usepackage{color}
 \usepackage{fancyvrb}
 \newcommand{\VerbBar}{|}
@@ -72,6 +82,14 @@
 \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
 \usepackage{longtable,booktabs}
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
 \usepackage{graphicx,grffile}
 \makeatletter
 \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
@@ -81,53 +99,21 @@
 % margins by default, and it is still possible to overwrite the defaults
 % using explicit options in \includegraphics[width, height, ...]{}
 \setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
-\IfFileExists{parskip.sty}{%
-\usepackage{parskip}
-}{% else
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{6pt plus 2pt minus 1pt}
-}
-\setlength{\emergencystretch}{3em}  % prevent overfull lines
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \setcounter{secnumdepth}{5}
-% Redefines (sub)paragraphs to behave more like sections
-\ifx\paragraph\undefined\else
-\let\oldparagraph\paragraph
-\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
-\fi
-\ifx\subparagraph\undefined\else
-\let\oldsubparagraph\subparagraph
-\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
-\fi
-
-%%% Use protect on footnotes to avoid problems with footnotes in titles
-\let\rmarkdownfootnote\footnote%
-\def\footnote{\protect\rmarkdownfootnote}
-
-%%% Change title format to be more compact
-\usepackage{titling}
-
-% Create subtitle command for use in maketitle
-\providecommand{\subtitle}[1]{
-  \posttitle{
-    \begin{center}\large#1\end{center}
-    }
-}
-
-\setlength{\droptitle}{-2em}
-
-  \title{STICS intercrop: a work in progress for the ReMIX H2020 project}
-    \pretitle{\vspace{\droptitle}\centering\huge}
-  \posttitle{\par}
-    \author{R. Vezy}
-    \preauthor{\centering\large\emph}
-  \postauthor{\par}
-      \predate{\centering\large\emph}
-  \postdate{\par}
-    \date{2019-05-23}
-
 \usepackage{booktabs}
+\usepackage[]{natbib}
+\bibliographystyle{apalike}
+
+\title{STICS intercrop: a work in progress for the ReMIX H2020 project}
+\author{R. Vezy}
+\date{2020-03-31}
 
 \begin{document}
 \maketitle
@@ -155,9 +141,30 @@ To compile this example to PDF, you need XeLaTeX. You are recommended to install
 
 In STICS, the light interception is either computed using a simple Beer law assuming a homogeneous, turbid canopy, or a radiation transfer model that consider the plants leaf area index, canopy shape, height and density. The Beer law option is very simple but generally fairly accurate for high density homogeneous crops, but may rapidly yield unsatisfying predictions for stands with higher structural complexity (e.g.~perennial plantations or mixed crops). For mixed crops, the model uses the radiation transfer model in a particular manner that is described in further details below.
 
-For the case of intercrops, the model first set the taller crop as ``dominant'', and the shorter crop as ``dominated''. The model then compute the radiation interception of each one according to the dominancy, the structure (height, width, light extinction coefficient\ldots{}) and position (interrow distance, row orientation) of the species. Of course, the dominancy of each plant species can be inverted if the dominated plant become taller than the dominant plant, and the model checks every day for such a case.
+For the case of intercrops, the model first set the taller crop as ``dominant'', and the shorter crop as ``dominated''. The model then compute the radiation interception of each one according to the dominancy, the structure (height, width, light extinction coefficient\ldots) and position (interrow distance, row orientation) of the species. Of course, the dominancy of each plant species can be inverted if the dominated plant become taller than the dominant plant, and the model checks every day for such a case.
 
-To facilitate understanding, we will use a common intercrop example throughout the whole document. We take a mixed crop simulated for the day of the year 1 with a global radiation of 25 MJ m-2 day-1 (= 12 MJ m-2 day-1 of PAR), and a diffuse fraction of light of 0.4, an interrow spacing of 1 meter, a shape of 1 (1= rectangle, 2= upside triangle and 3= downside rectangle), a canopy width of 0.2 meter, a canopy thickness of 0.1 meter, a row orientation of 0 relative to the North-South axis at latitude 43.61 degrees north, an LAI of 2, a light extinction coefficient of 0.2. The canopy of the dominant plant is 1 meter above the dominated plant.
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{j=}\DecValTok{1}              \CommentTok{# julian day (DOY= Day Of Year)}
+\NormalTok{ir=}\StringTok{ }\DecValTok{1}            \CommentTok{# Interrow distance}
+\NormalTok{l=}\StringTok{ }\FloatTok{0.2}           \CommentTok{# Width of the plant crown}
+\NormalTok{rap=}\StringTok{ }\FloatTok{0.5}         \CommentTok{# Thickness to width ratio}
+\NormalTok{haut=}\StringTok{ }\FloatTok{1.}         \CommentTok{# Height of the part of the dominant plant above the dominated plant}
+                 \CommentTok{# = hauteurzero = P_hautbase-originehaut}
+                 \CommentTok{# with originehaut= dominated plant height}
+\NormalTok{P_forme=}\StringTok{ }\DecValTok{1}       \CommentTok{# Plant shape code (1= rectangle, 2= upside triangle, 3= downside tr.)}
+\NormalTok{alpha=}\StringTok{ }\DecValTok{0}         \CommentTok{# Row orientation}
+\NormalTok{lat=}\StringTok{ }\FloatTok{43.61}       \CommentTok{# Latitude in degrees}
+\NormalTok{trg=}\StringTok{ }\DecValTok{25}          \CommentTok{# Global radiation}
+\NormalTok{rdif=}\StringTok{ }\FloatTok{0.4}        \CommentTok{# Diffuse fraction of the atmospheric radiation}
+\NormalTok{P_ktrou=}\StringTok{ }\FloatTok{0.8}     \CommentTok{# Light extinction coefficient of the dominant plant}
+\NormalTok{lai=}\StringTok{ }\DecValTok{4}           \CommentTok{# Leaf area index of the dominant plant}
+\NormalTok{eai=}\StringTok{ }\DecValTok{0}           \CommentTok{# Equivalent leaf area index, = photosynthetic surface that is not from}
+\CommentTok{# leaves (e.g. wheat ears, rapeseed siliquae, pea pods or grapes during their green stage)}
+\end{Highlighting}
+\end{Shaded}
+
+To facilitate understanding, we will use a common intercrop example throughout the whole document. We take a mixed crop simulated for the day of the year 1 with a global radiation of 25 MJ m-2 day-1 (= 12 MJ m-2 day-1 of PAR), and a diffuse fraction of light of 0.4, an interrow spacing of 1 meter, a shape of 1 (1= rectangle, 2= upside triangle and 3= downside rectangle), a canopy width of 0.2 meter, a canopy thickness of 0.1 meter, a row orientation of 0 relative to the North-South axis at latitude 43.61 degrees north, an LAI of 4, a light extinction coefficient of 0.8. The canopy of the dominant plant is 1 meter above the dominated plant.
 All code used in this document can be viewed in each section by clicking on the \texttt{Code} button on the right.
 
 \hypertarget{plant-shape}{%
@@ -228,11 +235,11 @@ Hence, the new thickness (\texttt{enouv}) is computed as: \(enouv=largeur\cdot\l
 
 All variable names are changed, whether there is a correction or not. Here is a summary table:
 
-\begin{table}[t]
+\begin{table}
 
 \caption{\label{tab:varmatch}Variable name modification in the formplante function}
 \centering
-\begin{tabular}{l|l|l}
+\begin{tabular}[t]{l|l|l}
 \hline
 Original & Modified & Definition\\
 \hline
@@ -357,11 +364,176 @@ The incident direct radiation for each X point is computed for all angles of the
 
 Here is an example of the computation of the direct proportion received at each X point for a crop using the \texttt{kgeom()} function:
 
-\begin{table}[t]
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{decangle=}\StringTok{ }\ControlFlowTok{function}\NormalTok{(j)\{}
+\NormalTok{  theta1 =}\StringTok{ }\DecValTok{2} \OperatorTok{*}\StringTok{ }\NormalTok{pi }\OperatorTok{*}\StringTok{ }\NormalTok{(j }\OperatorTok{-}\StringTok{ }\DecValTok{80}\NormalTok{) }\OperatorTok{/}\StringTok{ }\DecValTok{365}
+\NormalTok{  theta2 =}\StringTok{ }\FloatTok{0.034} \OperatorTok{*}\StringTok{ }\NormalTok{(}\KeywordTok{sin}\NormalTok{(}\DecValTok{2} \OperatorTok{*}\StringTok{ }\NormalTok{pi }\OperatorTok{*}\StringTok{ }\NormalTok{j }\OperatorTok{/}\StringTok{ }\DecValTok{365}\NormalTok{) }\OperatorTok{-}\StringTok{ }\KeywordTok{sin}\NormalTok{(}\DecValTok{2} \OperatorTok{*}\StringTok{ }\NormalTok{pi }\OperatorTok{*}\StringTok{ }\DecValTok{80} \OperatorTok{/}\StringTok{ }\DecValTok{365}\NormalTok{))}
+\NormalTok{  theta =}\StringTok{ }\NormalTok{theta1 }\OperatorTok{-}\StringTok{ }\NormalTok{theta2}
+\NormalTok{  decangle =}\StringTok{ }\KeywordTok{asin}\NormalTok{(}\FloatTok{0.3978} \OperatorTok{*}\StringTok{ }\KeywordTok{sin}\NormalTok{(theta))}
+\NormalTok{\}}
+
+\NormalTok{thetacrit=}\StringTok{ }\ControlFlowTok{function}\NormalTok{(lat,j,tgh,alpha)\{}
+  
+\NormalTok{  acrit =}\StringTok{ }\FloatTok{0.0}
+\NormalTok{  bcrit =}\StringTok{ }\FloatTok{0.0}
+\NormalTok{  a =}\StringTok{ }\FloatTok{0.0}
+\NormalTok{  b =}\StringTok{ }\FloatTok{0.0}
+\NormalTok{  thetacr =}\StringTok{ }\FloatTok{0.0}
+\NormalTok{  hcritprec=}\StringTok{ }\DecValTok{0}
+\NormalTok{  n  =}\StringTok{ }\DecValTok{3}
+\NormalTok{  dec =}\StringTok{ }\KeywordTok{decangle}\NormalTok{(j)}
+\NormalTok{  hprec =}\StringTok{ }\FloatTok{0.0}
+\NormalTok{  pi =}\StringTok{ }\DecValTok{4} \OperatorTok{*}\StringTok{ }\KeywordTok{atan}\NormalTok{(}\FloatTok{1.0}\NormalTok{)}
+\NormalTok{  theta=}\StringTok{ }\KeywordTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{180}\NormalTok{)}
+  
+  \ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\NormalTok{(}\DecValTok{18} \OperatorTok{*}\StringTok{ }\NormalTok{n))\{}
+\NormalTok{    theta[i] =}\StringTok{ }\FloatTok{10.} \OperatorTok{/}\StringTok{ }\NormalTok{n }\OperatorTok{*}\StringTok{ }\NormalTok{(i }\OperatorTok{-}\StringTok{ }\DecValTok{1}\NormalTok{)}
+\NormalTok{    theta[i] =}\StringTok{ }\NormalTok{(theta[i] }\OperatorTok{-}\StringTok{ }\DecValTok{90}\NormalTok{) }\OperatorTok{/}\StringTok{ }\DecValTok{180} \OperatorTok{*}\StringTok{ }\NormalTok{pi}
+    \CommentTok{# Sun position (h,azim)}
+\NormalTok{    sinh =}\StringTok{ }\KeywordTok{sin}\NormalTok{(lat) }\OperatorTok{*}\StringTok{ }\KeywordTok{sin}\NormalTok{(dec) }\OperatorTok{+}\StringTok{ }\KeywordTok{cos}\NormalTok{(lat) }\OperatorTok{*}\StringTok{ }\KeywordTok{cos}\NormalTok{(dec) }\OperatorTok{*}\StringTok{ }\KeywordTok{cos}\NormalTok{(theta[i])}
+\NormalTok{    h =}\StringTok{ }\KeywordTok{asin}\NormalTok{(sinh)}
+\NormalTok{    cosazim =}\StringTok{ }\NormalTok{(}\OperatorTok{-}\KeywordTok{cos}\NormalTok{(lat) }\OperatorTok{*}\StringTok{ }\KeywordTok{sin}\NormalTok{(dec) }\OperatorTok{+}\StringTok{ }\KeywordTok{sin}\NormalTok{(lat) }\OperatorTok{*}\StringTok{ }\KeywordTok{cos}\NormalTok{(dec) }\OperatorTok{*}\StringTok{ }\KeywordTok{cos}\NormalTok{(theta[i])) }\OperatorTok{/}\StringTok{ }\KeywordTok{cos}\NormalTok{(h)}
+\NormalTok{    cosazim =}\StringTok{ }\KeywordTok{pmin}\NormalTok{(}\FloatTok{1.0}\NormalTok{,cosazim)}
+    \ControlFlowTok{if}\NormalTok{(theta[i]}\OperatorTok{!=}\FloatTok{0.0}\NormalTok{)\{}
+\NormalTok{      azim =}\StringTok{ }\KeywordTok{acos}\NormalTok{(cosazim) }\OperatorTok{*}\StringTok{ }\NormalTok{theta[i] }\OperatorTok{/}\StringTok{ }\KeywordTok{abs}\NormalTok{(theta[i])}
+\NormalTok{    \}}\ControlFlowTok{else}\NormalTok{\{}
+\NormalTok{      azim =}\StringTok{ }\FloatTok{0.0}
+\NormalTok{    \}}
+    \ControlFlowTok{if}\NormalTok{(sinh}\OperatorTok{<}\FloatTok{0.0}\NormalTok{)\{h =}\StringTok{ }\FloatTok{0.0}\NormalTok{\}}
+    
+    \CommentTok{# Critical height}
+\NormalTok{    hcrit =}\StringTok{ }\KeywordTok{atan}\NormalTok{(tgh }\OperatorTok{*}\StringTok{ }\KeywordTok{abs}\NormalTok{(}\KeywordTok{sin}\NormalTok{(azim }\OperatorTok{+}\StringTok{ }\NormalTok{alpha }\OperatorTok{+}\StringTok{ }\FloatTok{0.00001}\NormalTok{)))}
+    \CommentTok{# test for h = hcrit}
+    \ControlFlowTok{if}\NormalTok{ (hcritprec }\OperatorTok{>=}\StringTok{ }\NormalTok{hprec }\OperatorTok{&}\StringTok{ }\NormalTok{hcrit }\OperatorTok{<=}\StringTok{ }\NormalTok{h }\OperatorTok{&}\StringTok{ }\NormalTok{i }\OperatorTok{>}\StringTok{ }\DecValTok{1}\NormalTok{)\{}
+      \CommentTok{# Linear interpolation:}
+\NormalTok{      acrit =}\StringTok{ }\NormalTok{(hcrit }\OperatorTok{-}\StringTok{ }\NormalTok{hcritprec) }\OperatorTok{/}\StringTok{ }\NormalTok{(theta[i] }\OperatorTok{-}\StringTok{ }\NormalTok{theta[i}\DecValTok{-1}\NormalTok{])}
+\NormalTok{      bcrit =}\StringTok{ }\NormalTok{hcrit }\OperatorTok{-}\StringTok{ }\NormalTok{acrit }\OperatorTok{*}\StringTok{ }\NormalTok{theta[i]}
+\NormalTok{      a =}\StringTok{ }\NormalTok{(h }\OperatorTok{-}\StringTok{ }\NormalTok{hprec) }\OperatorTok{/}\StringTok{ }\NormalTok{(theta[i] }\OperatorTok{-}\StringTok{ }\NormalTok{theta[i}\DecValTok{-1}\NormalTok{])}
+\NormalTok{      b =}\StringTok{ }\NormalTok{h }\OperatorTok{-}\StringTok{ }\NormalTok{a }\OperatorTok{*}\StringTok{ }\NormalTok{theta[i]}
+      
+      \ControlFlowTok{if}\NormalTok{(a}\OperatorTok{!=}\NormalTok{acrit)\{thetacr =}\StringTok{ }\NormalTok{(b }\OperatorTok{-}\StringTok{ }\NormalTok{bcrit) }\OperatorTok{/}\StringTok{ }\NormalTok{(acrit }\OperatorTok{-}\StringTok{ }\NormalTok{a)\}}
+\NormalTok{      hcritprec =}\StringTok{ }\NormalTok{hcrit}
+\NormalTok{      hprec =}\StringTok{ }\NormalTok{h}
+\NormalTok{    \}}
+\NormalTok{  \}}
+  \KeywordTok{return}\NormalTok{(thetacr)}
+\NormalTok{\}}
+
+\NormalTok{e =}\StringTok{ }\KeywordTok{abs}\NormalTok{(l }\OperatorTok{*}\StringTok{ }\NormalTok{rap) }\CommentTok{# Thickness of the plant crown}
+\NormalTok{xprec=}\StringTok{ }\DecValTok{0}         \CommentTok{# Init.}
+\NormalTok{limite =}\StringTok{ }\NormalTok{l }\OperatorTok{/}\StringTok{ }\DecValTok{2}
+
+\ControlFlowTok{if}\NormalTok{(ir}\OperatorTok{<}\FloatTok{1.0}\NormalTok{)\{interval =}\StringTok{ }\FloatTok{200.}\NormalTok{\}}\ControlFlowTok{else}\NormalTok{\{interval =}\StringTok{ }\FloatTok{20.}\NormalTok{\}}
+\ControlFlowTok{if}\NormalTok{(l}\OperatorTok{>}\NormalTok{ir}\OperatorTok{/}\FloatTok{2.}\NormalTok{)\{l =}\StringTok{ }\NormalTok{ir}\OperatorTok{/}\FloatTok{2.}\NormalTok{\}}
+
+\ControlFlowTok{if}\NormalTok{(e}\OperatorTok{>}\FloatTok{0.0}\NormalTok{)\{}
+\NormalTok{  limite2 =}\StringTok{ }\NormalTok{l}\OperatorTok{/}\DecValTok{2} \OperatorTok{*}\StringTok{ }\NormalTok{(haut}\OperatorTok{/}\NormalTok{e}\OperatorTok{+}\DecValTok{1}\NormalTok{)}
+\NormalTok{\}}\ControlFlowTok{else}\NormalTok{\{}
+\NormalTok{  P_forme =}\StringTok{ }\DecValTok{1}
+\NormalTok{\}}
+\CommentTok{# NB : is it sure that it is (haut/e+1) and not (haut/(e+1)) ? }
+
+\CommentTok{# Saving some intermediate results for output here (not in the real function):}
+\NormalTok{x_s=}\StringTok{ }\NormalTok{(}\DecValTok{1}\OperatorTok{:}\NormalTok{(ir }\OperatorTok{/}\StringTok{ }\DecValTok{2} \OperatorTok{*}\StringTok{ }\NormalTok{interval))}
+\NormalTok{Output=}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{x_index=}\NormalTok{ x_s,}
+                   \DataTypeTok{x_value=}\NormalTok{ (x_s}\DecValTok{-1}\NormalTok{)}\OperatorTok{/}\NormalTok{interval,}
+                   \DataTypeTok{theta1=} \KeywordTok{rep}\NormalTok{(}\OtherTok{NA_real_}\NormalTok{,}\KeywordTok{length}\NormalTok{(x_s)),}
+                   \DataTypeTok{theta2=} \KeywordTok{rep}\NormalTok{(}\OtherTok{NA_real_}\NormalTok{,}\KeywordTok{length}\NormalTok{(x_s)),}
+                   \DataTypeTok{theta1_deg=} \KeywordTok{rep}\NormalTok{(}\OtherTok{NA_real_}\NormalTok{,}\KeywordTok{length}\NormalTok{(x_s)),}
+                   \DataTypeTok{theta2_deg=} \KeywordTok{rep}\NormalTok{(}\OtherTok{NA_real_}\NormalTok{,}\KeywordTok{length}\NormalTok{(x_s)),}
+                   \DataTypeTok{kg=} \KeywordTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{,}\KeywordTok{length}\NormalTok{(x_s)))}
+
+\CommentTok{# Loop over Xs:}
+
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in}\NormalTok{ x_s)\{}
+\NormalTok{  x =}\StringTok{ }\NormalTok{(i}\DecValTok{-1}\NormalTok{) }\OperatorTok{/}\StringTok{ }\NormalTok{interval}
+  \ControlFlowTok{if}\NormalTok{(xprec}\OperatorTok{<=}\NormalTok{l}\OperatorTok{/}\DecValTok{2}\OperatorTok{&}\NormalTok{x}\OperatorTok{>=}\NormalTok{l}\OperatorTok{/}\DecValTok{2}\NormalTok{)\{ilim =}\StringTok{ }\NormalTok{i\}}
+\NormalTok{  xprec =}\StringTok{ }\NormalTok{x}
+  
+  \CommentTok{# kdir:}
+  
+  \CommentTok{# Rectangle:}
+  \ControlFlowTok{if}\NormalTok{(P_forme}\OperatorTok{==}\DecValTok{1}\NormalTok{)\{}
+\NormalTok{    tgh1 =}\StringTok{ }\NormalTok{(haut }\OperatorTok{+}\StringTok{ }\NormalTok{e) }\OperatorTok{/}\StringTok{ }\NormalTok{(ir }\OperatorTok{-}\StringTok{ }\NormalTok{x }\OperatorTok{-}\StringTok{ }\NormalTok{limite)}
+\NormalTok{    theta1 =}\StringTok{ }\KeywordTok{thetacrit}\NormalTok{(lat,j,tgh1,alpha)}
+    \ControlFlowTok{if}\NormalTok{(x}\OperatorTok{>}\NormalTok{limite)\{}
+\NormalTok{      tgh2 =}\StringTok{ }\NormalTok{(haut }\OperatorTok{+}\StringTok{ }\NormalTok{e) }\OperatorTok{/}\StringTok{ }\NormalTok{(x }\OperatorTok{-}\StringTok{ }\NormalTok{limite)}
+\NormalTok{      theta2 =}\StringTok{ }\KeywordTok{thetacrit}\NormalTok{(lat,j,tgh2,alpha)}
+\NormalTok{    \}}\ControlFlowTok{else} \ControlFlowTok{if}\NormalTok{(x }\OperatorTok{<}\StringTok{ }\NormalTok{limite)\{}
+\NormalTok{      tgh2 =}\StringTok{ }\NormalTok{haut }\OperatorTok{/}\StringTok{ }\NormalTok{( }\OperatorTok{-}\NormalTok{x }\OperatorTok{+}\StringTok{ }\NormalTok{limite)}
+\NormalTok{      theta2 =}\StringTok{ }\OperatorTok{-}\KeywordTok{thetacrit}\NormalTok{(lat,j,tgh2,alpha)}
+\NormalTok{    \}}\ControlFlowTok{else}\NormalTok{\{}
+      \CommentTok{# x == limite}
+\NormalTok{      theta2 =}\StringTok{ }\DecValTok{0}
+\NormalTok{    \}}
+\NormalTok{  \}}
+  
+  \CommentTok{# Downside Triangle:}
+  \ControlFlowTok{if}\NormalTok{ (P_forme}\OperatorTok{==}\DecValTok{2} \OperatorTok{&}\StringTok{ }\NormalTok{rap}\OperatorTok{<}\FloatTok{0.}\NormalTok{)\{}
+\NormalTok{    tgh1 =}\StringTok{ }\NormalTok{(haut }\OperatorTok{+}\StringTok{ }\NormalTok{e) }\OperatorTok{/}\StringTok{ }\NormalTok{(ir }\OperatorTok{-}\StringTok{ }\NormalTok{x }\OperatorTok{-}\StringTok{ }\NormalTok{limite)}
+\NormalTok{    theta1 =}\StringTok{ }\KeywordTok{thetacrit}\NormalTok{(lat,j,tgh1,alpha)}
+    \ControlFlowTok{if}\NormalTok{ (x }\OperatorTok{>}\StringTok{ }\NormalTok{limite)\{}
+\NormalTok{      tgh2 =}\StringTok{ }\NormalTok{(haut }\OperatorTok{+}\StringTok{ }\NormalTok{e) }\OperatorTok{/}\StringTok{ }\NormalTok{(x }\OperatorTok{-}\StringTok{ }\NormalTok{limite)}
+\NormalTok{      theta2 =}\StringTok{ }\KeywordTok{thetacrit}\NormalTok{(lat,j,tgh2,alpha)}
+\NormalTok{    \}}\ControlFlowTok{else} \ControlFlowTok{if}\NormalTok{(x }\OperatorTok{<}\StringTok{ }\NormalTok{limite)\{}
+\NormalTok{      tgh2 =}\StringTok{ }\NormalTok{(haut }\OperatorTok{+}\StringTok{ }\NormalTok{e) }\OperatorTok{/}\StringTok{ }\NormalTok{( x }\OperatorTok{-}\StringTok{ }\NormalTok{limite)}
+\NormalTok{      theta2 =}\StringTok{ }\OperatorTok{-}\KeywordTok{thetacrit}\NormalTok{(lat,j,tgh2,alpha)}
+\NormalTok{    \}}\ControlFlowTok{else}\NormalTok{\{}
+\NormalTok{      theta2 =}\StringTok{ }\DecValTok{0}
+\NormalTok{    \}}
+\NormalTok{  \}}
+  
+  \CommentTok{# Upside Triangle:}
+  \ControlFlowTok{if}\NormalTok{ (P_forme}\OperatorTok{==}\DecValTok{2}\OperatorTok{&}\NormalTok{rap}\OperatorTok{>}\FloatTok{0.}\NormalTok{)\{ then}
+\NormalTok{    tgh1 =}\StringTok{ }\NormalTok{(haut }\OperatorTok{+}\StringTok{ }\NormalTok{e) }\OperatorTok{/}\StringTok{ }\NormalTok{(ir }\OperatorTok{-}\StringTok{ }\NormalTok{x }\OperatorTok{-}\StringTok{ }\NormalTok{limite)}
+\NormalTok{    theta1 =}\StringTok{ }\KeywordTok{thetacrit}\NormalTok{(lat,j,tgh1,alpha)}
+    \ControlFlowTok{if}\NormalTok{ (x }\OperatorTok{<}\StringTok{ }\NormalTok{limite2)\{}
+      \ControlFlowTok{if}\NormalTok{ (x }\OperatorTok{>}\StringTok{ }\NormalTok{limite)\{}
+\NormalTok{        tgh2 =}\StringTok{ }\NormalTok{haut }\OperatorTok{/}\StringTok{ }\NormalTok{( x }\OperatorTok{-}\StringTok{ }\NormalTok{limite)}
+\NormalTok{        theta2 =}\StringTok{ }\KeywordTok{thetacrit}\NormalTok{(lat,j,tgh2,alpha)}
+\NormalTok{      \}}\ControlFlowTok{else} \ControlFlowTok{if}\NormalTok{(x }\OperatorTok{<}\StringTok{ }\NormalTok{limite)\{}
+\NormalTok{        tgh2 =}\StringTok{ }\NormalTok{haut }\OperatorTok{/}\StringTok{ }\NormalTok{(limite }\OperatorTok{-}\StringTok{ }\NormalTok{x)}
+\NormalTok{        theta2 =}\StringTok{ }\OperatorTok{-}\KeywordTok{thetacrit}\NormalTok{(lat,j,tgh2,alpha)}
+\NormalTok{      \}}\ControlFlowTok{else}\NormalTok{\{}
+\NormalTok{        theta2 =}\StringTok{ }\FloatTok{0.0}
+\NormalTok{      \}}
+\NormalTok{    \}}\ControlFlowTok{else} \ControlFlowTok{if}\NormalTok{(x }\OperatorTok{>=}\StringTok{ }\NormalTok{limite2)\{}
+\NormalTok{      tgh2 =}\StringTok{ }\NormalTok{(haut }\OperatorTok{+}\StringTok{ }\NormalTok{e) }\OperatorTok{/}\StringTok{ }\NormalTok{x}
+\NormalTok{      theta2 =}\StringTok{ }\KeywordTok{thetacrit}\NormalTok{(lat,j,tgh2,alpha)}
+\NormalTok{    \}}
+\NormalTok{  \}}
+  
+  \CommentTok{# NB: is there a missing else here ? kg is modified just after...}
+  \ControlFlowTok{if}\NormalTok{(e }\OperatorTok{>}\StringTok{ }\FloatTok{2.1e-2}\NormalTok{)\{}
+\NormalTok{    kg =}\StringTok{ }\KeywordTok{cos}\NormalTok{(theta1)}
+\NormalTok{    kg =}\StringTok{ }\KeywordTok{cos}\NormalTok{(theta2)}
+\NormalTok{  \}}
+\NormalTok{  kg =}\StringTok{ }\FloatTok{0.5} \OperatorTok{*}\StringTok{ }\NormalTok{(}\KeywordTok{cos}\NormalTok{(pi}\OperatorTok{/}\DecValTok{2} \OperatorTok{+}\StringTok{ }\NormalTok{theta1) }\OperatorTok{+}\StringTok{ }\KeywordTok{cos}\NormalTok{(pi}\OperatorTok{/}\DecValTok{2} \OperatorTok{+}\StringTok{ }\NormalTok{theta2))}
+\NormalTok{  kg =}\StringTok{ }\KeywordTok{max}\NormalTok{(kg,}\FloatTok{0.0}\NormalTok{)}
+  
+\NormalTok{  Output}\OperatorTok{$}\NormalTok{theta1[Output}\OperatorTok{$}\NormalTok{x_index}\OperatorTok{==}\NormalTok{i]=}\StringTok{ }\NormalTok{theta1}
+\NormalTok{  Output}\OperatorTok{$}\NormalTok{theta2[Output}\OperatorTok{$}\NormalTok{x_index}\OperatorTok{==}\NormalTok{i]=}\StringTok{ }\NormalTok{theta2}
+\NormalTok{  Output}\OperatorTok{$}\NormalTok{kg[Output}\OperatorTok{$}\NormalTok{x_index}\OperatorTok{==}\NormalTok{i]=}\StringTok{ }\NormalTok{kg}
+\NormalTok{\}}
+
+\NormalTok{Output}\OperatorTok{$}\NormalTok{theta1_deg=}\StringTok{ }\NormalTok{(pi}\OperatorTok{/}\DecValTok{2}\OperatorTok{+}\NormalTok{Output}\OperatorTok{$}\NormalTok{theta1)}\OperatorTok{*}\DecValTok{180}\OperatorTok{/}\NormalTok{pi}
+\NormalTok{Output}\OperatorTok{$}\NormalTok{theta2_deg=}\StringTok{ }\NormalTok{(pi}\OperatorTok{/}\DecValTok{2}\OperatorTok{-}\NormalTok{Output}\OperatorTok{$}\NormalTok{theta2)}\OperatorTok{*}\DecValTok{180}\OperatorTok{/}\NormalTok{pi}
+
+\KeywordTok{colnames}\NormalTok{(Output)=}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"X index"}\NormalTok{,}\StringTok{"X value (m)"}\NormalTok{,}\StringTok{"Theta 1 (rad)"}\NormalTok{,}\StringTok{"Theta 2 (rad)"}\NormalTok{,}
+                    \StringTok{"Theta 1 (deg)"}\NormalTok{,}\StringTok{"Theta 2 (deg)"}\NormalTok{,}\StringTok{"kgdirect"}\NormalTok{)}
+
+\KeywordTok{kable}\NormalTok{(Output, }\DataTypeTok{caption=} \KeywordTok{paste}\NormalTok{(}\StringTok{"Example of the computation of the incident direct"}\NormalTok{,}
+                             \StringTok{"radiation ratio kgdirect. See introduction section"}\NormalTok{,}
+                             \StringTok{"for further details on the crop."}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{table}
 
 \caption{\label{tab:kdir}Example of the computation of the incident direct radiation ratio kgdirect. See introduction section for further details on the crop.}
 \centering
-\begin{tabular}{r|r|r|r|r|r|r}
+\begin{tabular}[t]{r|r|r|r|r|r|r}
 \hline
 X index & X value (m) & Theta 1 (rad) & Theta 2 (rad) & Theta 1 (deg) & Theta 2 (deg) & kgdirect\\
 \hline
@@ -397,7 +569,97 @@ The incident diffuse radiation for all angles between \(\theta_1\) and \(\theta_
 
 Here is an example of the computation of the diffuse proportion received at each X point for the same crop as above (interrow= 1 meter, width= 0.2 meter, thickness= 0.1 meter, height= 1 meter) using the \texttt{kdif()} function:
 
-\begin{longtable}{r|r|r|r|r|r|r}
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Initializations:}
+\NormalTok{htab=}\StringTok{ }\KeywordTok{c}\NormalTok{(}\FloatTok{9.23}\NormalTok{, }\FloatTok{9.23}\NormalTok{, }\FloatTok{9.23}\NormalTok{, }\FloatTok{9.23}\NormalTok{, }\FloatTok{9.23}\NormalTok{, }\FloatTok{10.81}\NormalTok{, }\FloatTok{10.81}\NormalTok{, }\FloatTok{26.57}\NormalTok{,}
+        \FloatTok{26.57}\NormalTok{, }\FloatTok{26.57}\NormalTok{, }\FloatTok{31.08}\NormalTok{, }\FloatTok{31.08}\NormalTok{, }\FloatTok{31.08}\NormalTok{, }\FloatTok{31.08}\NormalTok{, }\FloatTok{31.08}\NormalTok{, }\FloatTok{47.41}\NormalTok{,}
+        \FloatTok{47.41}\NormalTok{, }\FloatTok{47.41}\NormalTok{, }\FloatTok{52.62}\NormalTok{, }\FloatTok{52.62}\NormalTok{, }\FloatTok{69.16}\NormalTok{, }\FloatTok{69.16}\NormalTok{, }\FloatTok{69.16}\NormalTok{)}
+\NormalTok{aztab=}\StringTok{ }\KeywordTok{c}\NormalTok{(}\FloatTok{12.23}\NormalTok{,}\FloatTok{59.77}\NormalTok{,}\FloatTok{84.23}\NormalTok{,}\FloatTok{131.77}\NormalTok{,}\FloatTok{156.23}\NormalTok{,}\DecValTok{36}\NormalTok{,}\DecValTok{108}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{72}\NormalTok{,}\DecValTok{144}\NormalTok{,}\FloatTok{23.27}\NormalTok{,}\FloatTok{48.73}\NormalTok{,}\FloatTok{95.27}\NormalTok{,}
+         \FloatTok{120.73}\NormalTok{,}\FloatTok{167.27}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{72}\NormalTok{,}\DecValTok{144}\NormalTok{,}\DecValTok{36}\NormalTok{,}\DecValTok{108}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{72}\NormalTok{,}\DecValTok{144}\NormalTok{)}
+\NormalTok{SOCtab=}\StringTok{ }\KeywordTok{c}\NormalTok{(}\FloatTok{0.0043}\NormalTok{, }\FloatTok{0.0043}\NormalTok{, }\FloatTok{0.0043}\NormalTok{, }\FloatTok{0.0043}\NormalTok{, }\FloatTok{0.0043}\NormalTok{, }\FloatTok{0.0055}\NormalTok{,}
+          \FloatTok{0.0055}\NormalTok{, }\FloatTok{0.0140}\NormalTok{, }\FloatTok{0.0140}\NormalTok{, }\FloatTok{0.0140}\NormalTok{, }\FloatTok{0.0197}\NormalTok{, }\FloatTok{0.0197}\NormalTok{,}
+          \FloatTok{0.0197}\NormalTok{, }\FloatTok{0.0197}\NormalTok{, }\FloatTok{0.0197}\NormalTok{, }\FloatTok{0.0336}\NormalTok{, }\FloatTok{0.0336}\NormalTok{, }\FloatTok{0.0336}\NormalTok{,}
+          \FloatTok{0.0399}\NormalTok{, }\FloatTok{0.0399}\NormalTok{, }\FloatTok{0.0495}\NormalTok{, }\FloatTok{0.0495}\NormalTok{, }\FloatTok{0.0495}\NormalTok{)}
+\NormalTok{xprec=}\StringTok{ }\DecValTok{0}
+
+\ControlFlowTok{if}\NormalTok{(ir}\OperatorTok{<}\FloatTok{1.0}\NormalTok{)\{interval =}\StringTok{ }\FloatTok{200.}\NormalTok{\}}\ControlFlowTok{else}\NormalTok{\{interval =}\StringTok{ }\FloatTok{20.}\NormalTok{\}}
+\ControlFlowTok{if}\NormalTok{(l}\OperatorTok{>}\NormalTok{ir}\OperatorTok{/}\FloatTok{2.}\NormalTok{)\{l =}\StringTok{ }\NormalTok{ir}\OperatorTok{/}\FloatTok{2.}\NormalTok{\}}
+
+\CommentTok{# Saving some intermediate results for Output_diff here (not in the real function):}
+\NormalTok{x_s=}\StringTok{ }\NormalTok{(}\DecValTok{1}\OperatorTok{:}\NormalTok{(ir }\OperatorTok{/}\StringTok{ }\DecValTok{2} \OperatorTok{*}\StringTok{ }\NormalTok{interval))}
+\NormalTok{Output_diff=}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{x_index=} \KeywordTok{rep}\NormalTok{(x_s,}\DataTypeTok{each=}\DecValTok{23}\NormalTok{),}
+                   \DataTypeTok{x_value=} \KeywordTok{rep}\NormalTok{((x_s}\DecValTok{-1}\NormalTok{)}\OperatorTok{/}\NormalTok{interval,}\DataTypeTok{each=}\DecValTok{23}\NormalTok{),}
+                   \DataTypeTok{Angle =} \KeywordTok{rep}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\DecValTok{23}\NormalTok{, }\KeywordTok{length}\NormalTok{(x_s)),}
+                   \DataTypeTok{G1=} \KeywordTok{rep}\NormalTok{(}\OtherTok{NA_real_}\NormalTok{,}\KeywordTok{length}\NormalTok{(x_s)}\OperatorTok{*}\DecValTok{23}\NormalTok{),}
+                   \DataTypeTok{G2=} \KeywordTok{rep}\NormalTok{(}\OtherTok{NA_real_}\NormalTok{,}\KeywordTok{length}\NormalTok{(x_s)}\OperatorTok{*}\DecValTok{23}\NormalTok{),}
+                   \DataTypeTok{hcrit=} \KeywordTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{,}\KeywordTok{length}\NormalTok{(x_s)}\OperatorTok{*}\DecValTok{23}\NormalTok{),}
+                   \DataTypeTok{kgdiffus=} \KeywordTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{,}\KeywordTok{length}\NormalTok{(x_s)}\OperatorTok{*}\DecValTok{23}\NormalTok{))}
+
+
+\CommentTok{# Loop over Xs:}
+
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in}\NormalTok{ x_s)\{}
+\NormalTok{  x =}\StringTok{ }\NormalTok{(i}\DecValTok{-1}\NormalTok{) }\OperatorTok{/}\StringTok{ }\NormalTok{interval}
+  \ControlFlowTok{if}\NormalTok{(xprec}\OperatorTok{<=}\NormalTok{l}\OperatorTok{/}\DecValTok{2}\OperatorTok{&}\NormalTok{x}\OperatorTok{>=}\NormalTok{l}\OperatorTok{/}\DecValTok{2}\NormalTok{)\{ilim =}\StringTok{ }\NormalTok{i\}}
+\NormalTok{  xprec =}\StringTok{ }\NormalTok{x}
+  
+  \CommentTok{# kdif:}
+  
+\NormalTok{  x =}\StringTok{ }\KeywordTok{min}\NormalTok{(x,ir}\OperatorTok{/}\DecValTok{2}\NormalTok{)}
+\NormalTok{  e =}\StringTok{ }\KeywordTok{abs}\NormalTok{(l}\OperatorTok{*}\NormalTok{rap)}
+\NormalTok{  kgdiffus =}\StringTok{ }\FloatTok{0.}
+  
+  \CommentTok{# Computing for the right-hand of the row:}
+\NormalTok{  G1 =}\StringTok{ }\NormalTok{(haut}\OperatorTok{+}\NormalTok{e)}\OperatorTok{/}\NormalTok{(ir}\OperatorTok{-}\NormalTok{x}\OperatorTok{-}\NormalTok{l}\OperatorTok{/}\FloatTok{2.}\NormalTok{) }\CommentTok{# the apparent tangent h1}
+  \ControlFlowTok{for}\NormalTok{(j }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\DecValTok{23}\NormalTok{)\{}
+\NormalTok{    hcrit =}\StringTok{ }\KeywordTok{atan}\NormalTok{(G1}\OperatorTok{*}\KeywordTok{sin}\NormalTok{(aztab[j]}\OperatorTok{/}\DecValTok{180}\OperatorTok{*}\NormalTok{pi))}\OperatorTok{/}\NormalTok{pi}\OperatorTok{*}\DecValTok{180}
+    \ControlFlowTok{if}\NormalTok{(hcrit}\OperatorTok{<}\NormalTok{htab[j])\{}
+\NormalTok{      kgdiffus =}\StringTok{ }\NormalTok{kgdiffus}\OperatorTok{+}\NormalTok{SOCtab[j]}
+      \CommentTok{######## Not in the real function ########}
+\NormalTok{      Output_diff}\OperatorTok{$}\NormalTok{kgdiffus[Output_diff}\OperatorTok{$}\NormalTok{x_index}\OperatorTok{==}\NormalTok{i}\OperatorTok{&}\NormalTok{Output_diff}\OperatorTok{$}\NormalTok{Angle}\OperatorTok{==}\NormalTok{j]=}\StringTok{ }\NormalTok{SOCtab[j]}
+      \CommentTok{##########################################}
+\NormalTok{    \}}
+    \CommentTok{######## Not in the real function ########}
+\NormalTok{    Output_diff}\OperatorTok{$}\NormalTok{hcrit[Output_diff}\OperatorTok{$}\NormalTok{x_index}\OperatorTok{==}\NormalTok{i}\OperatorTok{&}\NormalTok{Output_diff}\OperatorTok{$}\NormalTok{Angle}\OperatorTok{==}\NormalTok{j]=}\StringTok{ }\NormalTok{hcrit}
+\NormalTok{    Output_diff}\OperatorTok{$}\NormalTok{G1[Output_diff}\OperatorTok{$}\NormalTok{x_index}\OperatorTok{==}\NormalTok{i}\OperatorTok{&}\NormalTok{Output_diff}\OperatorTok{$}\NormalTok{Angle}\OperatorTok{==}\NormalTok{j]=}\StringTok{ }\NormalTok{G1}
+    \CommentTok{##########################################}
+\NormalTok{  \}}
+  
+  \CommentTok{# Computing for the left-hand row, if the point is not a shaded point:}
+  \ControlFlowTok{if}\NormalTok{(x}\OperatorTok{>}\NormalTok{l}\OperatorTok{/}\DecValTok{2}\NormalTok{)\{}
+\NormalTok{    G2 =}\StringTok{ }\NormalTok{(haut}\OperatorTok{+}\NormalTok{e)}\OperatorTok{/}\NormalTok{(x}\OperatorTok{-}\NormalTok{l}\OperatorTok{/}\DecValTok{2}\NormalTok{) }\CommentTok{# the apparent tangent h2}
+    \ControlFlowTok{for}\NormalTok{(j }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\DecValTok{23}\NormalTok{)\{}
+\NormalTok{      hcrit =}\StringTok{ }\KeywordTok{atan}\NormalTok{(G2}\OperatorTok{*}\KeywordTok{sin}\NormalTok{(aztab[j]}\OperatorTok{/}\DecValTok{180}\OperatorTok{*}\NormalTok{pi))}\OperatorTok{/}\NormalTok{pi}\OperatorTok{*}\DecValTok{180}
+      \ControlFlowTok{if}\NormalTok{(hcrit }\OperatorTok{<}\StringTok{ }\NormalTok{htab[j])\{}
+\NormalTok{        kgdiffus =}\StringTok{ }\NormalTok{kgdiffus}\OperatorTok{+}\NormalTok{SOCtab[j]}
+        \CommentTok{######## Not in the real function ########}
+\NormalTok{        Output_diff}\OperatorTok{$}\NormalTok{kgdiffus[Output_diff}\OperatorTok{$}\NormalTok{x_index}\OperatorTok{==}\NormalTok{i}\OperatorTok{&}\NormalTok{Output_diff}\OperatorTok{$}\NormalTok{Angle}\OperatorTok{==}\NormalTok{j]=}\StringTok{ }
+\StringTok{          }\NormalTok{Output_diff}\OperatorTok{$}\NormalTok{kgdiffus[Output_diff}\OperatorTok{$}\NormalTok{x_index}\OperatorTok{==}\NormalTok{i}\OperatorTok{&}\NormalTok{Output_diff}\OperatorTok{$}\NormalTok{Angle}\OperatorTok{==}\NormalTok{j]}\OperatorTok{+}\NormalTok{SOCtab[j]}
+        \CommentTok{##########################################}
+\NormalTok{      \}}
+      \CommentTok{######## Not in the real function ########}
+\NormalTok{      Output_diff}\OperatorTok{$}\NormalTok{hcrit[Output_diff}\OperatorTok{$}\NormalTok{x_index}\OperatorTok{==}\NormalTok{i}\OperatorTok{&}\NormalTok{Output_diff}\OperatorTok{$}\NormalTok{Angle}\OperatorTok{==}\NormalTok{j]=}\StringTok{ }\NormalTok{hcrit}
+\NormalTok{      Output_diff}\OperatorTok{$}\NormalTok{G2[Output_diff}\OperatorTok{$}\NormalTok{x_index}\OperatorTok{==}\NormalTok{i}\OperatorTok{&}\NormalTok{Output_diff}\OperatorTok{$}\NormalTok{Angle}\OperatorTok{==}\NormalTok{j]=}\StringTok{ }\NormalTok{G2}
+      \CommentTok{##########################################}
+\NormalTok{    \}}
+\NormalTok{  \}}
+\NormalTok{\}}
+
+\KeywordTok{colnames}\NormalTok{(Output_diff)=}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"X index"}\NormalTok{,}\StringTok{"X value (m)"}\NormalTok{,}\StringTok{"angle"}\NormalTok{,}\StringTok{"G1 (tangent)"}\NormalTok{,}
+                         \StringTok{"G2 (tangent)"}\NormalTok{,}\StringTok{"hcrit"}\NormalTok{,}\StringTok{"kgdiffus"}\NormalTok{)}
+\ControlFlowTok{if}\NormalTok{(knitr}\OperatorTok{:::}\KeywordTok{pandoc_to}\NormalTok{() }\OperatorTok{==}\StringTok{ "html"}\NormalTok{) \{Output_diff\}}\ControlFlowTok{else}\NormalTok{\{}
+  \KeywordTok{kable}\NormalTok{(Output_diff[}\DecValTok{1}\OperatorTok{:}\DecValTok{10}\NormalTok{,],}
+        \DataTypeTok{caption =} \KeywordTok{paste}\NormalTok{(}\StringTok{"Computation of the diffuse light incident on each"}\NormalTok{,}
+                        \StringTok{"point x. Ten first rows only, for the full data,"}\NormalTok{,}
+                        \StringTok{"please refer to the html version of this book"}\NormalTok{),}
+        \DataTypeTok{col.names =} \KeywordTok{c}\NormalTok{(}\StringTok{"X index"}\NormalTok{,}\StringTok{"X value (m)"}\NormalTok{,}\StringTok{"angle"}\NormalTok{,}\StringTok{"G1 (tangent)"}\NormalTok{,}
+                      \StringTok{"G2 (tangent)"}\NormalTok{,}\StringTok{"hcrit"}\NormalTok{,}\StringTok{"kgdiffus"}\NormalTok{), }\DataTypeTok{longtable =} \OtherTok{TRUE}\NormalTok{)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[t]{r|r|r|r|r|r|r}
 \caption{\label{tab:kdiff}Computation of the diffuse light incident on each point x. Ten first rows only, for the full data, please refer to the html version of this book}\\
 \hline
 X index & X value (m) & angle & G1 (tangent) & G2 (tangent) & hcrit & kgdiffus\\
@@ -426,11 +688,23 @@ X index & X value (m) & angle & G1 (tangent) & G2 (tangent) & hcrit & kgdiffus\\
 
 The total diffuse radiation incident to each point X is simply the cumulative of each angle:
 
-\begin{table}[t]
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{suppressWarnings}\NormalTok{(}\KeywordTok{suppressPackageStartupMessages}\NormalTok{(}\KeywordTok{library}\NormalTok{(dplyr)))}
+\NormalTok{Output_diff}\OperatorTok{%<>%}
+\StringTok{  }\KeywordTok{group_by}\NormalTok{(}\StringTok{`}\DataTypeTok{X index}\StringTok{`}\NormalTok{)}\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{summarise}\NormalTok{(}\DataTypeTok{kgdiffus=} \KeywordTok{sum}\NormalTok{(kgdiffus))}
+
+\KeywordTok{kable}\NormalTok{(Output_diff,}\DataTypeTok{caption=} \KeywordTok{paste}\NormalTok{(}\StringTok{"Example of the computation of the incident diffuse"}\NormalTok{,}
+\StringTok{"radiation ratio kgdiffus. See introduction section for further details on the crop."}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{table}
 
 \caption{\label{tab:kdifftot}Example of the computation of the incident diffuse radiation ratio kgdiffus. See introduction section for further details on the crop.}
 \centering
-\begin{tabular}{r|r}
+\begin{tabular}[t]{r|r}
 \hline
 X index & kgdiffus\\
 \hline
@@ -478,56 +752,92 @@ where \(P_{ktrou}\) is the targeted plant light extinction coefficient, \texttt{
 The total light incident to each X point is the sum of the three components: atmospheric diffuse light, atmospheric direct light and transmitted light by the dominant crop.
 Taking our previous example again, this computation leads to:
 
-\begin{table}[t]
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rdirect=}\StringTok{ }\DecValTok{1}\OperatorTok{-}\NormalTok{rdif}
+\NormalTok{rdroit=}\StringTok{ }\NormalTok{(Output_diff}\OperatorTok{$}\NormalTok{kgdiffus}\OperatorTok{*}\NormalTok{rdif)}\OperatorTok{+}\NormalTok{(Output}\OperatorTok{$}\NormalTok{kg}\OperatorTok{*}\NormalTok{rdirect)}
+\NormalTok{rtransmis =}\StringTok{ }\NormalTok{(}\FloatTok{1.0} \OperatorTok{-}\StringTok{ }\NormalTok{rdroit) }\OperatorTok{*}\StringTok{ }\NormalTok{(}\KeywordTok{exp}\NormalTok{(}\OperatorTok{-}\NormalTok{P_ktrou }\OperatorTok{*}\StringTok{ }\NormalTok{(lai }\OperatorTok{+}\StringTok{ }\NormalTok{eai)))}
+
+\NormalTok{incident_light=}\StringTok{ }
+\StringTok{  }\KeywordTok{data.frame}\NormalTok{(Output[,}\DecValTok{1}\OperatorTok{:}\DecValTok{2}\NormalTok{],}\DataTypeTok{Total=}\NormalTok{rdroit}\OperatorTok{+}\NormalTok{rtransmis, }\DataTypeTok{rdroit=}\NormalTok{ rdroit,}
+             \DataTypeTok{rtransmis=}\NormalTok{ rtransmis, }
+             \DataTypeTok{light_env=} \KeywordTok{ifelse}\NormalTok{(Output}\OperatorTok{$}\StringTok{`}\DataTypeTok{X value (m)}\StringTok{`}\OperatorTok{<}\NormalTok{limite,}\StringTok{"Shaded"}\NormalTok{,}\StringTok{"Sunlit"}\NormalTok{))}
+\KeywordTok{kable}\NormalTok{(incident_light,}
+      \DataTypeTok{col.names =} \KeywordTok{c}\NormalTok{(}\StringTok{"X index"}\NormalTok{,}\StringTok{"X value (m)"}\NormalTok{,}\StringTok{"Total incident ratio"}\NormalTok{,}
+                    \StringTok{"Atmospheric ratio (rdroit)"}\NormalTok{,}\StringTok{"Transmitted ratio (rtransmis)"}\NormalTok{,}
+                    \StringTok{"Light environment"}\NormalTok{),}
+  \DataTypeTok{caption=}\KeywordTok{paste}\NormalTok{(}\StringTok{"Example of the computation of the total incident radiation ratio."}\NormalTok{,}
+                \StringTok{"See introduction section for further details on the crop."}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{table}
 
 \caption{\label{tab:unnamed-chunk-5}Example of the computation of the total incident radiation ratio. See introduction section for further details on the crop.}
 \centering
-\begin{tabular}{r|r|r|r|r|l}
+\begin{tabular}[t]{r|r|r|r|r|l}
 \hline
 X index & X value (m) & Total incident ratio & Atmospheric ratio (rdroit) & Transmitted ratio (rtransmis) & Light environment\\
 \hline
-1 & 0.00 & 0.7727202 & 0.3106046 & 0.4621155 & Shaded\\
+1 & 0.00 & 0.3387059 & 0.3106046 & 0.0281013 & Shaded\\
 \hline
-2 & 0.05 & 0.7784515 & 0.3279890 & 0.4504624 & Shaded\\
+2 & 0.05 & 0.3553817 & 0.3279890 & 0.0273926 & Shaded\\
 \hline
-3 & 0.10 & 0.7799044 & 0.3323963 & 0.4475082 & Sunlit\\
+3 & 0.10 & 0.3596093 & 0.3323963 & 0.0272130 & Sunlit\\
 \hline
-4 & 0.15 & 0.7931983 & 0.3727197 & 0.4204785 & Sunlit\\
+4 & 0.15 & 0.3982891 & 0.3727197 & 0.0255693 & Sunlit\\
 \hline
-5 & 0.20 & 0.7918188 & 0.3685355 & 0.4232833 & Sunlit\\
+5 & 0.20 & 0.3942753 & 0.3685355 & 0.0257399 & Sunlit\\
 \hline
-6 & 0.25 & 0.7975112 & 0.3858020 & 0.4117092 & Sunlit\\
+6 & 0.25 & 0.4108381 & 0.3858020 & 0.0250361 & Sunlit\\
 \hline
-7 & 0.30 & 0.7984328 & 0.3885975 & 0.4098354 & Sunlit\\
+7 & 0.30 & 0.4135196 & 0.3885975 & 0.0249221 & Sunlit\\
 \hline
-8 & 0.35 & 0.8011901 & 0.3969610 & 0.4042292 & Sunlit\\
+8 & 0.35 & 0.4215422 & 0.3969610 & 0.0245812 & Sunlit\\
 \hline
-9 & 0.40 & 0.7961262 & 0.3816007 & 0.4145254 & Sunlit\\
+9 & 0.40 & 0.4068080 & 0.3816007 & 0.0252073 & Sunlit\\
 \hline
-10 & 0.45 & 0.7963256 & 0.3822058 & 0.4141198 & Sunlit\\
+10 & 0.45 & 0.4073885 & 0.3822058 & 0.0251827 & Sunlit\\
 \hline
 \end{tabular}
 \end{table}
 
 The Total incident ratio is computed as: \texttt{Total\ incident\ ratio=\ rdroit+rtransmis}. It is the proportion of the incident ligth from the atmosphere that reach the point on the plane below the plant canopy. This light either comes directly from the sky (\texttt{rdroit}) or passing through the plant canopy (\texttt{rtransmis}).
-Consequently, the first point \texttt{X} of our example that is right under the plant canopy receives in average 77.2720162\% of the light coming from the atmosphere: 31.0604617\% of the light directly from the sky (either direct or diffuse light) + 46.2115545\% of the light that is transmitted by the plant above.
+Consequently, the first point \texttt{X} of our example that is right under the plant canopy receives in average 33.8705892\% of the light coming from the atmosphere: 31.0604617\% of the light directly from the sky (either direct or diffuse light) + 2.8101275\% of the light that is transmitted by the plant above.
 
 \hypertarget{total-radiation-incident-to-the-plane}{%
 \subsection{Total radiation incident to the plane}\label{total-radiation-incident-to-the-plane}}
 
 After computing the total incident ratio for each point, the model averages the values between the so-called sunlit and shaded components. Each point positioned right under the plant canopy is considered shaded, and all other is considered sunlit (see fig.~\ref{fig:Compdominated}). using our previous example, this computation gives:
 
-\begin{table}[t]
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{incident_light}\OperatorTok{%<>%}
+\StringTok{  }\KeywordTok{group_by}\NormalTok{(light_env)}\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{summarise}\NormalTok{(}\DataTypeTok{Total=} \KeywordTok{mean}\NormalTok{(Total))}\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{transmute}\NormalTok{(}\DataTypeTok{Variable=} \KeywordTok{c}\NormalTok{(}\StringTok{"rombre"}\NormalTok{,}\StringTok{"rsoleil"}\NormalTok{),light_env,Total)}
+
+\KeywordTok{kable}\NormalTok{(incident_light, }
+      \DataTypeTok{col.names =} \KeywordTok{c}\NormalTok{(}\StringTok{"STICS variable name"}\NormalTok{,}\StringTok{"Light environment"}\NormalTok{,}
+                    \StringTok{"Total incident light ratio"}\NormalTok{),}
+      \DataTypeTok{caption=} \KeywordTok{paste}\NormalTok{(}\StringTok{"Example of the computation of the total incident radiation"}\NormalTok{,}
+                     \StringTok{"ratio for each light environment for a horizontal plane below"}\NormalTok{,}
+                     \StringTok{"the targeted plant canopy. See introduction section for further"}\NormalTok{,}
+                     \StringTok{"details on the crop."}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{table}
 
 \caption{\label{tab:unnamed-chunk-6}Example of the computation of the total incident radiation ratio for each light environment for a horizontal plane below the targeted plant canopy. See introduction section for further details on the crop.}
 \centering
-\begin{tabular}{l|l|r}
+\begin{tabular}[t]{l|l|r}
 \hline
 STICS variable name & Light environment & Total incident light ratio\\
 \hline
-rombre & Shaded & 0.7755858\\
+rombre & Shaded & 0.3470438\\
 \hline
-rsoleil & Sunlit & 0.7943134\\
+rsoleil & Sunlit & 0.4015338\\
 \hline
 \end{tabular}
 \end{table}
@@ -537,7 +847,21 @@ Finally, both ratios are used to compute the intercepted PAR \texttt{raint} (MJ 
 where \(P_{parsurrg}\) is a coefficient to compute PAR (Photosynthetically Active Radiation) from the global radiation, \texttt{trg} is the active radiation (either global radiation or radiation transmitted below the dominant crop), \texttt{rombre} and \texttt{rsoleil} are the ratio of incident light for shaded and sunlit components of the plane, and \texttt{surfAO} and \texttt{surfAS} are the relative surfaces (0 to 1) of the shaded and sunlit components of the plane.
 The computation of \texttt{trg} is further described in Chapter \ref{trg}.
 
-For our example, the crop would have intercepted 2.62 MJ m-2 day-1 of radiation, with a PAR of 12.5 W m-2, an \texttt{rombre} of 0.7755858, an \texttt{rsoleil} of 0.7943134 and a relative surface of 0.2 and 0.8 for the shaded and sunlit component respectively.
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(tidyverse)}
+\KeywordTok{library}\NormalTok{(magrittr)}
+\NormalTok{P_parsurrg=}\StringTok{ }\FloatTok{0.5}
+\NormalTok{incident_light}\OperatorTok{%<>%}\KeywordTok{spread}\NormalTok{(light_env,Total)}
+\NormalTok{surfAO =}\StringTok{ }\NormalTok{l}\OperatorTok{/}\NormalTok{ir}
+\NormalTok{surfAO =}\StringTok{ }\KeywordTok{min}\NormalTok{(surfAO,}\FloatTok{1.0}\NormalTok{)}
+\NormalTok{surfAS =}\StringTok{ }\FloatTok{1.0} \OperatorTok{-}\StringTok{ }\NormalTok{surfAO}
+\NormalTok{raint =}\StringTok{ }\NormalTok{P_parsurrg }\OperatorTok{*}\StringTok{ }\NormalTok{trg }\OperatorTok{*}\StringTok{ }\NormalTok{(}\DecValTok{1} \OperatorTok{-}\StringTok{ }\NormalTok{(incident_light}\OperatorTok{$}\NormalTok{Shaded[}\DecValTok{1}\NormalTok{] }\OperatorTok{*}\StringTok{ }\NormalTok{surfAO) }\OperatorTok{-}\StringTok{ }
+\StringTok{                              }\NormalTok{(incident_light}\OperatorTok{$}\NormalTok{Sunlit[}\DecValTok{2}\NormalTok{]}\OperatorTok{*}\StringTok{ }\NormalTok{surfAS))}
+\end{Highlighting}
+\end{Shaded}
+
+For our example, the crop would have intercepted 7.62 MJ m-2 day-1 of radiation, with a PAR of 12.5 W m-2, an \texttt{rombre} of 0.3470438, an \texttt{rsoleil} of 0.4015338 and a relative surface of 0.2 and 0.8 for the shaded and sunlit component respectively.
 
 \begin{quote}
 The relative surfaces (0 to 1) of the shaded and sunlit components of the plane (\texttt{surfAO} and \texttt{surfAS}) that are computed during the dominant plant computation are then used as the shaded and sunlit surfaces for the dominated plant.
@@ -557,7 +881,7 @@ The interception of the targeted plant is obtained by:
   Substracting this incident light to the global PAR, which gives the PAR intercepted by the target plant.
 \end{enumerate}
 
-This process is applied iteratively to the dominant and the dominated plant to compute both species PAR interception while taking account for their respective structure (shape, height, width\ldots{}).
+This process is applied iteratively to the dominant and the dominated plant to compute both species PAR interception while taking account for their respective structure (shape, height, width\ldots).
 
 \hypertarget{discussion-and-proposed-modifications}{%
 \section{Discussion and proposed modifications}\label{discussion-and-proposed-modifications}}
@@ -1099,9 +1423,9 @@ Two simulations of a wheat in sole crop and a pea in sole crop were run using ST
 The results show that using \texttt{masec} instead of the \texttt{lai} to model plant height gives better results. The model will now be used with this formalism.
 
 \hypertarget{stop-heightmasec-link-at-stage-x}{%
-\subsection{Stop height\textasciitilde{}masec link at stage X}\label{stop-heightmasec-link-at-stage-x}}
+\subsection{Stop height\textasciitilde masec link at stage X}\label{stop-heightmasec-link-at-stage-x}}
 
-The height\textasciitilde{}masec link can stop existing as soon as a plant reach a certain development stage. For example, wheat stops growing in height from the moment it is flowering.
+The height\textasciitilde masec link can stop existing as soon as a plant reach a certain development stage. For example, wheat stops growing in height from the moment it is flowering.
 
 Hence, a new parameter (\texttt{P\_stage\_const\_height}) was added to have the choice to break this link at any developing stage from this list :
 
@@ -1329,12 +1653,24 @@ Now it can be checked ad hoc using the new outputs, such as shown in Figure \ref
 \hypertarget{positive-raint-with-zero-laieai}{%
 \section{Positive raint with zero LAI+EAI}\label{positive-raint-with-zero-laieai}}
 
-\texttt{raint} was not equal to 0 (and so \texttt{fapar}) when the \texttt{lai}+\texttt{eai} was equal to 0, instead it remained at the last computed value when \texttt{lai}+\texttt{eai} was \textgreater{}0. A little modification of the model was made to fix the bug as seen in Figure \ref{fig:bugraint}. Note that a little modification on the computation of leaf senescence fix also a bug for the \texttt{lai} at the end (see e027b8efd93fe77aa7ac7242ce3496589003eb41).
+\texttt{raint} was not equal to 0 (and so \texttt{fapar}) when the \texttt{lai}+\texttt{eai} was equal to 0, instead it remained at the last computed value when \texttt{lai}+\texttt{eai} was \textgreater0. A little modification of the model was made to fix the bug as seen in Figure \ref{fig:bugraint}. Note that a little modification on the computation of leaf senescence fix also a bug for the \texttt{lai} at the end (see e027b8efd93fe77aa7ac7242ce3496589003eb41).
 
 \begin{figure}
 \centering
 \includegraphics{img/raintbug.png}
 \caption{\label{fig:bugraint}Bug fix for raint when lai+eai=0}
+\end{figure}
+
+\hypertarget{qfix-decrease}{%
+\section{Qfix decrease}\label{qfix-decrease}}
+
+S. Munz discovered that Qfix decreased abruplty in some years in intercropping. This effect should not be possible because Qfix is the cumulative fixed nitrogen.
+The issue was corrected in commit \texttt{4f9d92595c870d9b08f3f0b986cbb321630ad031}. The results are shown in figure \ref{fig:Width}.
+
+\begin{figure}
+\centering
+\includegraphics{img/Qfix_issue.png}
+\caption{\label{fig:Qfix}\textbf{Issue with Qfix decreasing abruptly for Pea. Principal plant: Pea, Dominated: Wheat. Simulation for 2007, low nitrogen (N0)}}
 \end{figure}
 
 \hypertarget{summary1}{%
@@ -1350,7 +1686,7 @@ A lot of code and parameterization has changed since the beginning of this book.
 
 The model was tested on a series of experimentations on Wheat and Pea from Auzeville. It consists on a set of observations made on either sole crops or intercrops, and the model was run on each case to evaluate its simulation outputs. The model was also tested to simulate a sole crop as an intercrop with both plants from the same species and variety.\\
 The results of this evaluation are available on \href{Auzeville_summary.html}{this separate page}.
-You can consider this page as a snapshot of the evaluation of the model version used as : 23 mai, 2019. This version of the model can be retrieved from my GIT repository using this SHA: \texttt{c9638aafb924949b630d273608d2b3c45369cd0c}.
+You can consider this page as a snapshot of the evaluation of the model version used as : 31 mars, 2020. This version of the model can be retrieved from my GIT repository using this SHA: \texttt{c9638aafb924949b630d273608d2b3c45369cd0c}.
 
 \hypertarget{model-parameterization}{%
 \section{Model parameterization}\label{model-parameterization}}
@@ -1373,11 +1709,11 @@ The computation is chosen using the \texttt{P\_code\_shape}. If \texttt{P\_code\
 The allometric equation is simply defined as:\\
 \(hauteur= P_{hautbase} + P_{hautK} \cdot masec^{P_{hautA}}\)\\
 So it has two new parameters: \texttt{P\_hautK} and \texttt{P\_hautA}.
-This equation is well known across a wide range of fields, can describe a large panel of relationships, is robust, and is quite simple to parameterize. In the case of STICS, the user should use sole crop data only for parameterization, because the hauteur\textasciitilde{}masec relationship is hard-coded for this situation. In the case of intercrop, the model will adapt the computation accordingly.
+This equation is well known across a wide range of fields, can describe a large panel of relationships, is robust, and is quite simple to parameterize. In the case of STICS, the user should use sole crop data only for parameterization, because the hauteur\textasciitilde masec relationship is hard-coded for this situation. In the case of intercrop, the model will adapt the computation accordingly.
 
 For our case experiment in Auzeville, these parameters were fitted thanks to the nls function in R using observations for each species independently.
 
-At first, we were afraid that the relationship would differ according to the nitogen management, but only the dry mass was impacted by the nitrogen treatments, not the height\textasciitilde{}masec relationship. However, the relationship changed a little between sole crops and intercrops, but was still robust enough to use it as is as shown in the results from \href{Auzeville_summary.html}{this separate page}, also shown in the first paragraph.
+At first, we were afraid that the relationship would differ according to the nitogen management, but only the dry mass was impacted by the nitrogen treatments, not the height\textasciitilde masec relationship. However, the relationship changed a little between sole crops and intercrops, but was still robust enough to use it as is as shown in the results from \href{Auzeville_summary.html}{this separate page}, also shown in the first paragraph.
 
 \hypertarget{equivalent-density}{%
 \subsection{Equivalent density}\label{equivalent-density}}
@@ -1423,7 +1759,7 @@ This computation needed to change, so we included two cases to compute the light
 \item
   The dominant plant is considered above the dominated plant (dominancy case): \texttt{p(i-1)\%rsoleil} represents the fraction of the radiation incoming right above the plant i, i.e.~the light transmitted to the associated plant, for the sunlit part (rombre is used for the shaded one). So \texttt{trg\_bak\ *\ p(i-1)\%rsoleil} is the actual amount of radiation transmitted to the sunlit part of the associated plant, and \texttt{trg\_bak\ *\ p(i-1)\%rombre} is the actual amount of radiation transmitted to the shaded part of the associated plant.
 \item
-  There is no clear dominancy because both plants have approx. the same height (Delta height\textless{}hauteur\_threshold): the trg is not transmitted from one plant to the other, but shared between both plants. In that case, the competition for light arises only through the LAI of each plant.
+  There is no clear dominancy because both plants have approx. the same height (Delta height\textless hauteur\_threshold): the trg is not transmitted from one plant to the other, but shared between both plants. In that case, the competition for light arises only through the LAI of each plant.
 \end{enumerate}
 
 The new version of the model integrating this code can be retrieved from the repository using this SHA: \texttt{591cd8db5aeaf8db2cdb5b62008c54d04d833df8}.
@@ -1433,7 +1769,43 @@ The new version of the model integrating this code can be retrieved from the rep
 
 The model does not need any further parameterization because this new formalism uses one parameter that is already available: \texttt{hauteur\_threshold}.
 
-\bibliography{book.bib,packages.bib}
+\hypertarget{lightcompetition}{%
+\chapter{Light competition effect}\label{lightcompetition}}
 
+The competition between the plant species in intercropping was so much mixed between several computations that it became difficult to parameterize the models, or even to grasp the functionning of the model. We propose a brand new approach to clarify and simplify the computations, while including a new process in the model: the shoot elongation.
+
+As explained in chapter \ref{Light}, STICS considers two kinds of competitions for light: the intra-species competition, and the inter-species competition. The model computes a competition for light between both species using the light interception module, and a second competition using the plant density. Until now the density effect represented both intra and inter-species competition because it was computed using an ``equivalent'' density that increased with the difference in height between the plants (see \ref{plantdensity}). This equivalent plant density was difficult to explain, and difficult to parameterize because it was used to compute \texttt{efdensite} (the density effect) with the same equation than for a sole crop, where this density effect is only an intra-specific competition.
+
+The model should simulate approximately the same results simulating a sole crop or the same crop twice in intercrop (we call it a self-intercrop). It was difficult make the model do it because the same equations were used for different purposes, so the parameterization of the model did not stand well.
+
+We propose to remove the complicated computation of the equivalent density because the competition for light between the two plants is already considered in the light interception module. We argue that the density computation should only be used for the same purpose as for the sole crop (intra-specific competition) to correctly use the \texttt{adens} and \texttt{bdens} parameters that are parameterized for a sole crop. The equivalent density would be used only as a way to match the density in intercrop to the equivalent density it would have in the sole crop, i.e.~densite*2 (densite: sowing density). The density effect (\texttt{efdensite}) would then only represent the intra-row competition, and the inter-row competition would be computed using the light interception module.
+
+It would greatly simplify the processes involved in intercropping, reducing the number of parameters with a complex meaning : \texttt{hauteur\_threshold2}, \texttt{eqdens\_max1}, \texttt{eqdens\_max2} and \texttt{code\_calc\_equi\_density}.
+\textgreater{} \texttt{P\_hauteur\_threshold} is still needed to know when we consider the plants are starting to be in competition for light.
+
+We also want to add another important process to the model: the elongation of the shoot with increasing shade. We propose to add a computation for the shoot elongation effect (called \texttt{ef\_elongation}) that would be applied to increase the plant heigth with increasing shading. This computation adds only one parameter that represent the effect on plant heigth with the maximum shading. This parameter is called \texttt{P\_elongation}.
+
+The computation is as follow:
+
+with \texttt{surf\_AO} the relative surface of the plant that is shaded (0.0: full sun, 1.0: fully shaded), \texttt{P\_elongation} the elongation effect when the plant is fully shaded (1.0 - n), and \texttt{ef\_elongation} the resulting elongation effect that is applied to compute the plant heigth. \texttt{ef\_elongation} linearly increases with increasing shading.
+
+The following plot shows the elongation effect with \texttt{P\_elongation=\ 1.5} for an increasingly shaded plant.
+
+\includegraphics{Postdoc_steps_files/figure-latex/unnamed-chunk-37-1.pdf}
+
+The elongation effect is then applied to the computation of the heigth as follows:
+
+By modifying our previous approach, we hope to simplify the computation of the competition for light between plants, and to integrate a potentially essential process that is shoot elongation. We can summarize the new approach as follows:
+
+\begin{itemize}
+\item
+  The intra-species competition is computed as it is in sole-crops using \texttt{efdensite}
+\item
+  The inter-species competition is computed using the light interception module
+\item
+  The plant elongation is also computed using the light interception module with the relative shaded surface of the plant as a proxy for light quality.
+\end{itemize}
+
+  \bibliography{book.bib,packages.bib}
 
 \end{document}

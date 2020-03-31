@@ -43,3 +43,10 @@ Now it can be checked ad hoc using the new outputs, such as shown in Figure \@re
 
 
 ![(\#fig:bugraint)Bug fix for raint when lai+eai=0](img/raintbug.png)
+
+## Qfix decrease
+
+S. Munz discovered that Qfix decreased abruplty in some years in intercropping. This effect should not be possible because Qfix is the cumulative fixed nitrogen.
+The issue was corrected in commit `4f9d92595c870d9b08f3f0b986cbb321630ad031`. The results are shown in figure \@ref(fig:Width).
+
+![(\#fig:Qfix)**Issue with Qfix decreasing abruptly for Pea. Principal plant: Pea, Dominated: Wheat. Simulation for 2007, low nitrogen (N0)**](img/Qfix_issue.png)
